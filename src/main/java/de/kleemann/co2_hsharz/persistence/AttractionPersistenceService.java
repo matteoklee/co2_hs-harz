@@ -49,9 +49,11 @@ public class AttractionPersistenceService {
         if (attractionEntity == null) {
             throw new IllegalArgumentException("attraction must not be null.");
         }
+        /*
         if (attractionEntity.getAttractionId() != null) {
             throw new IllegalArgumentException("new attraction must not contain an id.");
         }
+        */
         return saveAttraction(attractionEntity);
     }
 

@@ -16,7 +16,7 @@ public class AttractionMapper {
     public Attraction map(AttractionDTO attractionDTO) {
         Attraction attraction = attractionService.createAttraction();
         attraction.setAttractionName(attractionDTO.getAttractionName());
-        attraction.setAttractionLocation(attraction.getAttractionLocation());
+        attraction.setAttractionLocation(attractionDTO.getAttractionLocation());
         return attraction;
     }
 }

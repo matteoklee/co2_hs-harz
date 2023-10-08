@@ -1,5 +1,6 @@
 package de.kleemann.co2_hsharz.core;
 
+import de.kleemann.co2_hsharz.api.AttractionDTO;
 import de.kleemann.co2_hsharz.persistence.AttractionEntity;
 import de.kleemann.co2_hsharz.persistence.AttractionPersistenceService;
 import org.springframework.stereotype.Service;

@@ -6,7 +6,7 @@ public class Attraction {
 
     private final AttractionEntity attractionEntity;
 
-    public Attraction(AttractionEntity attractionEntity) {
+    public Attraction(final AttractionEntity attractionEntity) {
         if(attractionEntity == null) {
             throw new IllegalArgumentException("attractionEntity may not be null.");
         }

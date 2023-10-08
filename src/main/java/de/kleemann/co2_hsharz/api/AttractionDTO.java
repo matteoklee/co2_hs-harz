@@ -1,6 +1,6 @@
 package de.kleemann.co2_hsharz.api;
 
-final class AttractionDTO {
+public class AttractionDTO {
 
     private long attractionId;
     private String attractionName;
