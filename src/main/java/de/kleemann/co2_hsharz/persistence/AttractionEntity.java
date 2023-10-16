@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class AttractionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long attractionId;
     private String attractionName;
     private String attractionLocation;
