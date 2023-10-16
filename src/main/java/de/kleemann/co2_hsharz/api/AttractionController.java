@@ -11,17 +11,36 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-class AttractionsController {
+class AttractionController {
 
+    /**
+     * URL path for retrieving all attractions.
+     */
     private final String ATTRACTION_URL = "/attractions";
+
+    /**
+     * URL path for retrieving an attraction by ID.
+     */
+    private final String ATTRACTION_URL_WITH_ID = "/attractions/{id}";
     private final AttractionService attractionService;
     private final AttractionMapper attractionMapper;
 
-    AttractionsController(AttractionService attractionService, AttractionMapper attractionMapper) {
+    /**
+     * Constructor for AttractionController.
+     *
+     * @param attractionService The attraction service to be injected.
+     * @param attractionMapper The attraction mapper to be injected.
+     */
+    AttractionController(final AttractionService attractionService, final AttractionMapper attractionMapper) {
         this.attractionService = attractionService;
         this.attractionMapper = attractionMapper;
     }
 
+    /**
+     * Get a list of all attractions.
+     *
+     * @return ResponseEntity containing a list of AttractionDTO objects.
+     */
     @GetMapping(ATTRACTION_URL)
     public ResponseEntity<List<AttractionDTO>> getAllAttractions() {
         final List<AttractionDTO> attractions = attractionService.findAllAttractions()
@@ -31,13 +50,26 @@ class AttractionsController {
         return ResponseEntity.ok(attractions);
     }
 
-    @GetMapping(ATTRACTION_URL + "/{id}")
+    /**
+     * Get an attraction by its ID.
+     *
+     * @param attractionId The ID of the attraction to retrieve.
+     * @return ResponseEntity containing an AttractionDTO object.
+     */
+    @GetMapping(ATTRACTION_URL_WITH_ID)
     public ResponseEntity<AttractionDTO> getAttractionById(@PathVariable(value = "id") long attractionId) {
         final Attraction attraction = attractionService.findAttractionById(attractionId);
         return ResponseEntity.ok(attractionMapper.mapToAttractionDTO(attraction));
     }
 
-    @PutMapping(ATTRACTION_URL + "/{id}")
+    /**
+     * Update an attraction by its ID.
+     *
+     * @param attractionId The ID of the attraction to update.
+     * @param attractionDTO The updated data in the form of an AttractionDTO.
+     * @return ResponseEntity containing the updated AttractionDTO.
+     */
+    @PutMapping(ATTRACTION_URL_WITH_ID)
     public ResponseEntity<AttractionDTO> updateAttraction(@PathVariable(value = "id") long attractionId,
                                                        @RequestBody AttractionDTO attractionDTO) {
         if(attractionDTO == null) {
@@ -49,12 +81,23 @@ class AttractionsController {
         return ResponseEntity.ok(responseAttraction);
     }
 
-    @DeleteMapping(ATTRACTION_URL + "/{id}")
+    /**
+     * Delete an attraction by its ID.
+     *
+     * @param attractionId The ID of the attraction to delete.
+     */
+    @DeleteMapping(ATTRACTION_URL_WITH_ID)
     public void deleteAttraction(@PathVariable(value = "id") long attractionId) {
         Attraction attraction = attractionService.findAttractionById(attractionId);
         attractionService.deleteAttraction(attraction);
     }
 
+    /**
+     * Create a new attraction.
+     *
+     * @param attractionDTO The data for the new attraction in the form of an AttractionDTO.
+     * @return ResponseEntity containing the created AttractionDTO.
+     */
     @PostMapping(ATTRACTION_URL)
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<AttractionDTO> createAttraction(@RequestBody AttractionDTO attractionDTO) {
