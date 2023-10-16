@@ -13,10 +13,19 @@ public class AttractionMapper {
         this.attractionService = attractionService;
     }
 
-    public Attraction map(AttractionDTO attractionDTO) {
+    public Attraction mapToAttraction(AttractionDTO attractionDTO) {
         Attraction attraction = attractionService.createAttraction();
         attraction.setAttractionName(attractionDTO.getAttractionName());
         attraction.setAttractionLocation(attractionDTO.getAttractionLocation());
         return attraction;
     }
+
+    public AttractionDTO mapToAttractionDTO(Attraction attraction) {
+        AttractionDTO attractionDTO = new AttractionDTO();
+        attractionDTO.setAttractionId(attraction.getAttractionId());
+        attractionDTO.setAttractionName(attraction.getAttractionName());
+        attractionDTO.setAttractionLocation(attraction.getAttractionLocation());
+        return attractionDTO;
+    }
+
 }

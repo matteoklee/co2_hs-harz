@@ -1,15 +1,12 @@
 package de.kleemann.co2_hsharz.persistence;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 public class AttractionEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long attractionId;
     private String attractionName;
     private String attractionLocation;

@@ -28,20 +28,21 @@ class AttractionsController {
     }
 
     @GetMapping(ATTRACTION_URL + "/{id}")
-    public ResponseEntity<Attraction> getAttractionById(@PathVariable(value = "id") long attractionId) {
+    public ResponseEntity<AttractionDTO> getAttractionById(@PathVariable(value = "id") long attractionId) {
         final Attraction attraction = attractionService.findAttractionById(attractionId);
-        return ResponseEntity.ok(attraction);
+        return ResponseEntity.ok(attractionMapper.mapToAttractionDTO(attraction));
     }
 
     @PutMapping(ATTRACTION_URL + "/{id}")
-    public ResponseEntity<Attraction> updateAttraction(@PathVariable(value = "id") long attractionId,
+    public ResponseEntity<AttractionDTO> updateAttraction(@PathVariable(value = "id") long attractionId,
                                                        @RequestBody AttractionDTO attractionDTO) {
         if(attractionDTO == null) {
             throw new IllegalArgumentException("attractionDTO must not be null.");
         }
         Attraction attraction = attractionService.findAttractionById(attractionId);
-        attraction = attractionMapper.map(attractionDTO);
-        return ResponseEntity.ok(attractionService.updateAttraction(attractionId, attraction));
+        attraction = attractionMapper.mapToAttraction(attractionDTO);
+        AttractionDTO responseAttraction = attractionMapper.mapToAttractionDTO(attractionService.updateAttraction(attractionId, attraction));
+        return ResponseEntity.ok(responseAttraction);
     }
 
     @DeleteMapping(ATTRACTION_URL + "/{id}")
@@ -52,13 +53,13 @@ class AttractionsController {
 
     @PostMapping(ATTRACTION_URL)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<Attraction> createAttraction(@RequestBody AttractionDTO attractionDTO) {
+    public ResponseEntity<AttractionDTO> createAttraction(@RequestBody AttractionDTO attractionDTO) {
         if(attractionDTO == null) {
             throw new IllegalArgumentException("attractionDTO must not be null.");
         }
-        Attraction attraction = attractionMapper.map(attractionDTO);
+        Attraction attraction = attractionMapper.mapToAttraction(attractionDTO);
         final Attraction persistedAttraction = attractionService.persistAttraction(attraction);
-        return ResponseEntity.ok(persistedAttraction);
+        return ResponseEntity.ok(attractionMapper.mapToAttractionDTO(persistedAttraction));
     }
 
 }
