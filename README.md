@@ -1,4 +1,4 @@
-## REST API Dummy with CRUD methods for attraction object 
+## REST API Dummy with CRUD methods for an attraction object 
 ### co2_hs-harz
 
 ![Overview](src/main/resources/images/overview.png "Overview")
