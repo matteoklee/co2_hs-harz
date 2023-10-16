@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -22,8 +23,11 @@ class AttractionsController {
     }
 
     @GetMapping(ATTRACTION_URL)
-    public ResponseEntity<List<Attraction>> getAllAttractions() {
-        final List<Attraction> attractions = attractionService.findAllAttractions();
+    public ResponseEntity<List<AttractionDTO>> getAllAttractions() {
+        final List<AttractionDTO> attractions = attractionService.findAllAttractions()
+                .stream()
+                .map(attraction -> attractionMapper.mapToAttractionDTO(attraction))
+                .collect(Collectors.toList());
         return ResponseEntity.ok(attractions);
     }
 
