@@ -2,7 +2,9 @@ package de.kleemann.co2_hsharz.core.auth;
 
 import de.kleemann.co2_hsharz.persistence.UserEntity;
 import de.kleemann.co2_hsharz.persistence.UserPersistenceService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,14 +25,12 @@ public class UserService {
         this.userPersistenceService = userPersistenceService;
     }
 
-    /*
     public UserDetails loadUserByUsername(String username) {
         if(username.isBlank() || username.isEmpty()) {
             throw new IllegalArgumentException("username may not be null.");
         }
         return userPersistenceService.loadUserByUsername(username);
     }
-    */
 
     public List<User> findAllUsers() {
         return userPersistenceService.findAllUsers()

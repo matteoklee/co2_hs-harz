@@ -1,6 +1,12 @@
 package de.kleemann.co2_hsharz.persistence;
 
 import jakarta.persistence.EntityExistsException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +21,7 @@ import java.util.List;
  * @since 16.10.2023
  */
 @Service
-public class UserPersistenceService /*implements UserDetailsService*/ {
+public class UserPersistenceService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -23,7 +29,7 @@ public class UserPersistenceService /*implements UserDetailsService*/ {
         this.userRepository = userRepository;
     }
 
-    /*
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByUserName(username);
@@ -40,7 +46,6 @@ public class UserPersistenceService /*implements UserDetailsService*/ {
     }
 
 
-     */
     public List<UserEntity> findAllUsers() {
         return new ArrayList<>(userRepository.findAll());
     }

@@ -3,6 +3,7 @@ package de.kleemann.co2_hsharz.api.auth;
 import de.kleemann.co2_hsharz.core.auth.User;
 import de.kleemann.co2_hsharz.core.auth.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         System.err.println("DEBUG 1");
