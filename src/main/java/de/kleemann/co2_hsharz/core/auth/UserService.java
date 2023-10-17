@@ -1,5 +1,7 @@
 package de.kleemann.co2_hsharz.core.auth;
 
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.core.exceptions.CustomRuntimeException;
 import de.kleemann.co2_hsharz.persistence.auth.UserEntity;
 import de.kleemann.co2_hsharz.persistence.auth.UserPersistenceService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +29,7 @@ public class UserService {
 
     public UserDetails loadUserByUsername(String username) {
         if(username.isBlank() || username.isEmpty()) {
-            throw new IllegalArgumentException("username may not be null.");
+            throw new CustomIllegalArgumentException("username may not be null.");
         }
         return userPersistenceService.loadUserByUsername(username);
     }
@@ -45,13 +47,13 @@ public class UserService {
 
     public User persistUser(final User user) {
         if(user == null) {
-            throw new IllegalArgumentException("user must not be null.");
+            throw new CustomIllegalArgumentException("user must not be null.");
         }
         final UserEntity persistedUserEntity;
         try {
             persistedUserEntity = userPersistenceService.persistUser(user.getUserEntity());
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            throw new CustomRuntimeException("error in persistUser()");
         }
         return new User(persistedUserEntity);
     }

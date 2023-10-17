@@ -2,6 +2,7 @@ package de.kleemann.co2_hsharz.api.auth;
 
 import de.kleemann.co2_hsharz.core.auth.User;
 import de.kleemann.co2_hsharz.core.auth.UserService;
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -38,10 +39,10 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
         if(userDTO == null) {
-            throw new IllegalArgumentException("userDTO must not be null.");
+            throw new CustomIllegalArgumentException("userDTO must not be null.");
         }
         if(userService.isUserExisting(userDTO.getUserName())) {
-            throw new IllegalArgumentException("userName already exists");
+            throw new CustomIllegalArgumentException("userName already exists");
         }
         User user = convertToUser(userDTO);
         final User persistedUser = userService.persistUser(user);
