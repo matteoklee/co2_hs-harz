@@ -20,4 +20,7 @@ public class Application {
         return PREFIX + "API successsfully started.";
     }
 
+    public static String getPREFIX() {
+        return PREFIX;
+    }
 }

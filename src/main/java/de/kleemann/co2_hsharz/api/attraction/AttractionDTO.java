@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.api;
+package de.kleemann.co2_hsharz.api.attraction;
 
 public class AttractionDTO {
 

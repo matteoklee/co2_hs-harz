@@ -1,6 +1,6 @@
 package de.kleemann.co2_hsharz.core.auth;
 
-import de.kleemann.co2_hsharz.persistence.UserEntity;
+import de.kleemann.co2_hsharz.persistence.auth.UserEntity;
 
 /**
  * Class "User" is used for ...

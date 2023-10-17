@@ -28,17 +28,20 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        System.err.println("DEBUG 1");
         List<User> users = userService.findAllUsers();
         return ResponseEntity.ok(users.stream()
                 .map(this::convertToUserDTO)
                 .collect(Collectors.toList()));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
         if(userDTO == null) {
             throw new IllegalArgumentException("userDTO must not be null.");
+        }
+        if(userService.isUserExisting(userDTO.getUserName())) {
+            throw new IllegalArgumentException("userName already exists");
         }
         User user = convertToUser(userDTO);
         final User persistedUser = userService.persistUser(user);

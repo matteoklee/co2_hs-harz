@@ -1,5 +1,7 @@
-package de.kleemann.co2_hsharz.persistence;
+package de.kleemann.co2_hsharz.persistence.auth;
 
+import de.kleemann.co2_hsharz.core.exceptions.CustomEntityExistsException;
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -63,13 +65,13 @@ public class UserPersistenceService implements UserDetailsService {
             return userRepository.save(userEntity);
         }
         catch (EntityExistsException exception) {
-            throw new EntityExistsException("user already exists.");
+            throw new CustomEntityExistsException("user already exists.");
         }
     }
 
     public UserEntity persistUser(final UserEntity userEntity) {
         if (userEntity == null) {
-            throw new IllegalArgumentException("user must not be null.");
+            throw new CustomIllegalArgumentException("user must not be null.");
         }
         return saveUser(userEntity);
     }

@@ -1,7 +1,7 @@
 package de.kleemann.co2_hsharz.core.auth;
 
-import de.kleemann.co2_hsharz.persistence.UserEntity;
-import de.kleemann.co2_hsharz.persistence.UserPersistenceService;
+import de.kleemann.co2_hsharz.persistence.auth.UserEntity;
+import de.kleemann.co2_hsharz.persistence.auth.UserPersistenceService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +37,10 @@ public class UserService {
                 .stream()
                 .map(User::new)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isUserExisting(String userName) {
+        return findAllUsers().stream().anyMatch(user -> user.getUserName().equals(userName));
     }
 
     public User persistUser(final User user) {

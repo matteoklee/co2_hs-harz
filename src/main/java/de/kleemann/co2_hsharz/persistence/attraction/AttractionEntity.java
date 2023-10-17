@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.persistence;
+package de.kleemann.co2_hsharz.persistence.attraction;
 
 import jakarta.persistence.*;
 

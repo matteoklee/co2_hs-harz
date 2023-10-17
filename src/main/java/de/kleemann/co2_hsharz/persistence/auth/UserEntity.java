@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.persistence;
+package de.kleemann.co2_hsharz.persistence.auth;
 
 import de.kleemann.co2_hsharz.core.auth.UserRole;
 import jakarta.persistence.Entity;

@@ -1,7 +1,7 @@
-package de.kleemann.co2_hsharz.api;
+package de.kleemann.co2_hsharz.api.attraction;
 
-import de.kleemann.co2_hsharz.core.Attraction;
-import de.kleemann.co2_hsharz.core.AttractionService;
+import de.kleemann.co2_hsharz.core.attraction.Attraction;
+import de.kleemann.co2_hsharz.core.attraction.AttractionService;
 import org.springframework.stereotype.Component;
 
 @Component

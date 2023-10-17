@@ -1,6 +1,6 @@
-package de.kleemann.co2_hsharz.core;
+package de.kleemann.co2_hsharz.core.attraction;
 
-import de.kleemann.co2_hsharz.persistence.AttractionEntity;
+import de.kleemann.co2_hsharz.persistence.attraction.AttractionEntity;
 
 public class Attraction {
 
