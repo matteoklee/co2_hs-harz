@@ -46,7 +46,7 @@ public class SecurityConfiguration {
         authenticationManager = authenticationManagerBuilder.build();
 
         http.authorizeHttpRequests((authz)->authz
-                .requestMatchers("/auth/users").authenticated()
+                .requestMatchers("/auth/**").authenticated()
                 .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())
                 .authenticationManager(authenticationManager)
