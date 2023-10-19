@@ -1,7 +1,8 @@
-package de.kleemann.co2_hsharz.api;
+package de.kleemann.co2_hsharz.api.attraction;
 
-import de.kleemann.co2_hsharz.core.Attraction;
-import de.kleemann.co2_hsharz.core.AttractionService;
+import de.kleemann.co2_hsharz.core.attraction.Attraction;
+import de.kleemann.co2_hsharz.core.attraction.AttractionService;
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,7 +74,7 @@ class AttractionController {
     public ResponseEntity<AttractionDTO> updateAttraction(@PathVariable(value = "id") long attractionId,
                                                        @RequestBody AttractionDTO attractionDTO) {
         if(attractionDTO == null) {
-            throw new IllegalArgumentException("attractionDTO must not be null.");
+            throw new CustomIllegalArgumentException("attractionDTO must not be null.");
         }
         Attraction attraction = attractionService.findAttractionById(attractionId);
         attraction = attractionMapper.mapToAttraction(attractionDTO);
@@ -102,7 +103,7 @@ class AttractionController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<AttractionDTO> createAttraction(@RequestBody AttractionDTO attractionDTO) {
         if(attractionDTO == null) {
-            throw new IllegalArgumentException("attractionDTO must not be null.");
+            throw new CustomIllegalArgumentException("attractionDTO must not be null.");
         }
         Attraction attraction = attractionMapper.mapToAttraction(attractionDTO);
         final Attraction persistedAttraction = attractionService.persistAttraction(attraction);

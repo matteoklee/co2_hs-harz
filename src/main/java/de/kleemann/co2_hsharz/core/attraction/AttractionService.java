@@ -1,8 +1,9 @@
-package de.kleemann.co2_hsharz.core;
+package de.kleemann.co2_hsharz.core.attraction;
 
-import de.kleemann.co2_hsharz.api.AttractionDTO;
-import de.kleemann.co2_hsharz.persistence.AttractionEntity;
-import de.kleemann.co2_hsharz.persistence.AttractionPersistenceService;
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.core.exceptions.CustomRuntimeException;
+import de.kleemann.co2_hsharz.persistence.attraction.AttractionEntity;
+import de.kleemann.co2_hsharz.persistence.attraction.AttractionPersistenceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,39 +29,42 @@ public class AttractionService {
         try {
             return new Attraction(attractionPersistenceService.findAttractionById(attractionId));
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            //throw new RuntimeException(exception);
+            throw new CustomRuntimeException("error in findAttractionById()");
         }
     }
 
     public Attraction updateAttraction(long attractionId, Attraction attraction) {
         if (attraction == null) {
-            throw new IllegalArgumentException("attraction must not be null.");
+            throw new CustomIllegalArgumentException("attraction must not be null.");
         }
         final AttractionEntity updatedAttractionEntity;
         try {
             updatedAttractionEntity = attractionPersistenceService.updateAttraction(attractionId, attraction.getAttractionEntity());
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            //throw new RuntimeException(exception);
+            throw new CustomRuntimeException("error in updateAttraction()");
         }
         return new Attraction(updatedAttractionEntity);
     }
 
     public Attraction persistAttraction(final Attraction attraction) {
         if (attraction == null) {
-            throw new IllegalArgumentException("attraction must not be null.");
+            throw new CustomIllegalArgumentException("attraction must not be null.");
         }
         final AttractionEntity persistedAttractionEntity;
         try {
             persistedAttractionEntity = attractionPersistenceService.persistAttraction(attraction.getAttractionEntity());
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            //throw new RuntimeException(exception);
+            throw new CustomRuntimeException("error in persistAttraction()");
         }
         return new Attraction(persistedAttractionEntity);
     }
 
     public void deleteAttraction(final Attraction attraction) {
         if (attraction == null) {
-            throw new IllegalArgumentException("attraction must not be null.");
+            throw new CustomIllegalArgumentException("attraction must not be null.");
         }
         attractionPersistenceService.deleteAttraction(attraction.getAttractionEntity());
     }

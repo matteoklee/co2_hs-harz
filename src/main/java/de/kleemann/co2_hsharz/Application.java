@@ -2,11 +2,10 @@ package de.kleemann.co2_hsharz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@SpringBootApplication(scanBasePackages = "de.kleemann.co2_hsharz")
+@SpringBootApplication(scanBasePackages = "de.kleemann.co2_hsharz.*")
 public class Application {
 
     private static String PREFIX = "[CO2_HS-Harz] ";
@@ -16,9 +15,12 @@ public class Application {
         System.out.println(PREFIX + "API successfully started.");
     }
 
-    @GetMapping("")
+    //@GetMapping("")
     public String greeting() {
         return PREFIX + "API successsfully started.";
     }
 
+    public static String getPREFIX() {
+        return PREFIX;
+    }
 }

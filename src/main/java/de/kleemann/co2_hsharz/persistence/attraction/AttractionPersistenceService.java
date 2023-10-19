@@ -1,5 +1,8 @@
-package de.kleemann.co2_hsharz.persistence;
+package de.kleemann.co2_hsharz.persistence.attraction;
 
+import de.kleemann.co2_hsharz.core.exceptions.CustomEntityExistsException;
+import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,12 +25,12 @@ public class AttractionPersistenceService {
 
     public AttractionEntity findAttractionById(long attractionId) {
         return attractionRepository.findById(attractionId)
-                .orElseThrow(() -> new EntityNotFoundException("unknown attraction with id: " + attractionId));
+                .orElseThrow(() -> new CustomEntityNotFoundException("unknown attraction with id: " + attractionId));
     }
 
     public AttractionEntity updateAttraction(long attractionId, AttractionEntity attractionEntity) {
         if (attractionEntity == null) {
-            throw new IllegalArgumentException("attraction must not be null.");
+            throw new CustomIllegalArgumentException("attraction must not be null.");
         }
         AttractionEntity updateAttractionEntity = findAttractionById(attractionId);
         updateAttractionEntity.setAttractionId(attractionId);
@@ -41,13 +44,13 @@ public class AttractionPersistenceService {
             return attractionRepository.save(attractionEntity);
         }
         catch (EntityExistsException exception) {
-            throw new EntityExistsException("attraction already exists.");
+            throw new CustomEntityExistsException("attraction already exists.");
         }
     }
 
     public AttractionEntity persistAttraction(final AttractionEntity attractionEntity) {
         if (attractionEntity == null) {
-            throw new IllegalArgumentException("attraction must not be null.");
+            throw new CustomIllegalArgumentException("attraction must not be null.");
         }
         /*
         if (attractionEntity.getAttractionId() != null) {
@@ -59,7 +62,7 @@ public class AttractionPersistenceService {
 
     public void deleteAttraction(final AttractionEntity attractionEntity) {
         if (attractionEntity == null) {
-            throw new IllegalArgumentException("attraction must not be null!");
+            throw new CustomIllegalArgumentException("attraction must not be null!");
         }
         attractionRepository.deleteById(attractionEntity.getAttractionId());
     }
