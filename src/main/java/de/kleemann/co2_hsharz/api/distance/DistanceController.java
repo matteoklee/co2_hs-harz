@@ -23,9 +23,9 @@ public class DistanceController {
     }
 
     @GetMapping("/route")
-    public double getDistance() {
+    public void getDistance() {
         System.err.println("CALCULATING ROUTE...");
-        return distanceCalculationService.calculate();
+        distanceCalculationService.routing();
     }
 
 }
