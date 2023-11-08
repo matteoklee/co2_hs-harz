@@ -3,9 +3,11 @@ package de.kleemann.co2_hsharz.api.distance;
 import de.kleemann.co2_hsharz.core.distance.CoordinateService;
 import de.kleemann.co2_hsharz.core.distance.DistanceCalculationService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 /**
@@ -27,14 +29,21 @@ public class DistanceController {
         this.coordinateService = coordinateService;
     }
 
-    @GetMapping("/route")
-    public void getDistance() {
+    @GetMapping("/distance/{start}/{end}")
+    public void getDistance(@PathVariable(value = "start") String start, @PathVariable(value = "end") String end) {
         System.err.println("CALLING /api/route ...");
         //distanceCalculationService.routing();
+        /*
         try {
             coordinateService.getCoordinatesFromCity("Berlin");
             coordinateService.getCoordinatesFromCity("Halle");
             coordinateService.getCoordinatesFromCity("Wettin-Löbejün");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        */
+        try {
+            distanceCalculationService.calculateDistance(start, end);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -22,8 +22,6 @@ import java.io.IOException;
 @Service
 public class CoordinateService {
 
-    //bded9e02-2f9a-4ef7-8f39-dd5b6463f832
-
     @Value("${api.key}")
     private String API_KEY;
 

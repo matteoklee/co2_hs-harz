@@ -1,5 +1,7 @@
 package de.kleemann.co2_hsharz.core.distance;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graphhopper.GHRequest;
 import com.graphhopper.GHResponse;
 import com.graphhopper.GraphHopper;
@@ -11,8 +13,15 @@ import com.graphhopper.util.InstructionList;
 import com.graphhopper.util.PointList;
 import com.graphhopper.util.Translation;
 import com.graphhopper.util.shapes.GHPoint;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.Locale;
 
 /**
@@ -25,10 +34,13 @@ import java.util.Locale;
 @Service
 public class DistanceCalculationService {
 
+    private final CoordinateService coordinateService;
     private final String OSM_FILE_GERMANY = "C:/Users/Admin/Downloads/germany-latest.osm.pbf";
+    @Value("${api.key}")
+    private String API_KEY;
 
-    public DistanceCalculationService() {
-
+    public DistanceCalculationService(CoordinateService coordinateService) {
+        this.coordinateService = coordinateService;
     }
 
     public GraphHopper createGraphHopperInstance(String ghLoc) {
@@ -90,7 +102,47 @@ public class DistanceCalculationService {
 
     }
 
-    public void routingWithAPI() {
+    public double calculateDistance(String startCity, String endCity) throws IOException {
+        GHPoint start = coordinateService.getCoordinatesFromCity(startCity);
+        GHPoint end = coordinateService.getCoordinatesFromCity(endCity);
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://graphhopper.com/api/1/route?point=" + start + "&point=" + end + "&profile=car&locale=de&calc_points=false&key=" + API_KEY)
+                .get()
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        if (response.isSuccessful()) {
+            ResponseBody responseBody = response.body();
+            if (responseBody != null) {
+                String json = responseBody.string();
+
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode root = objectMapper.readTree(json);
+
+                JsonNode paths = root.get("paths");
+                if (paths != null && paths.isArray() && paths.size() > 0) {
+                    JsonNode firstPath = paths.get(0);
+                    double distance = firstPath.get("distance").asDouble();
+
+                    System.out.println("Die ermittelte Distanz zwischen " + startCity + " und " + endCity + " beträgt " + distance + " Meter.");
+                    return distance;
+                } else {
+                    System.out.println("Pfadinformationen nicht gefunden.");
+                }
+            } else {
+                System.out.println("Response-Body ist leer.");
+            }
+        } else {
+            System.out.println("Fehler beim Abrufen der Daten: " + response.code());
+        }
+
+        return 0.0;
+    }
+
+    public void routingWithAPI2() {
         //get api key
         //GraphHopperWeb
         //https://github.com/graphhopper/graphhopper/blob/master/client-hc/src/test/java/com/graphhopper/api/Examples.java
