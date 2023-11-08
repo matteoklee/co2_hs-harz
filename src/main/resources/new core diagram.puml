@@ -1,0 +1,103 @@
+@startuml
+!theme mars
+
+title
+<u>CO2-Rechner</u> - Klassendiagramm/ Datenbankstruktur
+<i>Core - Business Logic</i>
+end title
+
+header
+<font color=blue>Hochschule Harz</font>
+Hochschule für angewandte Wissenschaften
+Backend
+end header
+
+center footer
+Version 1.0
+Matteo Kleemann
+u37186@hs-harz.de
+end footer
+
+left to right direction
+
+package "Core" <<Node>> #lightblue {
+  class TransportMedium {
+    - long transportId
+    - String transportName
+    - TransportMediumType transportType
+    - double emissions
+    + TransportMediumType getTransportType()
+  }
+
+  enum TransportMediumType {
+    CAR_PETROL_SMALL
+    CAR_PETROL_MEDIUM
+    CAR_PETROL_LARGE
+    CAR_DIESEL_SMALL
+    CAR_DIESEL_MEDIUM
+    CAR_DIESEL_LARGE
+    BIKE
+    FOOT
+    TRAIN
+    CAR_HYBRID
+    CAR_ELECTRIC
+  }
+
+  class TransportMediumService {
+    + TransportMedium findTransportMediumById(long id)
+    + List<TransportMedium> findAllTransportMedium()
+    + TransportMedium createTransportMedium(TransportMedium medium)
+    + void updateTransportMedium(TransportMedium medium)
+    + void deleteTransportMedium(long id)
+  }
+
+  class Tourist {
+    - String touristName
+    - String touristSecurityQuestion
+    - String touristSecurityQuestionAnswer
+  }
+
+  class TouristService {
+    + Tourist findTouristById(long id)
+    + List<Tourist> findAllTourists()
+    + Tourist createTourist(Tourist tourist)
+    + void updateTourist(Tourist tourist)
+    + void deleteTourist(long id)
+  }
+
+  class TouristEmission {
+    - Tourist tourist
+    - TransportMedium vehicle
+    - double emissions
+    + double calculateEmissionsForTourist()
+  }
+
+  class EmissionsCalculatorService {
+    - TransportMedium vehicle
+    - double distance
+    + double calculateEmissions()
+  }
+
+  class Distance {
+    -Point distanceStart
+    -Point distanceEnd
+    +Distance(Point start, Point end)
+  }
+
+  class DistanceCalculatorService {
+    + double calculateDistance(Distance distance)
+  }
+
+  class CoordinateService {
+    + Point getCoordinatesFromCity(String city)
+  }
+
+  TransportMedium -down-> TransportMediumType
+  TransportMediumService --> TransportMedium
+  Tourist -down-> TouristService
+  TouristService --> TouristEmission
+  EmissionsCalculatorService --> TransportMedium
+  DistanceCalculatorService --> CoordinateService
+  DistanceCalculatorService --> Distance
+}
+@enduml

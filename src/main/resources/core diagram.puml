@@ -1,0 +1,109 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+!theme mars
+'title CO2-Rechner - Klassendiagramm/ Datenbankstruktur
+'scale 1
+
+title
+<u>CO2-Rechner</u> - Klassendiagramm/ Datenbankstruktur
+<i>Core - Buisness Logic</i>
+end title
+
+header
+<font color=blue>Hochschule Harz</font>
+Hochschule für angewandte Wissenschaften
+Backend
+end header
+
+center footer
+Version 1.0
+Matteo Kleemann
+u37186@hs-harz.de
+end footer
+
+left to right direction
+
+'mainframe **Core**
+
+package "Core" <<Node>> #lightblue {
+
+  folder "transport" {
+    class TransportMedium {
+      -long transportId
+      -String transportName
+      -TransportMediumType transportType
+      -double emissions
+    }
+    enum TransportMediumType {
+      CAR_PETROL_SMALL
+      CAR_PETROL_MEDIUM
+      CAR_PETROL_LARGE
+      CAR_DIESEL_SMALL
+      CAR_DIESEL_MEDIUM
+      CAR_DIESEL_LARGE
+      BIKE
+      FOOT
+      TRAIN
+      CAR_HYBRID
+      CAR_ELECTRIC
+    }
+    class TransportMediumService {
+      -TransportMedium vehicle
+      +findTransportMediumById()
+      +findAllTransportMedium()
+      +createTransportMedium()
+      +updateTransportMedium()
+      +deleteTransportMedium()
+    }
+    TransportMedium -[hidden]down- TransportMediumType
+
+    TransportMediumType -[hidden]down- TransportMediumService
+  }
+
+  folder "tourist" {
+     class Tourist {
+     -String touristName
+     -String touristSecurityQuestion
+     -String touristSecurityQuestionAnswer
+    }
+    class TouristService {
+     +Tourist findTouristById()
+     +Tourist findAllTourists()
+     +Tourist createTourist()
+     +Tourist updateTourist()
+     +Tourist deleteTourist()
+    }
+    class TouristEmission {
+      -Tourist tourist
+      -TransportMedium vehicle
+      -double emissions
+      +double calculateEmissionsForTourist()
+    }
+    Tourist -[hidden]down- TouristService
+
+    TouristService -[hidden]down- TouristEmission
+  }
+
+  folder "emissions" {
+     class EmissionsCalculatorService {
+      -TransportMedium vehicle
+      -double distance
+      +double calculateEmissions()
+    }
+  }
+
+  folder "distance" {
+    class DistanceCalculatorService {
+      +double calculateDistance(Point start, Point end)
+    }
+    class CoordinateService {
+      +Point getCoordinatesFromCity(String city)
+    }
+    DistanceCalculatorService -[hidden]down- CoordinateService
+  }
+
+}
+
+
+@enduml

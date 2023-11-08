@@ -41,6 +41,10 @@ public class DistanceCalculationService {
         return graphHopper;
     }
 
+    /**
+     * needs cache files inside target/routing-graph-cache
+     * if not exists, first routing takes some time
+     */
     public void routing() {
         //https://github.com/graphhopper/graphhopper/blob/master/example/src/main/java/com/graphhopper/example/RoutingExample.java
 
