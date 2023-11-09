@@ -1,6 +1,7 @@
 package de.kleemann.co2_hsharz.core.transport;
 
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumPersistenceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @version 1.0
  * @since 09.11.2023
  */
+@Service
 public class TransportMediumService {
 
     private final TransportMediumPersistenceService transportMediumPersistenceService;
