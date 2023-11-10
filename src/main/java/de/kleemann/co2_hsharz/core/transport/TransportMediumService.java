@@ -25,7 +25,7 @@ public class TransportMediumService {
         return null;
     }
 
-    public TransportMedium findTransportMediumByName(String transportName) {
+    public TransportMedium findTransportMediumByName(String transportMediumName) {
         return null;
     }
 

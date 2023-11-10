@@ -102,13 +102,15 @@ public class DistanceCalculationService {
 
     }
 
-    public double calculateDistance(String startCity, String endCity) throws IOException {
-        GHPoint start = coordinateService.getCoordinatesFromCity(startCity);
-        GHPoint end = coordinateService.getCoordinatesFromCity(endCity);
+    public double calculateDistance(String startLocation, String endLocation) throws IOException {
+        GHPoint start = coordinateService.getCoordinatesFromCity(startLocation);
+        GHPoint end = coordinateService.getCoordinatesFromCity(endLocation);
+
+        //Eingabe auf country == Deutschland testen
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://graphhopper.com/api/1/route?point=" + start + "&point=" + end + "&profile=car&locale=de&calc_points=false&key=" + API_KEY)
+                .url("https://graphhopper.com/api/1/route?point=" + start + "&point=" + end + "&profile=bike&locale=de&calc_points=false&key=" + API_KEY)
                 .get()
                 .build();
 
@@ -127,7 +129,7 @@ public class DistanceCalculationService {
                     JsonNode firstPath = paths.get(0);
                     double distance = firstPath.get("distance").asDouble();
 
-                    System.out.println("Die ermittelte Distanz zwischen " + startCity + " und " + endCity + " beträgt " + distance + " Meter.");
+                    System.out.println("Die ermittelte Distanz zwischen " + startLocation + " und " + endLocation + " beträgt " + distance + " Meter.");
                     return distance;
                 } else {
                     System.out.println("Pfadinformationen nicht gefunden.");
@@ -137,6 +139,11 @@ public class DistanceCalculationService {
             }
         } else {
             System.out.println("Fehler beim Abrufen der Daten: " + response.code());
+            ResponseBody responseBody = response.body();
+            if (responseBody != null) {
+                String json = responseBody.string();
+                System.err.println(json);
+            }
         }
 
         return 0.0;

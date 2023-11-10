@@ -18,7 +18,8 @@ public class EmissionsCalculationService {
     }
 
     public double calculateEmission(TransportMedium transportMedium, double distance) {
-        return 0.0;
+        double emission = transportMedium.getConsumption() * distance;
+        return emission;
     }
 
 }

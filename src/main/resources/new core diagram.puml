@@ -14,8 +14,8 @@ end header
 
 center footer
 Version 1.0
-Matteo Kleemann
-u37186@hs-harz.de
+'Matteo Kleemann
+'u37186@hs-harz.de
 end footer
 
 left to right direction
@@ -25,8 +25,7 @@ package "Core" <<Node>> #lightblue {
     - long transportId
     - String transportName
     - TransportMediumType transportType
-    - double emissions
-    + TransportMediumType getTransportType()
+    - double consumption
   }
 
   enum TransportMediumType {
@@ -45,13 +44,15 @@ package "Core" <<Node>> #lightblue {
 
   class TransportMediumService {
     + TransportMedium findTransportMediumById(long id)
-    + List<TransportMedium> findAllTransportMedium()
+    + List<TransportMedium> findAllTransportMediums()
+    + TransportMedium findTransportMediumByName(String transportMediumName)
     + TransportMedium createTransportMedium(TransportMedium medium)
     + void updateTransportMedium(TransportMedium medium)
     + void deleteTransportMedium(long id)
   }
 
   class Tourist {
+    - long touristId
     - String touristName
     - String touristSecurityQuestion
     - String touristSecurityQuestionAnswer
@@ -69,35 +70,54 @@ package "Core" <<Node>> #lightblue {
     - Tourist tourist
     - TransportMedium vehicle
     - double emissions
-    + double calculateEmissionsForTourist()
+    - double score/rating
+  }
+
+  class TouristEmissionService {
+
   }
 
   class EmissionsCalculatorService {
-    - TransportMedium vehicle
-    - double distance
-    + double calculateEmissions()
+    + calculateEmission(TransportMedium
+    transportMedium, double distance)
   }
 
-  class Distance {
-    -Point distanceStart
-    -Point distanceEnd
-    +Distance(Point start, Point end)
-  }
-
-  class DistanceCalculatorService {
-    + double calculateDistance(Distance distance)
+  class DistanceCalculationService {
+    - CoordinateService coordinateService
+    - String API_KEY
+    + double calculateDistance(String startLocation, String endLocation)
   }
 
   class CoordinateService {
+    - String API_KEY
     + Point getCoordinatesFromCity(String city)
   }
 
-  TransportMedium -down-> TransportMediumType
+  TransportMedium --> TransportMediumType
   TransportMediumService --> TransportMedium
-  Tourist -down-> TouristService
-  TouristService --> TouristEmission
+  TouristService --> Tourist
+  TouristEmission --> Tourist
+  TouristEmissionService --> TouristEmission
   EmissionsCalculatorService --> TransportMedium
-  DistanceCalculatorService --> CoordinateService
-  DistanceCalculatorService --> Distance
+  DistanceCalculationService --> CoordinateService
 }
+
+class EmissionsCalculationController {
+  + double getEmissionsForRoute(EmissionsCalculationDTO
+  emissionsCalculationDTO)
+}
+
+class EmissionsCalculationDTO {
+    - String startLocation;
+    - String endLocation;
+    - String transportMediumName;
+    - String transportMediumType;
+    - String transportMediumFuel;
+}
+
+
+EmissionsCalculationController --> EmissionsCalculatorService
+EmissionsCalculationController --> TransportMediumService
+EmissionsCalculationController --> DistanceCalculationService
+EmissionsCalculationController --> EmissionsCalculationDTO
 @enduml
