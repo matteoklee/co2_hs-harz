@@ -26,7 +26,10 @@ public class TransportMediumService {
     }
 
     public TransportMedium findTransportMediumByName(String transportMediumName) {
-        return null;
+        return new TransportMedium(transportMediumPersistenceService.findAllTransportMediums()
+                .stream()
+                .filter(transportMediumEntity -> transportMediumEntity.getTransportName().equals(transportMediumName)).findFirst().get());
+
     }
 
     public List<TransportMedium> findAllTransportMediums() {

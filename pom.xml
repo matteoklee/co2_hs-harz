@@ -123,11 +123,13 @@
         </dependency>
         -->
 
+        <!--
         <dependency>
             <groupId>com.graphhopper</groupId>
             <artifactId>graphhopper-core</artifactId>
             <version>7.0</version>
         </dependency>
+        -->
 
         <!-- https://mvnrepository.com/artifact/com.graphhopper/graphhopper-reader-osm -->
         <dependency>
@@ -136,11 +138,13 @@
             <version>2.4</version>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>com.graphhopper</groupId>
             <artifactId>graphhopper-web</artifactId>
             <version>7.0</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
