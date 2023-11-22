@@ -1,7 +1,5 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
-import de.kleemann.co2_hsharz.core.transport.TransportMedium;
-import de.kleemann.co2_hsharz.core.transport.TransportMediumType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,48 +16,78 @@ public class TransportMediumEntity {
 
     @Id
     @GeneratedValue
-    private long transportId;
-    private String transportName;
-    private TransportMediumType transportMediumType;
-    private double consumption;
+    private long transportMediumId;
+    private String transportMediumFileName;
+    private String transportMediumName;
+    private TransportMediumSize transportMediumSize;
+    private TransportMediumFuel transportMediumFuel;
+    private double transportMediumConsumption;
 
     public TransportMediumEntity() {
 
     }
 
-    public TransportMediumEntity(long transportId) {
-        setTransportId(transportId);
+    public TransportMediumEntity(long transportMediumId) {
+        setTransportMediumId(transportMediumId);
     }
 
-    public long getTransportId() {
-        return transportId;
+    public long getTransportMediumId() {
+        return transportMediumId;
     }
 
-    public void setTransportId(long transportId) {
-        this.transportId = transportId;
+    public void setTransportMediumId(long transportMediumId) {
+        this.transportMediumId = transportMediumId;
     }
 
-    public String getTransportName() {
-        return transportName;
+    public String getTransportMediumFileName() {
+        return transportMediumFileName;
     }
 
-    public void setTransportName(String transportName) {
-        this.transportName = transportName;
+    public void setTransportMediumFileName(String transportMediumFileName) {
+        this.transportMediumFileName = transportMediumFileName;
     }
 
-    public TransportMediumType getTransportMediumType() {
-        return transportMediumType;
+    public String getTransportMediumName() {
+        return transportMediumName;
     }
 
-    public void setTransportMediumType(TransportMediumType transportMediumType) {
-        this.transportMediumType = transportMediumType;
+    public void setTransportMediumName(String transportMediumName) {
+        this.transportMediumName = transportMediumName;
     }
 
-    public double getConsumption() {
-        return consumption;
+    public TransportMediumSize getTransportMediumSize() {
+        return transportMediumSize;
     }
 
-    public void setConsumption(double consumption) {
-        this.consumption = consumption;
+    public void setTransportMediumSize(TransportMediumSize transportMediumSize) {
+        this.transportMediumSize = transportMediumSize;
+    }
+
+    public TransportMediumFuel getTransportMediumFuel() {
+        return transportMediumFuel;
+    }
+
+    public void setTransportMediumFuel(TransportMediumFuel transportMediumFuel) {
+        this.transportMediumFuel = transportMediumFuel;
+    }
+
+    public double getTransportMediumConsumption() {
+        return transportMediumConsumption;
+    }
+
+    public void setTransportMediumConsumption(double transportMediumConsumption) {
+        this.transportMediumConsumption = transportMediumConsumption;
+    }
+
+    @Override
+    public String toString() {
+        return "TransportMediumEntity{" +
+                "transportMediumId=" + transportMediumId +
+                ", transportMediumFileName='" + transportMediumFileName +
+                ", transportMediumName='" + transportMediumName +
+                ", transportMediumSize=" + transportMediumSize +
+                ", transportMediumFuel=" + transportMediumFuel +
+                ", transportMediumConsumption=" + transportMediumConsumption +
+                '}';
     }
 }

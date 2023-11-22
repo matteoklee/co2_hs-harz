@@ -1,10 +1,17 @@
 package de.kleemann.co2_hsharz.api.emission;
 
 import de.kleemann.co2_hsharz.api.emission.dto.EmissionsCalculationDTO;
+import de.kleemann.co2_hsharz.api.emission.dto.TransportMediumDTO;
 import de.kleemann.co2_hsharz.core.distance.DistanceCalculationService;
 import de.kleemann.co2_hsharz.core.emissions.EmissionsCalculationService;
+import de.kleemann.co2_hsharz.core.transport.TransportMedium;
+import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 /**
  * Class "EmissionsCalculationController" is used for ...
@@ -31,16 +38,18 @@ public class EmissionsCalculationController {
 
     @PostMapping("/emission")
     public double getEmissionsForRoute(@RequestBody EmissionsCalculationDTO emissionsCalculationDTO) {
-        return 999.99;
-        /*
+        TransportMediumDTO transportMediumDTO = emissionsCalculationDTO.getTransportMediumDTO();
+        TransportMediumImpl transportMedium = transportMediumService.findTransportMediumByNameAndSizeAndFuel(transportMediumDTO.getTransportMediumName(),
+                TransportMediumSize.fromName(transportMediumDTO.getTransportMediumSize()),
+                TransportMediumFuel.fromName(transportMediumDTO.getTransportMediumFuel()));
+        double distance = 0;
         try {
-            return emissionsCalculationService.calculateEmission(transportMediumService.findTransportMediumByName(emissionsCalculationDTO.getTransportMediumName()),
-                    distanceCalculationService.calculateDistance(emissionsCalculationDTO.getStartLocation(), emissionsCalculationDTO.getEndLocation()));
-
+            distance = distanceCalculationService.calculateDistance(emissionsCalculationDTO.getStartLocation(), emissionsCalculationDTO.getEndLocation());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        */
+        return emissionsCalculationService.calculateEmission(transportMedium, distance);
+
     }
 
 }

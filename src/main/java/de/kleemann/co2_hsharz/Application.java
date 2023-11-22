@@ -11,18 +11,10 @@ public class Application {
     private static String PREFIX = "[CO2_HS-Harz] ";
 
     private final TransportMediumImportService transportMediumImportService;
-    private final TransportMediumPersistenceService transportMediumPersistenceService;
 
-    public Application(TransportMediumImportService transportMediumImportService, TransportMediumPersistenceService transportMediumPersistenceService) {
+    public Application(TransportMediumImportService transportMediumImportService) {
         this.transportMediumImportService = transportMediumImportService;
-        this.transportMediumPersistenceService = transportMediumPersistenceService;
-        //nur einmaliger Import
-        //transportMediumImportService.importTransportMediumData();
-        this.transportMediumPersistenceService.findAllTransportMediums()
-                .forEach((transportMediumEntity -> System.out.println("Id: " + transportMediumEntity.getTransportId()
-                        + ", Name: " + transportMediumEntity.getTransportName()
-                        + ", Type: " + transportMediumEntity.getTransportMediumType()
-                        + ", Consumption: " + transportMediumEntity.getConsumption())));
+        this.transportMediumImportService.importTransportMediumData();
     }
 
     public static void main(String[] args) {

@@ -11,20 +11,16 @@ public class EmissionsCalculationDTO {
 
     private String startLocation;
     private String endLocation;
-    private String transportMediumName;
-    private String transportMediumType;
-    private String transportMediumFuel;
+    private TransportMediumDTO transportMediumDTO;
 
     public EmissionsCalculationDTO() {
 
     }
 
-    public EmissionsCalculationDTO(String startLocation, String endLocation, String transportMediumName, String transportMediumType, String transportMediumFuel) {
+    public EmissionsCalculationDTO(String startLocation, String endLocation, TransportMediumDTO transportMediumDTO) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
-        this.transportMediumName = transportMediumName;
-        this.transportMediumType = transportMediumType;
-        this.transportMediumFuel = transportMediumFuel;
+        this.transportMediumDTO = transportMediumDTO;
     }
 
     public String getStartLocation() {
@@ -43,27 +39,11 @@ public class EmissionsCalculationDTO {
         this.endLocation = endLocation;
     }
 
-    public String getTransportMediumName() {
-        return transportMediumName;
+    public TransportMediumDTO getTransportMediumDTO() {
+        return transportMediumDTO;
     }
 
-    public void setTransportMediumName(String transportMediumName) {
-        this.transportMediumName = transportMediumName;
-    }
-
-    public String getTransportMediumType() {
-        return transportMediumType;
-    }
-
-    public void setTransportMediumType(String transportMediumType) {
-        this.transportMediumType = transportMediumType;
-    }
-
-    public String getTransportMediumFuel() {
-        return transportMediumFuel;
-    }
-
-    public void setTransportMediumFuel(String transportMediumFuel) {
-        this.transportMediumFuel = transportMediumFuel;
+    public void setTransportMediumDTO(TransportMediumDTO transportMediumDTO) {
+        this.transportMediumDTO = transportMediumDTO;
     }
 }

@@ -1,56 +1,32 @@
 package de.kleemann.co2_hsharz.core.transport;
 
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 
-/**
- * Class "TransportMedium" is used for ...
- *
- * @author Matteo Kleemann
- * @version 1.0
- * @since 09.11.2023
- */
-public class TransportMedium {
+public interface TransportMedium {
 
-    private final TransportMediumEntity transportMediumEntity;
+    public long getTransportMediumId();
 
-    public TransportMedium(TransportMediumEntity transportMediumEntity) {
-        if(transportMediumEntity == null) {
-            throw new IllegalArgumentException("transportMediumEntity must not be null.");
-        }
-        this.transportMediumEntity = transportMediumEntity;
-    }
+    public void setTransportMediumId(long transportMediumId);
 
+    public String getTransportMediumFileName();
 
-    public long getTransportId() {
-        return transportMediumEntity.getTransportId();
-    }
+    public void setTransportMediumFileName(String transportMediumFileName);
 
-    public void setTransportId(long transportId) {
-        this.transportMediumEntity.setTransportId(transportId);
-    }
+    public String getTransportMediumName();
 
-    public String getTransportName() {
-        return this.transportMediumEntity.getTransportName();
-    }
+    public void setTransportMediumName(String transportMediumName);
 
-    public void setTransportName(String transportName) {
-        this.transportMediumEntity.setTransportName(transportName);
-    }
+    public TransportMediumSize getTransportMediumSize();
 
-    public TransportMediumType getTransportMediumType() {
-        return this.transportMediumEntity.getTransportMediumType();
-    }
+    public void setTransportMediumSize(TransportMediumSize transportMediumSize);
 
-    public void setTransportMediumType(TransportMediumType transportMediumType) {
-        this.transportMediumEntity.setTransportMediumType(transportMediumType);
-    }
+    public TransportMediumFuel getTransportMediumFuel();
 
-    public double getConsumption() {
-        return this.transportMediumEntity.getConsumption();
-    }
+    public void setTransportMediumFuel(TransportMediumFuel transportMediumFuel);
 
-    public void setConsumption(double consumption) {
-        this.transportMediumEntity.setConsumption(consumption);
-    }
+    public double getTransportMediumConsumption();
+
+    public void setTransportMediumConsumption(double transportMediumConsumption);
 
 }

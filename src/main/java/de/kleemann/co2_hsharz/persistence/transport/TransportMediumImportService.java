@@ -1,5 +1,6 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 /**
  * Class "TransportMediumImportService" is used for ...
@@ -33,26 +33,111 @@ public class TransportMediumImportService {
         File[] directoryFiles = directory.listFiles();
 
         if(!directory.isDirectory()) {
-            System.err.println("No directory");
-            return;
+            throw new CustomIllegalArgumentException("directory for transportMediums does not exists yet.");
         }
 
         for(File file : directoryFiles) {
             String fileName = file.getName();
-            //System.out.println("File: " + fileName + " with type: " + transportMediumType);
 
-            TransportMediumEntity newTransportMedium = transportMediumPersistenceService.createTransportMediumEntity();
-            TransportMediumType transportMediumType = TransportMediumType.fromFileName(fileName);
+            if(transportMediumPersistenceService.existsByTransportMediumFileName(fileName)) {
+                continue;
+            }
+            double emission = getCO2FromFile(file.getAbsolutePath());
+            TransportMediumEntity newTransportMedium = getTransportMedium(fileName);
+            newTransportMedium.setTransportMediumConsumption(emission);
 
-            if(transportMediumType == null) continue;
-
-            newTransportMedium.setTransportName(transportMediumType.getFileNamePart());
-            newTransportMedium.setTransportMediumType(transportMediumType);
-            newTransportMedium.setConsumption(getCO2FromFile(file.getAbsolutePath()));
+            //newTransportMedium.setConsumption(getCO2FromFile(file.getAbsolutePath()));
             TransportMediumEntity persistedTransportMedium = transportMediumPersistenceService.persistTransportMedium(newTransportMedium);
-            System.out.println("Created new transport medium: " + persistedTransportMedium.getTransportId() + ", name: " + persistedTransportMedium.getTransportName()
-            + ", type: " + persistedTransportMedium.getTransportMediumType() + ", consumption: " + persistedTransportMedium.getConsumption());
+            System.out.println("Created new transport medium: " + persistedTransportMedium.toString());
         }
+    }
+
+    private TransportMediumEntity getTransportMedium(String filename) {
+        TransportMediumEntity transportMediumEntity = transportMediumPersistenceService.createTransportMediumEntity();
+        transportMediumEntity.setTransportMediumFileName(filename);
+
+        String[] split = filename.split("_");
+        String name = split[0];
+
+        if(name.equalsIgnoreCase("Bus")) {
+            name = name + split[1];
+
+            transportMediumEntity.setTransportMediumName(name);
+
+            if(split[1].equalsIgnoreCase("Linie")) {
+                String fuel = split[2];
+
+                transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+                transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
+                return transportMediumEntity;
+            }
+
+            // Bus Reise
+            transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.DEFAULT);
+            transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
+            return transportMediumEntity;
+        }
+
+        transportMediumEntity.setTransportMediumName(name);
+
+        if(name.equalsIgnoreCase("Fahrrad")) {
+            transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.DEFAULT);
+            transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
+            return transportMediumEntity;
+        }
+
+        if(name.equalsIgnoreCase("Pkw")) {
+            String fuel = split[1];
+
+            if(fuel.equalsIgnoreCase("Otto")) {
+                if(split[2].equalsIgnoreCase("LPG")) {
+                    String size = split[3];
+
+                    transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
+                    transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.LPG);
+                    return transportMediumEntity;
+                }
+
+                String size = split[2];
+
+                transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
+                transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+                return transportMediumEntity;
+            }
+
+            if(fuel.equalsIgnoreCase("PHEV")) {
+                fuel = fuel + "_" + split[2];
+                String size = split[3];
+
+                transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
+                transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+                return transportMediumEntity;
+            }
+
+            if(fuel.equalsIgnoreCase("EM")) {
+                String size = split[2];
+
+                transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
+                transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.ELECTRIC);
+                return transportMediumEntity;
+            }
+
+            // Diesel
+            String size = split[2];
+
+            transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
+            transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+            return transportMediumEntity;
+        }
+
+        if(name.equalsIgnoreCase("Zug")) {
+            String fuel = split[3];
+
+            transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+            transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
+            return transportMediumEntity;
+        }
+        return null;
     }
 
     private double getCO2FromFile(String path) {
@@ -102,8 +187,5 @@ public class TransportMediumImportService {
 
         return BigDecimal.valueOf(number).multiply(BigDecimal.valueOf(Math.pow(base, exponent))).doubleValue();
     }
-
-
-
 
 }

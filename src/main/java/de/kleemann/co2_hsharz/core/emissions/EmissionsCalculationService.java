@@ -1,6 +1,6 @@
 package de.kleemann.co2_hsharz.core.emissions;
 
-import de.kleemann.co2_hsharz.core.transport.TransportMedium;
+import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,8 +17,9 @@ public class EmissionsCalculationService {
 
     }
 
-    public double calculateEmission(TransportMedium transportMedium, double distance) {
-        double emission = transportMedium.getConsumption() * distance;
+    public double calculateEmission(TransportMediumImpl transportMedium, double distance) {
+        double transportMediumConsumption = transportMedium.getTransportMediumConsumption(); //1 kg/km
+        double emission = transportMediumConsumption * ((double) (distance/1000));
         return emission;
     }
 

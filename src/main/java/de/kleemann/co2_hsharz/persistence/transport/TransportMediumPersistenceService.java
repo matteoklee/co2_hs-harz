@@ -3,6 +3,7 @@ package de.kleemann.co2_hsharz.persistence.transport;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityExistsException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
 import de.kleemann.co2_hsharz.persistence.attraction.AttractionEntity;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
@@ -31,20 +32,39 @@ public class TransportMediumPersistenceService {
         return new ArrayList<>(transportMediumRepository.findAll());
     }
 
-    public TransportMediumEntity findTransportMediumById(long transportId) {
-        return transportMediumRepository.findById(transportId)
-                .orElseThrow(() -> new CustomEntityNotFoundException("unknown transport medium with id: " + transportId));
+    public TransportMediumEntity findTransportMediumById(long transportMediumId) {
+        return transportMediumRepository.findById(transportMediumId)
+                .orElseThrow(() -> new CustomEntityNotFoundException("unknown transport medium with id: " + transportMediumId));
     }
 
-    public TransportMediumEntity updateTransportMedium(long transportId, TransportMediumEntity transportMediumEntity) {
+    public TransportMediumEntity findTransportMediumByName(String transportMediumName) {
+        return transportMediumRepository.findFirstByTransportMediumNameLike(transportMediumName);
+    }
+
+    public TransportMediumEntity findTransportMediumByNameAndSizeAndFuel(String transportMediumName,
+                                                                         TransportMediumSize transportMediumSize,
+                                                                         TransportMediumFuel transportMediumFuel) {
+        return transportMediumRepository
+                .findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(transportMediumName,
+                        transportMediumSize, transportMediumFuel);
+    }
+
+    public boolean existsByTransportMediumFileName(String transportMediumFileName) {
+        return transportMediumRepository .existsByTransportMediumFileName(transportMediumFileName);
+    }
+
+
+    public TransportMediumEntity updateTransportMedium(long transportMediumId, TransportMediumEntity transportMediumEntity) {
         if (transportMediumEntity == null) {
             throw new CustomIllegalArgumentException("transportMediumEntity must not be null.");
         }
-        TransportMediumEntity updateTransportMediumEntity = findTransportMediumById(transportId);
-        updateTransportMediumEntity.setTransportId(transportId);
-        updateTransportMediumEntity.setTransportName(transportMediumEntity.getTransportName());
-        updateTransportMediumEntity.setTransportMediumType(transportMediumEntity.getTransportMediumType());
-        updateTransportMediumEntity.setConsumption(transportMediumEntity.getConsumption());
+        TransportMediumEntity updateTransportMediumEntity = findTransportMediumById(transportMediumId);
+        updateTransportMediumEntity.setTransportMediumId(transportMediumId);
+        updateTransportMediumEntity.setTransportMediumFileName(transportMediumEntity.getTransportMediumFileName());
+        updateTransportMediumEntity.setTransportMediumName(transportMediumEntity.getTransportMediumName());
+        updateTransportMediumEntity.setTransportMediumSize(transportMediumEntity.getTransportMediumSize());
+        updateTransportMediumEntity.setTransportMediumFuel(transportMediumEntity.getTransportMediumFuel());
+        updateTransportMediumEntity.setTransportMediumConsumption(transportMediumEntity.getTransportMediumConsumption());
 
         return saveTransportMedium(updateTransportMediumEntity);
     }
@@ -74,7 +94,7 @@ public class TransportMediumPersistenceService {
         if (transportMediumEntity == null) {
             throw new CustomIllegalArgumentException("transportMediumEntity must not be null!");
         }
-        transportMediumRepository.deleteById(transportMediumEntity.getTransportId());
+        transportMediumRepository.deleteById(transportMediumEntity.getTransportMediumId());
     }
 
     public TransportMediumEntity createTransportMediumEntity() {
