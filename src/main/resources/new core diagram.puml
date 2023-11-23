@@ -1,0 +1,123 @@
+@startuml
+!theme mars
+
+title
+<u>CO2-Rechner</u> - Klassendiagramm/ Datenbankstruktur
+<i>Core - Business Logic</i>
+end title
+
+header
+<font color=blue>Hochschule Harz</font>
+Hochschule für angewandte Wissenschaften
+Backend
+end header
+
+center footer
+Version 1.0
+'Matteo Kleemann
+'u37186@hs-harz.de
+end footer
+
+left to right direction
+
+package "Core" <<Node>> #lightblue {
+  class TransportMedium {
+    - long transportId
+    - String transportName
+    - TransportMediumType transportType
+    - double consumption
+  }
+
+  enum TransportMediumType {
+    CAR_PETROL_SMALL
+    CAR_PETROL_MEDIUM
+    CAR_PETROL_LARGE
+    CAR_DIESEL_SMALL
+    CAR_DIESEL_MEDIUM
+    CAR_DIESEL_LARGE
+    BIKE
+    FOOT
+    TRAIN
+    CAR_HYBRID
+    CAR_ELECTRIC
+  }
+
+  class TransportMediumService {
+    + TransportMedium findTransportMediumById(long id)
+    + List<TransportMedium> findAllTransportMediums()
+    + TransportMedium findTransportMediumByName(String transportMediumName)
+    + TransportMedium createTransportMedium(TransportMedium medium)
+    + void updateTransportMedium(TransportMedium medium)
+    + void deleteTransportMedium(long id)
+  }
+
+  class Tourist {
+    - long touristId
+    - String touristName
+    - String touristSecurityQuestion
+    - String touristSecurityQuestionAnswer
+  }
+
+  class TouristService {
+    + Tourist findTouristById(long id)
+    + List<Tourist> findAllTourists()
+    + Tourist createTourist(Tourist tourist)
+    + void updateTourist(Tourist tourist)
+    + void deleteTourist(long id)
+  }
+
+  class TouristEmission {
+    - Tourist tourist
+    - TransportMedium vehicle
+    - double emissions
+    - double score/rating
+  }
+
+  class TouristEmissionService {
+
+  }
+
+  class EmissionsCalculatorService {
+    + calculateEmission(TransportMedium
+    transportMedium, double distance)
+  }
+
+  class DistanceCalculationService {
+    - CoordinateService coordinateService
+    - String API_KEY
+    + double calculateDistance(String startLocation, String endLocation)
+  }
+
+  class CoordinateService {
+    - String API_KEY
+    + Point getCoordinatesFromCity(String city)
+  }
+
+  TransportMedium --> TransportMediumType
+  TransportMediumService --> TransportMedium
+  TouristService --> Tourist
+  TouristEmission --> Tourist
+  TouristEmissionService --> TouristEmission
+  EmissionsCalculatorService --> TransportMedium
+  DistanceCalculationService --> CoordinateService
+}
+
+class EmissionsCalculationController {
+  + double getEmissionsForRoute(EmissionsCalculationDTO
+  emissionsCalculationDTO)
+}
+
+class EmissionsCalculationDTO {
+    - String startLocation;
+    - String endLocation;
+    - String transportMediumName;
+    - String transportMediumType;
+    - String transportMediumFuel;
+}
+
+
+EmissionsCalculationController --> EmissionsCalculatorService
+EmissionsCalculationController --> TransportMediumService
+EmissionsCalculationController --> DistanceCalculationService
+EmissionsCalculationController --> EmissionsCalculationDTO
+@enduml
