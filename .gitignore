@@ -19,6 +19,9 @@ src/main/resources/application.properties
 .springBeans
 .sts4-cache
 
+### Eclipse ###
+*.prefs
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
