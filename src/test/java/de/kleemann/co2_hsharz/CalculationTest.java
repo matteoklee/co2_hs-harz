@@ -1,3 +1,4 @@
+package de.kleemann.co2_hsharz;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumRepository;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
