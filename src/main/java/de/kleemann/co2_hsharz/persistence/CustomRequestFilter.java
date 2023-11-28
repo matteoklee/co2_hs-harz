@@ -22,8 +22,6 @@ public class CustomRequestFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String remoteAddress = servletRequest.getRemoteAddr();
         System.err.println(Application.getPREFIX() + "Zugriff auf API von IP-Adresse: " + remoteAddress);
-        servletRequest.getParameterNames().asIterator().forEachRemaining(s ->
-                System.err.println(Application.getPREFIX() + "Parameter: " + s));
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

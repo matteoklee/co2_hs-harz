@@ -19,8 +19,13 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        System.out.println(PREFIX + "API successfully started.");
-
+        System.out.println("   ____ ___ ____       ____           _                     \n" +
+                "  / ___/ _ \\___ \\     |  _ \\ ___  ___| |__  _ __   ___ _ __ \n" +
+                " | |  | | | |__) |____| |_) / _ \\/ __| '_ \\| '_ \\ / _ \\ '__|\n" +
+                " | |__| |_| / __/_____|  _ <  __/ (__| | | | | | |  __/ |   \n" +
+                "  \\____\\___/_____|    |_| \\_\\___|\\___|_| |_|_| |_|\\___|_|   \n" +
+                "                                                            \n" +
+                "API successfully started.");
     }
 
     public static String getPREFIX() {

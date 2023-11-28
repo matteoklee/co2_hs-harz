@@ -31,10 +31,6 @@ public class CalculationTest {
         this.transportMediumRepos = testRepo;
     }
 
-    @Test
-    public void testFindFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(){
 
-        assertThat(1).isEqualTo(1); //TODO nur ein dummy, chill
-    }
 
 }
