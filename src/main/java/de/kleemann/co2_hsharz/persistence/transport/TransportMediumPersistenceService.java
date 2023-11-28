@@ -41,6 +41,10 @@ public class TransportMediumPersistenceService {
         return transportMediumRepository.findFirstByTransportMediumNameLike(transportMediumName);
     }
 
+    public TransportMediumEntity findTransportMediumByNameAndFuel(String transportMediumName, TransportMediumFuel transportMediumFuel) {
+        return transportMediumRepository.findFirstByTransportMediumNameAndTransportMediumFuel(transportMediumName, transportMediumFuel);
+    }
+
     public TransportMediumEntity findTransportMediumByNameAndSizeAndFuel(String transportMediumName,
                                                                          TransportMediumSize transportMediumSize,
                                                                          TransportMediumFuel transportMediumFuel) {

@@ -40,6 +40,15 @@ public class TransportMediumService {
         }
     }
 
+    public TransportMediumImpl findTransportMediumByNameAndFuel(String transportMediumName, TransportMediumFuel transportMediumFuel) {
+        try {
+            return new TransportMediumImpl(transportMediumPersistenceService
+                    .findTransportMediumByNameAndFuel(transportMediumName, transportMediumFuel));
+        } catch (Exception exception) {
+            throw new CustomEntityNotFoundException("transportMedium could not be found.");
+        }
+    }
+
     public TransportMediumImpl findTransportMediumByNameAndSizeAndFuel(String transportMediumName,
                                                                        TransportMediumSize transportMediumSize,
                                                                        TransportMediumFuel transportMediumFuel) {
