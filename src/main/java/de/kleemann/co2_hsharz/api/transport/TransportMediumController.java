@@ -35,7 +35,7 @@ public class TransportMediumController {
     public List<TransportMedium> findAllTransportMediums(HttpServletRequest request) {
         String clientIP = request.getRemoteAddr();
         try {
-            System.err.println("Client IP: " + clientIP + ", whatIsMyIp: " + getPublicIP());
+            System.err.println("Client IP: " + clientIP + ", whatIsMyIp: " + getPublicIP() + ", local?: " + request.getLocalAddr());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

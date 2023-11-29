@@ -18,6 +18,7 @@ public interface TransportMediumRepository extends JpaRepository<TransportMedium
     TransportMediumEntity findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(String transportMediumName, TransportMediumSize transportMediumSize, TransportMediumFuel transportMediumFuel);
 
     TransportMediumEntity findFirstByTransportMediumNameLike(String transportMediumName);
+    TransportMediumEntity findFirstByTransportMediumNameAndTransportMediumFuel(String transportMediumName, TransportMediumFuel transportMediumFuel);
 
     boolean existsByTransportMediumFileName(String transportMediumFileName);
 
