@@ -3,6 +3,7 @@ package de.kleemann.co2_hsharz.core.transport;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumPersistenceService;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 import org.springframework.stereotype.Service;
@@ -31,25 +32,25 @@ public class TransportMediumService {
     }
 
     //return TransportMedium interface? --> requires mapper?
-    public TransportMediumImpl findTransportMediumByName(String transportMediumName) {
+    public TransportMediumImpl findTransportMediumByName(TransportMediumName transportMediumName) {
         try {
             return new TransportMediumImpl(transportMediumPersistenceService
                     .findTransportMediumByName(transportMediumName));
         } catch (Exception exception) {
-            throw new CustomEntityNotFoundException("transportMedium could not be found.");
+            throw new CustomEntityNotFoundException("findTransportMediumByName could not be found.");
         }
     }
 
-    public TransportMediumImpl findTransportMediumByNameAndFuel(String transportMediumName, TransportMediumFuel transportMediumFuel) {
+    public TransportMediumImpl findTransportMediumByNameAndFuel(TransportMediumName transportMediumName, TransportMediumFuel transportMediumFuel) {
         try {
             return new TransportMediumImpl(transportMediumPersistenceService
                     .findTransportMediumByNameAndFuel(transportMediumName, transportMediumFuel));
         } catch (Exception exception) {
-            throw new CustomEntityNotFoundException("transportMedium could not be found.");
+            throw new CustomEntityNotFoundException("findTransportMediumByNameAndFuel could not be found.");
         }
     }
 
-    public TransportMediumImpl findTransportMediumByNameAndSizeAndFuel(String transportMediumName,
+    public TransportMediumImpl findTransportMediumByNameAndSizeAndFuel(TransportMediumName transportMediumName,
                                                                        TransportMediumSize transportMediumSize,
                                                                        TransportMediumFuel transportMediumFuel) {
         System.err.println("DEBUG: " + transportMediumName + ", Size: " + transportMediumSize + ", Fuel: " + transportMediumFuel);
@@ -57,7 +58,7 @@ public class TransportMediumService {
             return new TransportMediumImpl(transportMediumPersistenceService
                     .findTransportMediumByNameAndSizeAndFuel(transportMediumName, transportMediumSize, transportMediumFuel));
         } catch (Exception exception) {
-            throw new CustomEntityNotFoundException("transportMedium could not be found.");
+            throw new CustomEntityNotFoundException("findTransportMediumByNameAndSizeAndFuel could not be found.");
         }
     }
 

@@ -8,19 +8,22 @@ import java.util.Optional;
 public enum TransportMediumSize {
 
     DEFAULT(0, "default"),
-    SMALL(1, "klein"),
-    MEDIUM(2, "mittel"),
-    LARGE(3, "gross");
+    SMALL(1, "klein", "small"),
+    MEDIUM(2, "mittel", "medium"),
+    LARGE(3, "gross", "large");
 
     private int transportMediumSize;
-    private String transportMediumSizeString;
+    private String[] transportMediumSizeStrings;
 
     private static final Map<String, TransportMediumSize> SIZENAME_MAP = new HashMap<>();
 
     static {
-        for(TransportMediumSize size : values()) {
-            if(size.getTransportMediumSizeString() != null) {
-                SIZENAME_MAP.put(size.getTransportMediumSizeString().toLowerCase(), size);
+        for(TransportMediumSize transportMediumSize : values()) {
+            String[] sizeNames = transportMediumSize.getTransportMediumSizeString();
+            if(sizeNames != null) {
+                for(String size : sizeNames) {
+                    SIZENAME_MAP.put(size.toLowerCase(), transportMediumSize);
+                }
             }
         }
     }
@@ -33,9 +36,9 @@ public enum TransportMediumSize {
         this.transportMediumSize = size;
     }
 
-    TransportMediumSize(int size, String sizeString) {
+    TransportMediumSize(int size, String ... sizeString) {
         this.transportMediumSize = size;
-        this.transportMediumSizeString = sizeString;
+        this.transportMediumSizeStrings = sizeString;
     }
 
     public static TransportMediumSize fromName(String sizeString) {
@@ -49,8 +52,8 @@ public enum TransportMediumSize {
         //return TransportMediumSize.valueOf(sizeString);
     }
 
-    public String getTransportMediumSizeString() {
-        return transportMediumSizeString;
+    public String[] getTransportMediumSizeString() {
+        return transportMediumSizeStrings;
     }
 
     public static Optional<TransportMediumSize> valueOf(int size) {
@@ -59,9 +62,4 @@ public enum TransportMediumSize {
                 .findFirst();
     }
 
-    @Override
-    public String toString() {
-        //check what needed for repository
-        return transportMediumSizeString;
-    }
 }

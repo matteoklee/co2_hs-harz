@@ -15,10 +15,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransportMediumRepository extends JpaRepository<TransportMediumEntity, Long> {
 
-    TransportMediumEntity findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(String transportMediumName, TransportMediumSize transportMediumSize, TransportMediumFuel transportMediumFuel);
+    TransportMediumEntity findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(TransportMediumName transportMediumName, TransportMediumSize transportMediumSize, TransportMediumFuel transportMediumFuel);
 
-    TransportMediumEntity findFirstByTransportMediumNameLike(String transportMediumName);
-    TransportMediumEntity findFirstByTransportMediumNameAndTransportMediumFuel(String transportMediumName, TransportMediumFuel transportMediumFuel);
+    TransportMediumEntity findFirstByTransportMediumName(TransportMediumName transportMediumName);
+    TransportMediumEntity findFirstByTransportMediumNameAndTransportMediumFuel(TransportMediumName transportMediumName, TransportMediumFuel transportMediumFuel);
 
     boolean existsByTransportMediumFileName(String transportMediumFileName);
 

@@ -18,7 +18,7 @@ public class TransportMediumEntity {
     @GeneratedValue
     private long transportMediumId;
     private String transportMediumFileName;
-    private String transportMediumName;
+    private TransportMediumName transportMediumName;
     private TransportMediumSize transportMediumSize;
     private TransportMediumFuel transportMediumFuel;
     private double transportMediumConsumption;
@@ -47,11 +47,11 @@ public class TransportMediumEntity {
         this.transportMediumFileName = transportMediumFileName;
     }
 
-    public String getTransportMediumName() {
+    public TransportMediumName getTransportMediumName() {
         return transportMediumName;
     }
 
-    public void setTransportMediumName(String transportMediumName) {
+    public void setTransportMediumName(TransportMediumName transportMediumName) {
         this.transportMediumName = transportMediumName;
     }
 

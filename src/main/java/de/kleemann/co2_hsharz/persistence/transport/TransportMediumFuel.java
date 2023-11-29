@@ -15,23 +15,26 @@ import java.util.Optional;
 public enum TransportMediumFuel {
 
     DEFAULT(0, "Default"),
-    PETROL(1, "Otto"),
+    PETROL(1, "Otto", "Petrol", "Benzin"),
     DIESEL(2, "Diesel"),
     PHEV_DIESEL(3, "PHEV_Diesel"),
     PHEV_OTTO(4, "PHEV_Otto"),
-    ELECTRIC(5, "Elektro"),
-    CNG(6, "CNG"),
-    LPG(7, "LPG");
+    ELECTRIC(5, "Elektro", "Electric"),
+    CNG(6, "Erdgas", "CNG"),
+    LPG(7, "Autogas", "LPG");
 
     private int transportMediumFuel;
-    private String transportMediumFuelString;
+    private String[] transportMediumFuelStrings;
 
     private static final Map<String, TransportMediumFuel> FUELNAME_MAP = new HashMap<>();
 
     static {
-        for(TransportMediumFuel fuel : values()) {
-            if(fuel.getTransportMediumFuelString() != null) {
-                FUELNAME_MAP.put(fuel.getTransportMediumFuelString().toLowerCase(), fuel);
+        for(TransportMediumFuel transportMediumFuel : values()) {
+            String[] fuelNames = transportMediumFuel.getTransportMediumFuelStrings();
+            if(fuelNames != null) {
+                for(String fuel : fuelNames) {
+                    FUELNAME_MAP.put(fuel.toLowerCase(), transportMediumFuel);
+                }
             }
         }
     }
@@ -40,13 +43,13 @@ public enum TransportMediumFuel {
 
     }
 
-    TransportMediumFuel(int fuel, String fuelString) {
+    TransportMediumFuel(int fuel, String ... fuelString) {
         this.transportMediumFuel = fuel;
-        this.transportMediumFuelString = fuelString;
+        this.transportMediumFuelStrings = fuelString;
     }
 
-    public String getTransportMediumFuelString() {
-        return transportMediumFuelString;
+    public String[] getTransportMediumFuelStrings() {
+        return transportMediumFuelStrings;
     }
 
     public static TransportMediumFuel fromName(String fuelName) {
@@ -65,9 +68,4 @@ public enum TransportMediumFuel {
                 .findFirst();
     }
 
-    @Override
-    public String toString() {
-        //check what needed
-        return transportMediumFuelString;
-    }
 }
