@@ -1,6 +1,7 @@
 package de.kleemann.co2_hsharz.persistence;
 
 import de.kleemann.co2_hsharz.persistence.auth.UserPersistenceService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +31,18 @@ public class SecurityConfiguration {
     AuthenticationManager authenticationManager;
     private final UserPersistenceService userPersistenceService;
 
+    @Value("${custom.user.username}")
+    private String userUsername;
+
+    @Value("${custom.user.password}")
+    private String userPassword;
+
+    @Value("${custom.admin.username}")
+    private String adminUsername;
+
+    @Value("${custom.admin.password}")
+    private String adminPassword;
+
     public SecurityConfiguration(UserPersistenceService userPersistenceService) {
         this.userPersistenceService = userPersistenceService;
     }
@@ -40,7 +53,7 @@ public class SecurityConfiguration {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        System.out.println("DEBUG 2");
+        System.out.println("Calling filterChain ...");
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService());
         authenticationManager = authenticationManagerBuilder.build();
@@ -61,15 +74,14 @@ public class SecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        System.out.println("DEBUG 3");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        UserDetails user = User.withUsername("user")
-                .password(passwordEncoder.encode("user"))
+        UserDetails user = User.withUsername(userUsername)
+                .password(passwordEncoder.encode(userPassword))
                 //.password("user")
                 .roles("USER")
                 .build();
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("admin"))
+        UserDetails admin = User.withUsername(adminUsername)
+                .password(passwordEncoder.encode(adminPassword))
                 //.password("admin")
                 .roles("USER", "ADMIN")
                 .build();
