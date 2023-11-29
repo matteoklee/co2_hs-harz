@@ -2,6 +2,7 @@ package de.kleemann.co2_hsharz.core.transport;
 
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 
 /**
@@ -44,12 +45,12 @@ public class TransportMediumImpl implements TransportMedium {
     }
 
     @Override
-    public String getTransportMediumName() {
+    public TransportMediumName getTransportMediumName() {
         return this.transportMediumEntity.getTransportMediumName();
     }
 
     @Override
-    public void setTransportMediumName(String transportMediumName) {
+    public void setTransportMediumName(TransportMediumName transportMediumName) {
         this.transportMediumEntity.setTransportMediumName(transportMediumName);
     }
 

@@ -1,21 +1,20 @@
-package de.kleemann.co2_hsharz.persistence.transport;
+package de.kleemann.co2_hsharz.api.transport;
 
-import jakarta.persistence.Entity;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 /**
- * Class "TransportMediumEntity" is used for ...
+ * Class "TransportMediumResponseDTO" is used for ...
  *
  * @author Matteo Kleemann
  * @version 1.0
- * @since 09.11.2023
+ * @since 29.11.2023
  */
-@Entity
-public class TransportMediumEntity {
+public class TransportMediumResponseDTO {
 
-    @Id
-    @GeneratedValue
     private long transportMediumId;
     private String transportMediumFileName;
     private TransportMediumName transportMediumName;
@@ -23,12 +22,18 @@ public class TransportMediumEntity {
     private TransportMediumFuel transportMediumFuel;
     private double transportMediumConsumption;
 
-    public TransportMediumEntity() {
+
+    public TransportMediumResponseDTO() {
 
     }
 
-    public TransportMediumEntity(long transportMediumId) {
-        setTransportMediumId(transportMediumId);
+    public TransportMediumResponseDTO(long transportMediumId, String transportMediumFileName, TransportMediumName transportMediumName, TransportMediumSize transportMediumSize, TransportMediumFuel transportMediumFuel, double transportMediumConsumption) {
+        this.transportMediumId = transportMediumId;
+        this.transportMediumFileName = transportMediumFileName;
+        this.transportMediumName = transportMediumName;
+        this.transportMediumSize = transportMediumSize;
+        this.transportMediumFuel = transportMediumFuel;
+        this.transportMediumConsumption = transportMediumConsumption;
     }
 
     public long getTransportMediumId() {
@@ -77,17 +82,5 @@ public class TransportMediumEntity {
 
     public void setTransportMediumConsumption(double transportMediumConsumption) {
         this.transportMediumConsumption = transportMediumConsumption;
-    }
-
-    @Override
-    public String toString() {
-        return "TransportMediumEntity{" +
-                "transportMediumId=" + transportMediumId +
-                ", transportMediumFileName='" + transportMediumFileName +
-                ", transportMediumName='" + transportMediumName +
-                ", transportMediumSize=" + transportMediumSize +
-                ", transportMediumFuel=" + transportMediumFuel +
-                ", transportMediumConsumption=" + transportMediumConsumption +
-                '}';
     }
 }

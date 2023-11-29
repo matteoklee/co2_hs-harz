@@ -12,7 +12,8 @@ public class TransportMediumDTO {
     private String transportMediumName;
     private String transportMediumSize;
     private String transportMediumFuel;
-    private String transportMediumCustomConsumption;
+    private double transportMediumCustomConsumption;
+
 
     public TransportMediumDTO(String transportMediumName, String transportMediumSize, String transportMediumFuel) {
         this.transportMediumName = transportMediumName;
@@ -42,5 +43,13 @@ public class TransportMediumDTO {
 
     public void setTransportMediumFuel(String transportMediumFuel) {
         this.transportMediumFuel = transportMediumFuel;
+    }
+
+    public double getTransportMediumCustomConsumption() {
+        return transportMediumCustomConsumption;
+    }
+
+    public void setTransportMediumCustomConsumption(double transportMediumCustomConsumption) {
+        this.transportMediumCustomConsumption = transportMediumCustomConsumption;
     }
 }

@@ -59,6 +59,21 @@ public class TransportMediumImportService {
         String[] split = filename.split("_");
         String name = split[0];
 
+        transportMediumEntity.setTransportMediumName(TransportMediumName.fromName(name));
+        switch(name.toLowerCase()) {
+            case "pkw":
+                return handleCar(transportMediumEntity, split);
+            case "fahrrad":
+                return handleBike(transportMediumEntity, split);
+            case "zug":
+                return handleTrain(transportMediumEntity, split);
+            case "bus":
+                return handleBus(transportMediumEntity, split);
+            default:
+                throw new CustomIllegalArgumentException("transportMedium could not be created from file.");
+        }
+
+        /*
         if(name.equalsIgnoreCase("Bus")) {
             name = name + split[1];
 
@@ -137,7 +152,79 @@ public class TransportMediumImportService {
             transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
             return transportMediumEntity;
         }
-        return null;
+        */
+    }
+
+    private TransportMediumEntity handleCar(TransportMediumEntity transportMedium, String[] split) {
+        String fuel = split[1];
+        String size = "";
+
+        switch(fuel.toLowerCase()) {
+            case "otto":
+                if(split[2].equalsIgnoreCase("LPG")) {
+                    size = split[3];
+
+                    transportMedium.setTransportMediumSize(TransportMediumSize.fromName(size));
+                    transportMedium.setTransportMediumFuel(TransportMediumFuel.LPG);
+                } else {
+                    size = split[2];
+
+                    transportMedium.setTransportMediumSize(TransportMediumSize.fromName(size));
+                    transportMedium.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+                }
+                return transportMedium;
+            case "diesel":
+                size = split[2];
+
+                transportMedium.setTransportMediumSize(TransportMediumSize.fromName(size));
+                transportMedium.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+                return transportMedium;
+            case "phev":
+                fuel = fuel + "_" + split[2];
+                size = split[3];
+
+                transportMedium.setTransportMediumSize(TransportMediumSize.fromName(size));
+                transportMedium.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+                return transportMedium;
+            case "em":
+                size = split[2];
+
+                transportMedium.setTransportMediumSize(TransportMediumSize.fromName(size));
+                transportMedium.setTransportMediumFuel(TransportMediumFuel.ELECTRIC);
+                return transportMedium;
+            default:
+                throw new CustomIllegalArgumentException("car combination could not be found.");
+        }
+
+    }
+
+    private TransportMediumEntity handleTrain(TransportMediumEntity transportMedium, String[] split) {
+        String fuel = split[3];
+
+        transportMedium.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+        transportMedium.setTransportMediumSize(TransportMediumSize.DEFAULT);
+        return transportMedium;
+    }
+
+    private TransportMediumEntity handleBus(TransportMediumEntity transportMedium, String[] split) {
+        transportMedium.setTransportMediumName(TransportMediumName.fromName(split[0] + split[1]));
+
+        if(split[1].equalsIgnoreCase("Linie")) {
+            String fuel = split[2];
+
+            transportMedium.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
+            transportMedium.setTransportMediumSize(TransportMediumSize.DEFAULT);
+        } else {
+            transportMedium.setTransportMediumFuel(TransportMediumFuel.DEFAULT);
+            transportMedium.setTransportMediumSize(TransportMediumSize.DEFAULT);
+        }
+        return transportMedium;
+    }
+
+    private TransportMediumEntity handleBike(TransportMediumEntity transportMedium, String[] split) {
+        transportMedium.setTransportMediumFuel(TransportMediumFuel.DEFAULT);
+        transportMedium.setTransportMediumSize(TransportMediumSize.DEFAULT);
+        return transportMedium;
     }
 
     private double getCO2FromFile(String path) {
@@ -148,7 +235,6 @@ public class TransportMediumImportService {
 
             String string;
             boolean direct_emission = true;
-
             while((string = bufferedReader.readLine()) != null) {
                 if(string.startsWith("<td>CO2</td>")) {
                     string = bufferedReader.readLine();
@@ -159,14 +245,11 @@ public class TransportMediumImportService {
                     break;
                 }
             }
-
             bufferedReader.close();
             fileReader.close();
-
             if(!direct_emission) {
                 return -1;
             }
-
             return getCO2Value(string);
         } catch (Exception e) {
             e.printStackTrace();

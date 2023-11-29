@@ -37,15 +37,15 @@ public class TransportMediumPersistenceService {
                 .orElseThrow(() -> new CustomEntityNotFoundException("unknown transport medium with id: " + transportMediumId));
     }
 
-    public TransportMediumEntity findTransportMediumByName(String transportMediumName) {
-        return transportMediumRepository.findFirstByTransportMediumNameLike(transportMediumName);
+    public TransportMediumEntity findTransportMediumByName(TransportMediumName transportMediumName) {
+        return transportMediumRepository.findFirstByTransportMediumName(transportMediumName);
     }
 
-    public TransportMediumEntity findTransportMediumByNameAndFuel(String transportMediumName, TransportMediumFuel transportMediumFuel) {
+    public TransportMediumEntity findTransportMediumByNameAndFuel(TransportMediumName transportMediumName, TransportMediumFuel transportMediumFuel) {
         return transportMediumRepository.findFirstByTransportMediumNameAndTransportMediumFuel(transportMediumName, transportMediumFuel);
     }
 
-    public TransportMediumEntity findTransportMediumByNameAndSizeAndFuel(String transportMediumName,
+    public TransportMediumEntity findTransportMediumByNameAndSizeAndFuel(TransportMediumName transportMediumName,
                                                                          TransportMediumSize transportMediumSize,
                                                                          TransportMediumFuel transportMediumFuel) {
         return transportMediumRepository
