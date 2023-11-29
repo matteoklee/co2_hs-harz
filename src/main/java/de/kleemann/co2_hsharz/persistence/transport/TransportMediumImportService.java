@@ -33,7 +33,7 @@ public class TransportMediumImportService {
         File[] directoryFiles = directory.listFiles();
 
         if(!directory.isDirectory()) {
-            throw new CustomIllegalArgumentException("directory for transportMediums does not exists yet.");
+            throw new CustomIllegalArgumentException("directory for transportMediums does not exists yet. Path: " + directory.getAbsolutePath());
         }
 
         for(File file : directoryFiles) {
