@@ -78,6 +78,29 @@ public class TransportMediumEntity {
     public void setTransportMediumConsumption(double transportMediumConsumption) {
         this.transportMediumConsumption = transportMediumConsumption;
     }
+    
+    @Override
+	public boolean equals(Object obj) {
+    	if(obj == null || !(obj instanceof TransportMediumEntity))
+    		return false;
+    	
+    	TransportMediumEntity entity = (TransportMediumEntity) obj;
+    	
+		return entity.getTransportMediumId() == this.getTransportMediumId()
+				&& entity.getTransportMediumConsumption() == this.getTransportMediumConsumption()
+				&& (entity.getTransportMediumFileName() == null ? 
+						this.getTransportMediumFileName() == null : 
+						entity.getTransportMediumFileName().equals(this.getTransportMediumFileName()))
+				&& (entity.getTransportMediumFuel() == null ? 
+						this.getTransportMediumFuel() == null :
+						entity.getTransportMediumFuel().equals(this.getTransportMediumFuel()))
+				&& (entity.getTransportMediumName() == null ? 
+						this.getTransportMediumName() == null : 
+						entity.getTransportMediumName().equals(this.getTransportMediumName()))
+				&& (entity.getTransportMediumSize() == null ? 
+						this.getTransportMediumSize() == null : 
+						entity.getTransportMediumSize().equals(this.getTransportMediumSize()));
+	}
 
     @Override
     public String toString() {
