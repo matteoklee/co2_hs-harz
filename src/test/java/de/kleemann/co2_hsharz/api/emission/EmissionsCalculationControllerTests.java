@@ -1,10 +1,24 @@
 package de.kleemann.co2_hsharz.api.emission;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import de.kleemann.co2_hsharz.api.emission.EmissionsCalculationTestsUtil.TransportMediumDTOValidation;
+import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
+import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 
 /**
  * This class contains tests for {@link EmissionsCalculationController}
@@ -22,13 +36,38 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class EmissionsCalculationControllerTests {
 	
 	private final EmissionsCalculationController controller;
+	private final TransportMediumService transportMediumService;
 	
 	@Autowired
-	public EmissionsCalculationControllerTests(final EmissionsCalculationController controller) {
+	public EmissionsCalculationControllerTests(final EmissionsCalculationController controller, final TransportMediumService transportMediumService) {
 		this.controller = controller;
+		this.transportMediumService = transportMediumService;
 	}
 	
-	public void testFindAllTransportMediums() {
+	/**
+	 * Testet API mit korrekten Inputs
+	 */
+	@Test
+	public void testGetEmissionsForRouteWithCorrectInputs() {
+		List<TransportMediumDTOValidation> validationEntities = EmissionsCalculationTestsUtil.createListOfTransportMediumDTOValidations();
+		for(TransportMediumDTOValidation entity : validationEntities) {
+			try{		
+				transportMediumService.findTransportMediumByNameAndSizeAndFuel(
+					entity.getTransportMediumName(), 
+					 TransportMediumSize.fromName(entity.getTransportMediumSize()), 
+					 TransportMediumFuel.fromName(entity.getTransportMediumFuel())
+				);
+				if(!entity.isValid())
+					fail("TransportMediumDTO should not be valid, but is: " + entity.toString());
+			}
+			catch(Exception e) {
+				if(entity.isValid()) {
+					System.out.println("Failed Test on TransportMediumDTO " + entity.toString() + "; Got Exception: " + e.getLocalizedMessage());
+					e.printStackTrace();
+					fail("TransportMediumDTO should be valid, but isn't: " + entity.toString());
+				}
+			}
+		}
 		
 	}
 }
