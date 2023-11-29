@@ -52,7 +52,7 @@ public class TransportMediumService {
         }
     }
 
-    public List<TransportMediumImpl> findAllTransportMediums() {
+    public List<TransportMedium> findAllTransportMediums() {
         return transportMediumPersistenceService.findAllTransportMediums()
                 .stream()
                 .map(TransportMediumImpl::new)
