@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.kleemann.co2_hsharz.core.transport.TransportMedium;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,7 +31,7 @@ public class TransportMediumController {
     }
 
     @GetMapping("/transport")
-    public List<TransportMedium> findAllTransportMediums(HttpServletRequest request) {
+    public List<TransportMediumResponseDTO> findAllTransportMediums(HttpServletRequest request) {
         String clientIP = request.getRemoteAddr();
         try {
             System.err.println("Client IP: " + clientIP + ", whatIsMyIp: " + getPublicIP() + ", local?: " + request.getLocalAddr());
