@@ -62,26 +62,26 @@ public class TransportMediumImportService {
         String[] split = filename.split("_");
         String name = split[0];
 
-        if(name.toLowerCase().equals("bus"))
-        	name += split[1];
-        
-        TransportMediumName mediumName = TransportMediumName.fromName(name);
-        
-        if(mediumName == null) {
-        	System.err.println("Failed to find TransportMediumName from String " + name);
-        	return null;
+        if(name.toLowerCase().equals("bus")) {
+            name += split[1];
         }
-        transportMediumEntity.setTransportMediumName(mediumName);
-        switch(mediumName) {
-        case DEFAULT:
-        case FOOT:
-        case BIKE:			return handleBike(transportMediumEntity, split);	
-		case BUS_PUBLIC:
-		case BUS_TOUR:		return handleBus(transportMediumEntity, split);
-		case CAR:			return handleCar(transportMediumEntity, split);
-		case TRAIN:			return handleTrain(transportMediumEntity, split);
-		default:
-			throw new CustomIllegalArgumentException("transportMedium could not be created from file."); 
+        TransportMediumName transportMediumName = TransportMediumName.fromName(name);
+        if(transportMediumName == null) {
+        	throw new CustomIllegalArgumentException("failed to find transportMediumName from String " + name);
+        }
+        transportMediumEntity.setTransportMediumName(transportMediumName);
+
+        switch(transportMediumName) {
+            case BIKE:
+                return handleBike(transportMediumEntity, split);
+            case BUS_PUBLIC, BUS_TOUR:
+                return handleBus(transportMediumEntity, split);
+            case CAR:
+                return handleCar(transportMediumEntity, split);
+            case TRAIN:
+                return handleTrain(transportMediumEntity, split);
+            default:
+                throw new CustomIllegalArgumentException("transportMedium could not be created from file.");
         }
 
         /*
