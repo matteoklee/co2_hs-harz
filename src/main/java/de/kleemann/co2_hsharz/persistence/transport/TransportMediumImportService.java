@@ -72,6 +72,7 @@ public class TransportMediumImportService {
         transportMediumEntity.setTransportMediumName(transportMediumName);
 
         switch(transportMediumName) {
+            case DEFAULT, FOOT:
             case BIKE:
                 return handleBike(transportMediumEntity, split);
             case BUS_PUBLIC, BUS_TOUR:
