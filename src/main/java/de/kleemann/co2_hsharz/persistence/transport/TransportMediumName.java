@@ -13,7 +13,7 @@ public enum TransportMediumName {
     BUS_TOUR(2, "Busreise"),
     TRAIN(3, "Zug", "Train"),
     BIKE(4, "Fahrrad", "Bike"),
-    FOOT(5, "Fuß", "Foot");
+    FOOT(5, "Fussgaenger", "Fuß", "Foot");
 
     private int transportMediumName;
     private String[] transportMediumNameStrings;
