@@ -13,7 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import de.kleemann.co2_hsharz.api.emission.EmissionsCalculationTestsUtil.TransportMediumDTOValidation;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 

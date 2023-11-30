@@ -14,14 +14,14 @@ public class EmissionsCalculationTestsUtil {
 		throw new UnsupportedOperationException("Utility classes shouldn't be constructed");
 	}
 	
-	public static Object[][] transportMediumNameInputs = {	{null, false}, {"", false}, {"1234", false}, {"bullshit", false}, 
+	public static Object[][] transportMediumNameInputs = {	{null, false}, {"", false}, {"1", true}, {"1234", false}, {"bullshit", false}, 
 															{"pkw", true}, {"car", true}, {"PKW", true}, {"Default", false}, 
 															{"Buslinie", true}, {"bUsrEise", true}, {"zug", true}, {"Train", true}, 
 															{"Fahrrad", true}, {"BIKE", true}, {"Fuß", true}, {"foot", true}};
-	public static Object[][] transportMediumSizeInputs = {	{null, false}, {"", false}, {"1234", false}, {"bullshit", false},
+	public static Object[][] transportMediumSizeInputs = {	{null, false}, {"", false}, {"1", true}, {"1234", false}, {"bullshit", false},
 															{"klein", true}, {"SMALL", true}, {"mittel", true}, {"Medium", true}, 
 															{"gross", true}, {"large", true}, {"1", true}};
-	public static Object[][] transportMediumFuelInputs = {	{null, false}, {"", false}, {"1234", false}, {"bullshit", false}, 
+	public static Object[][] transportMediumFuelInputs = {	{null, false}, {"", false}, {"1", true}, {"1234", false}, {"bullshit", false}, 
 															{"otto", true}, {"petrol", true}, {"benzin", true}, {"Default", false}, 
 															{"diesel", true}, {"PHEV_Diesel", true}, {"phev_otto", true}, {"elektro", false},
 															{"electric", true}, {"erdgas", true}, {"cng", true}, {"autogas", false}, {"lpg", false}};
