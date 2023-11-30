@@ -215,7 +215,6 @@ public class TransportMediumImportService {
     }
 
     private TransportMediumEntity handleBus(TransportMediumEntity transportMedium, String[] split) {
-        transportMedium.setTransportMediumName(TransportMediumName.fromName(split[0] + split[1]));
 
         if(split[1].equalsIgnoreCase("Linie")) {
             String fuel = split[2];
