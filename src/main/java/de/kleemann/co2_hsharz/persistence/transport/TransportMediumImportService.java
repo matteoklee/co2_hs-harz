@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
 
 /**
  * Class "TransportMediumImportService" is used for ...

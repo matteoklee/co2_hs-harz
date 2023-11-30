@@ -1,9 +1,9 @@
 package de.kleemann.co2_hsharz.api.transport;
 
-import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
 
 /**
  * Class "TransportMediumResponseDTO" is used for ...

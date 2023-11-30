@@ -5,7 +5,8 @@ import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
 import de.kleemann.co2_hsharz.persistence.attraction.AttractionEntity;
-import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
 

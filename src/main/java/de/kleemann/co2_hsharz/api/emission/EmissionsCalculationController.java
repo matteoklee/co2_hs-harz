@@ -8,9 +8,10 @@ import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import de.kleemann.co2_hsharz.core.transport.TransportMedium;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
-import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
