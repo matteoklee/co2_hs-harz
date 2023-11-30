@@ -1,14 +1,17 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
-import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.core.transport.TransportMediumType;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
+
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 /**
  * Class "TransportMediumImportService" is used for ...
@@ -33,7 +36,7 @@ public class TransportMediumImportService {
         File[] directoryFiles = directory.listFiles();
 
         if(!directory.isDirectory()) {
-            throw new CustomIllegalArgumentException("directory for transportMediums does not exists yet.");
+            throw new CustomIllegalArgumentException("directory for transportMediums does not exists yet. Path: " + directory.getAbsolutePath());
         }
 
         for(File file : directoryFiles) {
@@ -59,16 +62,24 @@ public class TransportMediumImportService {
         String[] split = filename.split("_");
         String name = split[0];
 
-        transportMediumEntity.setTransportMediumName(TransportMediumName.fromName(name));
-        switch(name.toLowerCase()) {
-            case "pkw":
-                return handleCar(transportMediumEntity, split);
-            case "fahrrad":
+        if(name.toLowerCase().equals("bus")) {
+            name += split[1];
+        }
+        TransportMediumName transportMediumName = TransportMediumName.fromName(name);
+        if(transportMediumName == null) {
+        	throw new CustomIllegalArgumentException("failed to find transportMediumName from String " + name);
+        }
+        transportMediumEntity.setTransportMediumName(transportMediumName);
+
+        switch(transportMediumName) {
+            case BIKE:
                 return handleBike(transportMediumEntity, split);
-            case "zug":
-                return handleTrain(transportMediumEntity, split);
-            case "bus":
+            case BUS_PUBLIC, BUS_TOUR:
                 return handleBus(transportMediumEntity, split);
+            case CAR:
+                return handleCar(transportMediumEntity, split);
+            case TRAIN:
+                return handleTrain(transportMediumEntity, split);
             default:
                 throw new CustomIllegalArgumentException("transportMedium could not be created from file.");
         }
@@ -207,7 +218,6 @@ public class TransportMediumImportService {
     }
 
     private TransportMediumEntity handleBus(TransportMediumEntity transportMedium, String[] split) {
-        transportMedium.setTransportMediumName(TransportMediumName.fromName(split[0] + split[1]));
 
         if(split[1].equalsIgnoreCase("Linie")) {
             String fuel = split[2];
@@ -258,6 +268,9 @@ public class TransportMediumImportService {
     }
 
     private double getCO2Value(String string) {
+    	if(string == null || string.length() < 34)
+    		return -1;
+    	
         string = string.substring(18, 34);
         String[] split = string.split("<sup>");
 

@@ -3,8 +3,9 @@ package de.kleemann.co2_hsharz.persistence.transport;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityExistsException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
-import de.kleemann.co2_hsharz.persistence.attraction.AttractionEntity;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,9 @@
 package de.kleemann.co2_hsharz.api.transport;
 
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 /**
  * Class "TransportMediumResponseDTO" is used for ...
@@ -25,6 +24,12 @@ public class TransportMediumResponseDTO {
 
     public TransportMediumResponseDTO() {
 
+    }
+    
+    public TransportMediumResponseDTO(TransportMediumImpl transportMedium) {
+    	this(transportMedium.getTransportMediumId(), transportMedium.getTransportMediumFileName(),
+                transportMedium.getTransportMediumName(), transportMedium.getTransportMediumSize(),
+                transportMedium.getTransportMediumFuel(), transportMedium.getTransportMediumConsumption());
     }
 
     public TransportMediumResponseDTO(long transportMediumId, String transportMediumFileName, TransportMediumName transportMediumName, TransportMediumSize transportMediumSize, TransportMediumFuel transportMediumFuel, double transportMediumConsumption) {
