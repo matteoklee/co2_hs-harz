@@ -1,6 +1,6 @@
-package de.kleemann.co2_hsharz.core.fuel;
+package de.kleemann.co2_hsharz.core.transport.fuel;
 
-import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
 import lombok.Setter;
 
 public class FuelImpl implements Fuel {

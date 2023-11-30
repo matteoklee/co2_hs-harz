@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.persistence.fuel;
+package de.kleemann.co2_hsharz.persistence.transport.fuel;
 
 import java.util.Arrays;
 import java.util.HashMap;

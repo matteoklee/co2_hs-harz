@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.core.fuel;
+package de.kleemann.co2_hsharz.core.transport.fuel;
 
 public interface Fuel {
 	public int getId();

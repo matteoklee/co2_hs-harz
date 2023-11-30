@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.persistence.transport;
+package de.kleemann.co2_hsharz.persistence.transport.size;
 
 import java.util.Arrays;
 import java.util.HashMap;

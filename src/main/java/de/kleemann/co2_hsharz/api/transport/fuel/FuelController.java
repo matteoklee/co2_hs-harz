@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.api.fuel;
+package de.kleemann.co2_hsharz.api.transport.fuel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.kleemann.co2_hsharz.api.transport.TransportMediumResponseDTO;
-import de.kleemann.co2_hsharz.core.fuel.FuelImpl;
-import de.kleemann.co2_hsharz.core.fuel.FuelService;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
-import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
+import de.kleemann.co2_hsharz.core.transport.fuel.FuelImpl;
+import de.kleemann.co2_hsharz.core.transport.fuel.FuelService;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
 
 /**
  * This API Controller provides functions to retrieve all fuel types, as well as available fuel types for specific transportMediumNames
@@ -25,7 +25,7 @@ import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
  * @since 30.11.2023
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/transport")
 public class FuelController {
 	 private final FuelService fuelService;
 	 private final TransportMediumService transportMediumService;
@@ -56,7 +56,7 @@ public class FuelController {
 		 
 		 mediums.removeIf(entry -> !entry.getTransportMediumName().equals(name));
 		 mediums.stream().forEach(entry -> {
-			if(!fuels.contains(entry.getTransportMediumFuel()))
+			if(!fuels.contains(entry.getTransportMediumFuel()) && entry.getTransportMediumFuel() != null)
 				fuels.add(
 					entry.getTransportMediumFuel()
 				);
