@@ -16,7 +16,7 @@ public class TransportMediumTestUtil {
 		transportMedium.setTransportMediumConsumption(7.9);
 		transportMedium.setTransportMediumId(99);
 		transportMedium.setTransportMediumFileName("myFileName");
-		transportMedium.setTransportMediumName("testMedium");
+		transportMedium.setTransportMediumName(TransportMediumName.TRAIN);
 		transportMedium.setTransportMediumSize(TransportMediumSize.MEDIUM);
 		return transportMedium;
 	}
@@ -26,7 +26,7 @@ public class TransportMediumTestUtil {
 		transportMedium.setTransportMediumFuel(TransportMediumFuel.LPG);
 		transportMedium.setTransportMediumConsumption(11);
 		transportMedium.setTransportMediumId(100);
-		transportMedium.setTransportMediumName("testLarge");
+		transportMedium.setTransportMediumName(TransportMediumName.CAR);
 		transportMedium.setTransportMediumSize(TransportMediumSize.LARGE);
 		return transportMedium;
 	}
@@ -36,7 +36,7 @@ public class TransportMediumTestUtil {
 		transportMedium.setTransportMediumFuel(TransportMediumFuel.PETROL);
 		transportMedium.setTransportMediumConsumption(5);
 		transportMedium.setTransportMediumId(101);
-		transportMedium.setTransportMediumName("testSmall");
+		transportMedium.setTransportMediumName(TransportMediumName.BUS_TOUR);
 		transportMedium.setTransportMediumSize(TransportMediumSize.SMALL);
 		return transportMedium;
 	}
@@ -46,7 +46,7 @@ public class TransportMediumTestUtil {
 		transportMedium.setTransportMediumFuel(TransportMediumFuel.CNG);
 		transportMedium.setTransportMediumConsumption(20);
 		transportMedium.setTransportMediumId(102);
-		transportMedium.setTransportMediumName("testCNG");
+		transportMedium.setTransportMediumName(TransportMediumName.BUS_PUBLIC);
 		transportMedium.setTransportMediumSize(TransportMediumSize.LARGE);
 		return transportMedium;
 	}
