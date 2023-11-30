@@ -1,12 +1,11 @@
 package de.kleemann.co2_hsharz.core.transport;
 
-import de.kleemann.co2_hsharz.api.transport.TransportMediumResponseDTO;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumPersistenceService;
-import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 import org.springframework.stereotype.Service;
 
@@ -64,10 +63,10 @@ public class TransportMediumService {
         }
     }
 
-    public List<TransportMediumResponseDTO> findAllTransportMediums() {
+    public List<TransportMediumImpl> findAllTransportMediums() {
         return transportMediumPersistenceService.findAllTransportMediums()
                 .stream()
-                .map(TransportMediumResponseDTO::new)
+                .map(TransportMediumImpl::new)
                 .collect(Collectors.toList());
     }
 

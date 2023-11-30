@@ -1,9 +1,9 @@
 package de.kleemann.co2_hsharz.core.transport;
 
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
-import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 /**
  * Class "TransportMedium" is used for ...

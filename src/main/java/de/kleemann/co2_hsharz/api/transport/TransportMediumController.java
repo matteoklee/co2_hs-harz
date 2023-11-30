@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import de.kleemann.co2_hsharz.core.transport.TransportMedium;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,35 +35,12 @@ public class TransportMediumController {
     }
 
     @GetMapping("/transport")
-    public ResponseEntity<Object> findAllTransportMediums(HttpServletRequest request) {
-        String clientIP = request.getRemoteAddr();
-        try {
-            System.err.println("Client IP: " + clientIP + ", whatIsMyIp: " + getPublicIP() + ", local?: " + request.getLocalAddr());
-        } catch (IOException e) {
-        	return ResponseEntity
-        			.status(HttpStatus.FORBIDDEN)
-        			.body(e.getLocalizedMessage());
-        }
-        
-        try {
-        	List<TransportMediumResponseDTO> list = transportMediumService.findAllTransportMediums();
-        	return ResponseEntity
-        			.status(HttpStatus.OK)
-        			.body(list);
-        }
-        catch(Exception e) {
-        	return ResponseEntity
-        			.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        			.body(e.getLocalizedMessage());
-        }
-        
-    }
-
-    private String getPublicIP() throws IOException {
-        URL whatIsMyIP = new URL("http://checkip.amazonaws.com");
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(whatIsMyIP.openStream()))) {
-            return in.readLine();
-        }
+    public ResponseEntity<List<TransportMediumResponseDTO>> findAllTransportMediums() {
+        return new ResponseEntity<>
+                (transportMediumService.findAllTransportMediums()
+                .stream()
+                .map(TransportMediumResponseDTO::new)
+                .collect(Collectors.toList()), HttpStatus.OK);
     }
 
 }

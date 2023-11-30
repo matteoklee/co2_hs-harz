@@ -5,12 +5,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
 
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 /**
  * Class "TransportMediumImportService" is used for ...

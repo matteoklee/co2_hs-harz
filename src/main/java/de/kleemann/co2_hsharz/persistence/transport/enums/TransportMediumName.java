@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.persistence.transport;
+package de.kleemann.co2_hsharz.persistence.transport.enums;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,11 +9,11 @@ public enum TransportMediumName {
 
     DEFAULT(0, "Default"),
     CAR(1, "Pkw", "Car"),
-    BUS_PUBLIC(2, "Buslinie"),
-    BUS_TOUR(2, "Busreise"),
-    TRAIN(3, "Zug", "Train"),
-    BIKE(4, "Fahrrad", "Bike"),
-    FOOT(5, "Fussgaenger", "Fuß", "Foot");
+    BUS_PUBLIC(2, "Buslinie", "BUS_PUBLIC"),
+    BUS_TOUR(3, "Busreise", "BUS_TOUR"),
+    TRAIN(4, "Zug", "Train"),
+    BIKE(5, "Fahrrad", "Bike"),
+    FOOT(6, "Fussgaenger", "Fuß", "Foot");
 
     private int transportMediumName;
     private String[] transportMediumNameStrings;
