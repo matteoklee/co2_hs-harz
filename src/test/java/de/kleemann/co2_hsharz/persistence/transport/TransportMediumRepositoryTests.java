@@ -94,7 +94,7 @@ public class TransportMediumRepositoryTests {
 	public void testFindFirstByTransportMediumNameLike() {
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityD();
 		medium = repos.save(medium);
-		TransportMediumEntity result = repos.findFirstByTransportMediumNameLike(medium.getTransportMediumName());
+		TransportMediumEntity result = repos.findFirstByTransportMediumName(medium.getTransportMediumName());
 		assertThat(result).isNotNull();
 		assertThat(result).isEqualTo(medium);
 	}
