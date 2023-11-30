@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
+
 /**
  * Class "TransportMediumRepository" is used for ...
  *

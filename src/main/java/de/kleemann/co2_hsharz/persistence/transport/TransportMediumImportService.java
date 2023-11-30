@@ -1,14 +1,15 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
-import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.core.transport.TransportMediumType;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
 
 /**
  * Class "TransportMediumImportService" is used for ...

@@ -1,7 +1,7 @@
 package de.kleemann.co2_hsharz.api.transport;
 
+import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 

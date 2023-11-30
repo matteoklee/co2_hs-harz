@@ -1,5 +1,6 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
+import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

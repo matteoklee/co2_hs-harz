@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
+
 /**
  * This class contains tests for {@link TransportMediumRepository}
  * <li> Test of Built-In CRUD 

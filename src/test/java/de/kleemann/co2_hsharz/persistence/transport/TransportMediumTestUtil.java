@@ -1,5 +1,7 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
+import de.kleemann.co2_hsharz.persistence.fuel.TransportMediumFuel;
+
 public class TransportMediumTestUtil {
 	
 	/**
