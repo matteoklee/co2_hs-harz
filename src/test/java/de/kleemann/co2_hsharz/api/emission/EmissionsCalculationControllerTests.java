@@ -7,6 +7,12 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
+<<<<<<< HEAD
+=======
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
+>>>>>>> refs/remotes/matteoklee_dev/fabian
 
 /**
  * This class contains tests for {@link EmissionsCalculationController}

@@ -1,7 +1,8 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
-import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 public class TransportMediumTestUtil {
 	

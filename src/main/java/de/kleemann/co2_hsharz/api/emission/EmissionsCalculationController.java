@@ -5,12 +5,11 @@ import de.kleemann.co2_hsharz.api.emission.dto.TransportMediumDTO;
 import de.kleemann.co2_hsharz.core.distance.DistanceCalculationService;
 import de.kleemann.co2_hsharz.core.emissions.EmissionsCalculationService;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.core.transport.TransportMedium;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
-import de.kleemann.co2_hsharz.persistence.transport.fuel.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 import org.springframework.web.bind.annotation.*;
 
