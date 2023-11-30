@@ -59,18 +59,26 @@ public class TransportMediumImportService {
         String[] split = filename.split("_");
         String name = split[0];
 
-        transportMediumEntity.setTransportMediumName(TransportMediumName.fromName(name));
-        switch(name.toLowerCase()) {
-            case "pkw":
-                return handleCar(transportMediumEntity, split);
-            case "fahrrad":
-                return handleBike(transportMediumEntity, split);
-            case "zug":
-                return handleTrain(transportMediumEntity, split);
-            case "bus":
-                return handleBus(transportMediumEntity, split);
-            default:
-                throw new CustomIllegalArgumentException("transportMedium could not be created from file.");
+        if(name.toLowerCase().equals("bus"))
+        	name += split[1];
+        
+        TransportMediumName mediumName = TransportMediumName.fromName(name);
+        
+        if(mediumName == null) {
+        	System.err.println("Failed to find TransportMediumName from String " + name);
+        	return null;
+        }
+        transportMediumEntity.setTransportMediumName(mediumName);
+        switch(mediumName) {
+        case DEFAULT:
+        case FOOT:
+        case BIKE:			return handleBike(transportMediumEntity, split);	
+		case BUS_PUBLIC:
+		case BUS_TOUR:		return handleBus(transportMediumEntity, split);
+		case CAR:			return handleCar(transportMediumEntity, split);
+		case TRAIN:			return handleTrain(transportMediumEntity, split);
+		default:
+			throw new CustomIllegalArgumentException("transportMedium could not be created from file."); 
         }
 
         /*
@@ -258,6 +266,9 @@ public class TransportMediumImportService {
     }
 
     private double getCO2Value(String string) {
+    	if(string == null || string.length() < 34)
+    		return -1;
+    	
         string = string.substring(18, 34);
         String[] split = string.split("<sup>");
 
