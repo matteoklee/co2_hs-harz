@@ -1,5 +1,6 @@
 package de.kleemann.co2_hsharz.core.transport;
 
+import de.kleemann.co2_hsharz.api.transport.TransportMediumResponseDTO;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
@@ -62,10 +63,10 @@ public class TransportMediumService {
         }
     }
 
-    public List<TransportMedium> findAllTransportMediums() {
+    public List<TransportMediumResponseDTO> findAllTransportMediums() {
         return transportMediumPersistenceService.findAllTransportMediums()
                 .stream()
-                .map(TransportMediumImpl::new)
+                .map(TransportMediumResponseDTO::new)
                 .collect(Collectors.toList());
     }
 
