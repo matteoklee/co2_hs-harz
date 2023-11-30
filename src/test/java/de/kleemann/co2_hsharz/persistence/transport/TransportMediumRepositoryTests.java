@@ -41,6 +41,7 @@ public class TransportMediumRepositoryTests {
 	 * Tests saving and retrieving a {@link TransportMediumEntity} in/from Database
 	 */
 	public void testSaveAndFindTransportMediumById() {
+		repos.deleteAll();
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityA();
 		repos.save(medium);
 		Optional<TransportMediumEntity> result = repos.findById(medium.getTransportMediumId());
@@ -53,6 +54,7 @@ public class TransportMediumRepositoryTests {
 	 */
 	@Test
 	public void testUpdateTransportMedium() {
+		repos.deleteAll();
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityB();
 		medium = repos.save(medium);
 		medium.setTransportMediumFuel(TransportMediumFuel.PETROL);
@@ -67,6 +69,7 @@ public class TransportMediumRepositoryTests {
 	 */
 	@Test
 	public void testCreateAndDeleteTransportMedium() {
+		repos.deleteAll();
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityC();
 		
 		medium = repos.save(medium);
@@ -81,6 +84,7 @@ public class TransportMediumRepositoryTests {
 	 */
 	@Test
 	public void testFindFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel() {
+		repos.deleteAll();
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityC();
 		medium = repos.save(medium);
 		TransportMediumEntity result = repos.findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(
@@ -93,7 +97,8 @@ public class TransportMediumRepositoryTests {
 	 * Tests retrieving the first {@link TransportMediumEntity} in Database by Name
 	 */
 	@Test
-	public void testFindFirstByTransportMediumNameLike() {
+	public void testFindFirstByTransportMediumName() {
+		repos.deleteAll();
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityD();
 		medium = repos.save(medium);
 		TransportMediumEntity result = repos.findFirstByTransportMediumName(medium.getTransportMediumName());
