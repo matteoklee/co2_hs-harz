@@ -5,6 +5,18 @@ import de.kleemann.co2_hsharz.persistence.transport.size.TransportMediumSize;
 
 public class TransportMediumTestUtil {
 	
+	public static Object[][] transportMediumNameInputs = {	{null, false}, {"", false}, {"1", true}, {"1234", false}, {"bullshit", false}, 
+															{"pkw", true}, {"car", true}, {"PKW", true}, {"Default", true}, 
+															{"Buslinie", true}, {"bUsrEise", true}, {"zug", true}, {"Train", true}, 
+															{"Fahrrad", true}, {"BIKE", true}, {"Fuß", true}, {"foot", true}};
+	public static Object[][] transportMediumSizeInputs = {	{null, false}, {"", false}, {"1", true}, {"1234", false}, {"bullshit", false},
+															{"klein", true}, {"SMALL", true}, {"mittel", true}, {"Medium", true}, 
+															{"gross", true}, {"large", true}, {"1", true}, {"Default", true}};
+	public static Object[][] transportMediumFuelInputs = {	{null, false}, {"", false}, {"1", true}, {"1234", false}, {"bullshit", false}, 
+															{"otto", true}, {"petrol", true}, {"benzin", true}, {"Default", true}, 
+															{"diesel", true}, {"PHEV_Diesel", true}, {"phev_otto", true}, {"elektro", true},
+															{"electric", true}, {"erdgas", true}, {"cng", true}, {"autogas", true}, {"lpg", true}};
+	
 	/**
 	 * Should not be instantiated
 	 * @throws UnsupportedOperationException
@@ -46,9 +58,9 @@ public class TransportMediumTestUtil {
 	
 	public static TransportMediumEntity createTransportMediumEntityD() {
 		TransportMediumEntity transportMedium = new TransportMediumEntity();
-		transportMedium.setTransportMediumFuel(TransportMediumFuel.CNG);
+		transportMedium.setTransportMediumFuel(TransportMediumFuel.ELECTRIC);
 		transportMedium.setTransportMediumConsumption(20);
-		transportMedium.setTransportMediumId(102);
+		transportMedium.setTransportMediumId(-1);
 		transportMedium.setTransportMediumName(TransportMediumName.BUS_PUBLIC);
 		transportMedium.setTransportMediumSize(TransportMediumSize.LARGE);
 		return transportMedium;
