@@ -1,10 +1,7 @@
 package de.kleemann.co2_hsharz.api.emission;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -15,9 +12,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import de.kleemann.co2_hsharz.api.emission.EmissionsCalculationTestsUtil.TransportMediumDTOValidation;
-import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
 
 /**
@@ -48,14 +45,14 @@ public class EmissionsCalculationControllerTests {
 	 * Testet API mit korrekten Inputs
 	 */
 	@Test
-	public void testGetEmissionsForRouteWithCorrectInputs() {
+	public void testFindTransportMediumByNameAndSizeAndFuel() {
 		List<TransportMediumDTOValidation> validationEntities = EmissionsCalculationTestsUtil.createListOfTransportMediumDTOValidations();
 		for(TransportMediumDTOValidation entity : validationEntities) {
 			try{		
 				transportMediumService.findTransportMediumByNameAndSizeAndFuel(
-					entity.getTransportMediumName(), 
-					 TransportMediumSize.fromName(entity.getTransportMediumSize()), 
-					 TransportMediumFuel.fromName(entity.getTransportMediumFuel())
+					TransportMediumName.fromName(entity.getTransportMediumName()), 
+					TransportMediumSize.fromName(entity.getTransportMediumSize()), 
+					TransportMediumFuel.fromName(entity.getTransportMediumFuel())
 				);
 				if(!entity.isValid())
 					fail("TransportMediumDTO should not be valid, but is: " + entity.toString());
