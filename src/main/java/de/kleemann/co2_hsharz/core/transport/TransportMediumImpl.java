@@ -1,5 +1,6 @@
 package de.kleemann.co2_hsharz.core.transport;
 
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
@@ -18,7 +19,7 @@ public class TransportMediumImpl implements TransportMedium {
 
     public TransportMediumImpl(TransportMediumEntity transportMediumEntity) {
         if(transportMediumEntity == null) {
-            throw new IllegalArgumentException("transportMediumEntity must not be null.");
+            throw new CustomIllegalArgumentException("transportMediumEntity must not be null.");
         }
         this.transportMediumEntity = transportMediumEntity;
     }

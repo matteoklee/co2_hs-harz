@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.api.transport;
+package de.kleemann.co2_hsharz.api.transport.dto;
 
 import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
