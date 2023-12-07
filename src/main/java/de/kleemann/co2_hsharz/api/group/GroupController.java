@@ -1,10 +1,15 @@
 package de.kleemann.co2_hsharz.api.group;
 
-import de.kleemann.co2_hsharz.persistence.group.GroupEntity;
+import de.kleemann.co2_hsharz.api.group.dto.GroupResponseDTO;
+import de.kleemann.co2_hsharz.core.group.GroupImpl;
+import de.kleemann.co2_hsharz.core.group.GroupService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class "GroupController" is used for ...
@@ -14,20 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 06.12.2023
  */
 @RestController
-@RequestMapping("/api/group")
+@RequestMapping("/api")
 public class GroupController {
 
-    /**
-     * Returns Information about a group
-     * (does not contain the passphrase)
-     *
-     * @param groupNickName
-     * @param groupPassPhrase
-     * @return group information
-     */
-    @GetMapping
-    public GroupEntity getGroupInformation(@PathVariable String groupNickName, @PathVariable String groupPassPhrase){
-        return null;
+    private final GroupService groupService;
+
+    public GroupController(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
+    @GetMapping("/group")
+    public List<GroupResponseDTO> getAllGroups() {
+        return new ArrayList<>(groupService.findAllGroups()
+                .stream()
+                .map(GroupResponseDTO::new)
+                .collect(Collectors.toList()));
     }
 
 }

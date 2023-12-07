@@ -2,6 +2,7 @@ package de.kleemann.co2_hsharz.api.group;
 
 import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionDTO;
 import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionRequestDTO;
+import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionResponseDTO;
 import de.kleemann.co2_hsharz.api.transport.dto.TransportMediumDTO;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.group.GroupImpl;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class "GroupEmissionController" is used for ...
@@ -51,7 +53,7 @@ public class GroupEmissionController {
      * @param groupEmissionRequestDTO
      */
     @PostMapping("/groupEmission")
-    public ResponseEntity<GroupEmission> saveGroupEmission(@RequestBody GroupEmissionRequestDTO groupEmissionRequestDTO){
+    public ResponseEntity<GroupEmissionResponseDTO> saveGroupEmission(@RequestBody GroupEmissionRequestDTO groupEmissionRequestDTO){
         GroupEmissionDTO groupEmissionDTO = groupEmissionRequestDTO.getGroupEmissionDTO();
         TransportMediumDTO transportMediumDTO = groupEmissionRequestDTO.getTransportMediumDTO();
 
@@ -121,7 +123,7 @@ public class GroupEmissionController {
 
         //set attributes
         final GroupEmissionImpl persistedGroupEmission = groupEmissionService.persistGroupEmission(groupEmission);
-        return ResponseEntity.ok(persistedGroupEmission);
+        return ResponseEntity.ok(new GroupEmissionResponseDTO(persistedGroupEmission));
     }
 
     /**
@@ -129,7 +131,10 @@ public class GroupEmissionController {
      * @return History of emissions
      */
     @GetMapping("/groupEmission")
-    public List<GroupEmission> getGroupEmissions() {
-        return new ArrayList<>(groupEmissionService.findAllGroupEmissions());
+    public List<GroupEmissionResponseDTO> getGroupEmissions() {
+        return new ArrayList<>(groupEmissionService.findAllGroupEmissions()
+                .stream()
+                .map(GroupEmissionResponseDTO::new)
+                .collect(Collectors.toList()));
     }
 }

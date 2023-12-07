@@ -32,7 +32,9 @@ public class TransportMediumResponseDTO {
                 transportMedium.getTransportMediumFuel(), transportMedium.getTransportMediumConsumption());
     }
 
-    public TransportMediumResponseDTO(long transportMediumId, String transportMediumFileName, TransportMediumName transportMediumName, TransportMediumSize transportMediumSize, TransportMediumFuel transportMediumFuel, double transportMediumConsumption) {
+    public TransportMediumResponseDTO(long transportMediumId, String transportMediumFileName,
+                                      TransportMediumName transportMediumName, TransportMediumSize transportMediumSize,
+                                      TransportMediumFuel transportMediumFuel, double transportMediumConsumption) {
         this.transportMediumId = transportMediumId;
         this.transportMediumFileName = transportMediumFileName;
         this.transportMediumName = transportMediumName;
