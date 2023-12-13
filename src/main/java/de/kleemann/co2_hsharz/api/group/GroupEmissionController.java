@@ -68,11 +68,11 @@ public class GroupEmissionController {
                     .findTransportMediumByNameAndSizeAndFuel(TransportMediumName.CAR,
                             TransportMediumSize.MEDIUM,
                             TransportMediumFuel.PETROL);
-            groupEmission.setGroupEmissionTransportMediumId(defaultTransportMedium.getTransportMediumId());
+            groupEmission.setGroupEmissionTransportMedium(defaultTransportMedium.getTransportMediumEntity());
         } else {
             groupEmission.setGroupEmissionCustomTransportMedium(false);
             TransportMediumImpl transportMedium = transportMediumService.findTransportMediumByCustomInput(transportMediumDTO);
-            groupEmission.setGroupEmissionTransportMediumId(transportMedium.getTransportMediumId());
+            groupEmission.setGroupEmissionTransportMedium(transportMedium.getTransportMediumEntity());
         }
 
         String groupNickName = groupEmissionDTO.getGroupEmissionNickName();

@@ -4,6 +4,7 @@ import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import de.kleemann.co2_hsharz.core.group.GroupImpl;
 import de.kleemann.co2_hsharz.persistence.group.GroupEntity;
 import de.kleemann.co2_hsharz.persistence.group.emission.GroupEmissionEntity;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
 
 import java.util.Date;
 
@@ -66,13 +67,13 @@ public class GroupEmissionImpl implements GroupEmission {
     }
 
     @Override
-    public long getGroupEmissionTransportMediumId() {
-        return groupEmissionEntity.getGroupEmissionTransportMediumId();
+    public TransportMediumEntity getGroupEmissionTransportMedium() {
+        return groupEmissionEntity.getGroupEmissionTransportMedium();
     }
 
     @Override
-    public void setGroupEmissionTransportMediumId(long groupEmissionTransportMediumId) {
-        groupEmissionEntity.setGroupEmissionTransportMediumId(groupEmissionTransportMediumId);
+    public void setGroupEmissionTransportMedium(TransportMediumEntity groupEmissionTransportMedium) {
+        groupEmissionEntity.setGroupEmissionTransportMedium(groupEmissionTransportMedium);
     }
 
     @Override

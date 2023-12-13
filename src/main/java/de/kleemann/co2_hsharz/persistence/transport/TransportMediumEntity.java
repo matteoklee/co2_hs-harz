@@ -3,9 +3,7 @@ package de.kleemann.co2_hsharz.persistence.transport;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 /**
  * Class "TransportMediumEntity" is used for ...
@@ -18,13 +16,14 @@ import jakarta.persistence.Id;
 public class TransportMediumEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transportMediumId;
     private String transportMediumFileName;
     private TransportMediumName transportMediumName;
     private TransportMediumSize transportMediumSize;
     private TransportMediumFuel transportMediumFuel;
     private double transportMediumConsumption;
+    private double transportMediumVersion;
 
     public TransportMediumEntity() {
 
@@ -81,7 +80,15 @@ public class TransportMediumEntity {
     public void setTransportMediumConsumption(double transportMediumConsumption) {
         this.transportMediumConsumption = transportMediumConsumption;
     }
-    
+
+    public double getTransportMediumVersion() {
+        return transportMediumVersion;
+    }
+
+    public void setTransportMediumVersion(double transportMediumVersion) {
+        this.transportMediumVersion = transportMediumVersion;
+    }
+
     @Override
 	public boolean equals(Object obj) {
     	if(obj == null || !(obj instanceof TransportMediumEntity))
@@ -114,6 +121,7 @@ public class TransportMediumEntity {
                 ", transportMediumSize=" + transportMediumSize +
                 ", transportMediumFuel=" + transportMediumFuel +
                 ", transportMediumConsumption=" + transportMediumConsumption +
+                ", transportMediumVersion=" + transportMediumVersion +
                 '}';
     }
 }

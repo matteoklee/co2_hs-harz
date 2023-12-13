@@ -20,7 +20,8 @@ public class GroupEmissionResponseDTO {
     private boolean groupEmissionCustomTransportMedium;
     private long groupEmissionTransportMediumId;
 
-    private GroupEntity group;
+    //private GroupEntity group;
+    private long groupId;
     private double groupEmission;
     private double groupEmissionScore;
     private Date groupEmissionCreateDate;
@@ -29,21 +30,21 @@ public class GroupEmissionResponseDTO {
     public GroupEmissionResponseDTO(GroupEmissionImpl groupEmission) {
         this(groupEmission.getGroupEmissionId(), groupEmission.getGroupEmissionStartLocation(),
                 groupEmission.getGroupEmissionEndLocation(), groupEmission.isGroupEmissionCustomTransportMedium(),
-                groupEmission.getGroupEmissionTransportMediumId(), groupEmission.getGroup(),
+                groupEmission.getGroupEmissionTransportMedium().getTransportMediumId(), groupEmission.getGroup().getGroupId(),
                 groupEmission.getGroupEmission(), groupEmission.getGroupEmissionScore(),
                 groupEmission.getGroupEmissionCreateDate());
     }
 
     public GroupEmissionResponseDTO(long groupEmissionId, String groupEmissionStartLocation,
                                     String groupEmissionEndLocation, boolean groupEmissionCustomTransportMedium,
-                                    long groupEmissionTransportMediumId, GroupEntity group, double groupEmission,
+                                    long groupEmissionTransportMediumId, long groupId, double groupEmission,
                                     double groupEmissionScore, Date groupEmissionCreateDate) {
         this.groupEmissionId = groupEmissionId;
         this.groupEmissionStartLocation = groupEmissionStartLocation;
         this.groupEmissionEndLocation = groupEmissionEndLocation;
         this.groupEmissionCustomTransportMedium = groupEmissionCustomTransportMedium;
         this.groupEmissionTransportMediumId = groupEmissionTransportMediumId;
-        this.group = group;
+        this.groupId = groupId;
         this.groupEmission = groupEmission;
         this.groupEmissionScore = groupEmissionScore;
         this.groupEmissionCreateDate = groupEmissionCreateDate;
@@ -89,12 +90,12 @@ public class GroupEmissionResponseDTO {
         this.groupEmissionTransportMediumId = groupEmissionTransportMediumId;
     }
 
-    public GroupEntity getGroup() {
-        return group;
+    public long getGroupId() {
+        return groupId;
     }
 
-    public void setGroup(GroupEntity group) {
-        this.group = group;
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
     }
 
     public double getGroupEmission() {

@@ -15,11 +15,11 @@ import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 
 /**
  * This class contains tests for {@link TransportMediumRepository}
- * <li> Test of Built-In CRUD 
+ * <li> Test of Built-In CRUD
  * <li> Test of Custom {@link TransportMediumRepository} Functions
- * 
+ *
  * TODO Edgecases
- * 
+ *
  * @author Fabian Siemens
  * @version 1.0
  * @since 29.11.2023
@@ -29,14 +29,14 @@ import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TransportMediumRepositoryTests {
-	
+
 	private final TransportMediumRepository repos;
-	
+
 	@Autowired
 	public TransportMediumRepositoryTests(final TransportMediumRepository repos) {
 		this.repos = repos;
 	}
-	
+
 	/**
 	 * Tests saving and retrieving a {@link TransportMediumEntity} in/from Database
 	 */
@@ -48,7 +48,7 @@ public class TransportMediumRepositoryTests {
 		assertThat(result).isPresent();
 		assertThat(result.get()).isEqualTo(medium);
 	}
-	
+
 	/**
 	 * Tests saving and updating a {@link TransportMediumEntity} in Database
 	 */
@@ -63,7 +63,7 @@ public class TransportMediumRepositoryTests {
 		assertThat(result).isPresent();
 		assertThat(result.get()).isEqualTo(medium);
 	}
-	
+
 	/**
 	 * Tests saving and deleting a {@link TransportMediumEntity} in Database
 	 */
@@ -71,14 +71,14 @@ public class TransportMediumRepositoryTests {
 	public void testCreateAndDeleteTransportMedium() {
 		repos.deleteAll();
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityC();
-		
+
 		medium = repos.save(medium);
 		assertThat(repos.existsById(medium.getTransportMediumId())).isTrue();
-		
+
 		repos.delete(medium);
 		assertThat(repos.existsById(medium.getTransportMediumId())).isFalse();
 	}
-	
+
 	/**
 	 * Tests retrieving the first {@link TransportMediumEntity} in Database by Name, Size and Fuel
 	 */
@@ -87,12 +87,12 @@ public class TransportMediumRepositoryTests {
 		repos.deleteAll();
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityC();
 		medium = repos.save(medium);
-		TransportMediumEntity result = repos.findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(
+		TransportMediumEntity result = repos.getFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuelOrderByTransportMediumVersionDesc(
 				medium.getTransportMediumName(), medium.getTransportMediumSize(), medium.getTransportMediumFuel());
 		assertThat(result).isNotNull();
 		assertThat(result).isEqualTo(medium);
 	}
-	
+
 	/**
 	 * Tests retrieving the first {@link TransportMediumEntity} in Database by Name
 	 */
@@ -101,11 +101,11 @@ public class TransportMediumRepositoryTests {
 		repos.deleteAll();
 		TransportMediumEntity medium = TransportMediumTestUtil.createTransportMediumEntityD();
 		medium = repos.save(medium);
-		TransportMediumEntity result = repos.findFirstByTransportMediumName(medium.getTransportMediumName());
+		TransportMediumEntity result = repos.getFirstByTransportMediumNameOrderByTransportMediumVersionDesc(medium.getTransportMediumName());
 		assertThat(result).isNotNull();
 		assertThat(result).isEqualTo(medium);
 	}
-	
+
 	/**
 	 * Tests existence of {@link TransportMediumEntity} by filename
 	 */

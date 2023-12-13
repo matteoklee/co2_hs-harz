@@ -85,6 +85,16 @@ public class TransportMediumImpl implements TransportMedium {
         this.transportMediumEntity.setTransportMediumConsumption(transportMediumConsumption);
     }
 
+    @Override
+    public double getTransportMediumVersion() {
+        return this.transportMediumEntity.getTransportMediumVersion();
+    }
+
+    @Override
+    public void setTransportMediumVersion(double transportMediumVersion) {
+        this.transportMediumEntity.setTransportMediumVersion(transportMediumVersion);
+    }
+
 
     public TransportMediumEntity getTransportMediumEntity() {
         return transportMediumEntity;

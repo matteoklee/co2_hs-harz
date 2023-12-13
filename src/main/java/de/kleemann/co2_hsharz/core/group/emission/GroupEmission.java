@@ -1,6 +1,7 @@
 package de.kleemann.co2_hsharz.core.group.emission;
 
 import de.kleemann.co2_hsharz.persistence.group.GroupEntity;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
 
 import java.util.Date;
 
@@ -28,9 +29,11 @@ public interface GroupEmission {
     public boolean isGroupEmissionCustomTransportMedium();
 
     public void setGroupEmissionCustomTransportMedium(boolean groupEmissionCustomTransportMedium);
-    public long getGroupEmissionTransportMediumId();
 
-    public void setGroupEmissionTransportMediumId(long groupEmissionTransportMediumId);
+    public TransportMediumEntity getGroupEmissionTransportMedium();
+
+    public void setGroupEmissionTransportMedium(TransportMediumEntity groupEmissionTransportMedium);
+
     public GroupEntity getGroup();
 
     public void setGroup(GroupEntity group);

@@ -39,23 +39,29 @@ public class TransportMediumPersistenceService {
     }
 
     public TransportMediumEntity findTransportMediumByName(TransportMediumName transportMediumName) {
-        return transportMediumRepository.findFirstByTransportMediumName(transportMediumName);
+        return transportMediumRepository.getFirstByTransportMediumNameOrderByTransportMediumVersionDesc(transportMediumName);
     }
 
     public TransportMediumEntity findTransportMediumByNameAndFuel(TransportMediumName transportMediumName, TransportMediumFuel transportMediumFuel) {
-        return transportMediumRepository.findFirstByTransportMediumNameAndTransportMediumFuel(transportMediumName, transportMediumFuel);
+        return transportMediumRepository
+                .getFirstByTransportMediumNameAndTransportMediumFuelOrderByTransportMediumVersionDesc(transportMediumName, transportMediumFuel);
     }
 
     public TransportMediumEntity findTransportMediumByNameAndSizeAndFuel(TransportMediumName transportMediumName,
                                                                          TransportMediumSize transportMediumSize,
                                                                          TransportMediumFuel transportMediumFuel) {
         return transportMediumRepository
-                .findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(transportMediumName,
-                        transportMediumSize, transportMediumFuel);
+                .getFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuelOrderByTransportMediumVersionDesc(
+                        transportMediumName, transportMediumSize, transportMediumFuel);
     }
 
     public boolean existsByTransportMediumFileName(String transportMediumFileName) {
-        return transportMediumRepository .existsByTransportMediumFileName(transportMediumFileName);
+        return transportMediumRepository.existsByTransportMediumFileName(transportMediumFileName);
+    }
+
+    public TransportMediumEntity findTransportMediumByFileName(String transportMediumFileName) {
+        return transportMediumRepository
+                .getFirstByTransportMediumFileNameOrderByTransportMediumVersionDesc(transportMediumFileName);
     }
 
 

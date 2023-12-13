@@ -13,7 +13,7 @@ public class GroupResponseDTO {
 
     private long groupId;
     private String groupNickName;
-    private String groupPassPhrase;
+//    private String groupPassPhrase;
     private int groupSize;
 
     public GroupResponseDTO(GroupImpl group) {
@@ -23,7 +23,7 @@ public class GroupResponseDTO {
     public GroupResponseDTO(long groupId, String groupNickName, String groupPassPhrase, int groupSize) {
         this.groupId = groupId;
         this.groupNickName = groupNickName;
-        this.groupPassPhrase = groupPassPhrase;
+//        this.groupPassPhrase = groupPassPhrase;
         this.groupSize = groupSize;
     }
 
@@ -43,13 +43,13 @@ public class GroupResponseDTO {
         this.groupNickName = groupNickName;
     }
 
-    public String getGroupPassPhrase() {
-        return groupPassPhrase;
-    }
+//    public String getGroupPassPhrase() {
+//        return groupPassPhrase;
+//    }
 
-    public void setGroupPassPhrase(String groupPassPhrase) {
-        this.groupPassPhrase = groupPassPhrase;
-    }
+//    public void setGroupPassPhrase(String groupPassPhrase) {
+//        this.groupPassPhrase = groupPassPhrase;
+//    }
 
     public int getGroupSize() {
         return groupSize;

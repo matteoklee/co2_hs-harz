@@ -19,11 +19,13 @@ import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 @Repository
 public interface TransportMediumRepository extends JpaRepository<TransportMediumEntity, Long> {
 
-    TransportMediumEntity findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(TransportMediumName transportMediumName, TransportMediumSize transportMediumSize, TransportMediumFuel transportMediumFuel);
+    TransportMediumEntity getFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuelOrderByTransportMediumVersionDesc(TransportMediumName transportMediumName, TransportMediumSize transportMediumSize, TransportMediumFuel transportMediumFuel);
 
-    TransportMediumEntity findFirstByTransportMediumName(TransportMediumName transportMediumName);
-    TransportMediumEntity findFirstByTransportMediumNameAndTransportMediumFuel(TransportMediumName transportMediumName, TransportMediumFuel transportMediumFuel);
+    TransportMediumEntity getFirstByTransportMediumNameOrderByTransportMediumVersionDesc(TransportMediumName transportMediumName);
+    TransportMediumEntity getFirstByTransportMediumNameAndTransportMediumFuelOrderByTransportMediumVersionDesc(TransportMediumName transportMediumName, TransportMediumFuel transportMediumFuel);
 
     boolean existsByTransportMediumFileName(String transportMediumFileName);
+
+    TransportMediumEntity getFirstByTransportMediumFileNameOrderByTransportMediumVersionDesc(String transportMediumFileName);
 
 }

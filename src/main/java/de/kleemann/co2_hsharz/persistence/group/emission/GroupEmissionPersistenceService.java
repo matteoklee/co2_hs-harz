@@ -43,7 +43,7 @@ public class GroupEmissionPersistenceService {
         updateGroupEmissionEntity.setGroupEmissionStartLocation(groupEmissionEntity.getGroupEmissionStartLocation());
         updateGroupEmissionEntity.setGroupEmissionEndLocation(groupEmissionEntity.getGroupEmissionEndLocation());
         updateGroupEmissionEntity.setGroupEmissionCustomTransportMedium(groupEmissionEntity.isGroupEmissionCustomTransportMedium());
-        updateGroupEmissionEntity.setGroupEmissionTransportMediumId(groupEmissionEntity.getGroupEmissionTransportMediumId());
+        updateGroupEmissionEntity.setGroupEmissionTransportMedium(groupEmissionEntity.getGroupEmissionTransportMedium());
         updateGroupEmissionEntity.setGroup(groupEmissionEntity.getGroup());
         updateGroupEmissionEntity.setGroupEmission(groupEmissionEntity.getGroupEmission());
         updateGroupEmissionEntity.setGroupEmissionScore(groupEmissionEntity.getGroupEmissionScore());

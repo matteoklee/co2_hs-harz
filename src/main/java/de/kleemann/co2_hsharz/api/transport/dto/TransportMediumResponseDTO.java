@@ -20,6 +20,7 @@ public class TransportMediumResponseDTO {
     private TransportMediumSize transportMediumSize;
     private TransportMediumFuel transportMediumFuel;
     private double transportMediumConsumption;
+    private double transportMediumVersion;
 
 
     public TransportMediumResponseDTO() {
@@ -29,18 +30,19 @@ public class TransportMediumResponseDTO {
     public TransportMediumResponseDTO(TransportMediumImpl transportMedium) {
     	this(transportMedium.getTransportMediumId(), transportMedium.getTransportMediumFileName(),
                 transportMedium.getTransportMediumName(), transportMedium.getTransportMediumSize(),
-                transportMedium.getTransportMediumFuel(), transportMedium.getTransportMediumConsumption());
+                transportMedium.getTransportMediumFuel(), transportMedium.getTransportMediumConsumption(), transportMedium.getTransportMediumVersion());
     }
 
     public TransportMediumResponseDTO(long transportMediumId, String transportMediumFileName,
                                       TransportMediumName transportMediumName, TransportMediumSize transportMediumSize,
-                                      TransportMediumFuel transportMediumFuel, double transportMediumConsumption) {
+                                      TransportMediumFuel transportMediumFuel, double transportMediumConsumption, double transportMediumVersion) {
         this.transportMediumId = transportMediumId;
         this.transportMediumFileName = transportMediumFileName;
         this.transportMediumName = transportMediumName;
         this.transportMediumSize = transportMediumSize;
         this.transportMediumFuel = transportMediumFuel;
         this.transportMediumConsumption = transportMediumConsumption;
+        this.transportMediumVersion = transportMediumVersion;
     }
 
     public long getTransportMediumId() {
@@ -89,5 +91,13 @@ public class TransportMediumResponseDTO {
 
     public void setTransportMediumConsumption(double transportMediumConsumption) {
         this.transportMediumConsumption = transportMediumConsumption;
+    }
+
+    public double getTransportMediumVersion() {
+        return transportMediumVersion;
+    }
+
+    public void setTransportMediumVersion(double transportMediumVersion) {
+        this.transportMediumVersion = transportMediumVersion;
     }
 }

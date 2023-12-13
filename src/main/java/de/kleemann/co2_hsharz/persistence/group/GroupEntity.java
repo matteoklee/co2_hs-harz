@@ -16,7 +16,7 @@ import java.util.Set;
 public class GroupEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long groupId;
     @Column(unique = true, nullable = false)
     private String groupNickName;
@@ -25,6 +25,7 @@ public class GroupEntity {
     private int groupSize;
 
     public GroupEntity() {
+        
     }
 
     public GroupEntity(long id) {

@@ -1,6 +1,7 @@
 package de.kleemann.co2_hsharz.persistence.group.emission;
 
 import de.kleemann.co2_hsharz.persistence.group.GroupEntity;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -16,12 +17,18 @@ import java.util.Date;
 public class GroupEmissionEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long groupEmissionId;
     private String groupEmissionStartLocation;
     private String groupEmissionEndLocation;
     private boolean groupEmissionCustomTransportMedium;
-    private long groupEmissionTransportMediumId;
+
+    //private long groupEmissionTransportMediumId;
+
+    @ManyToOne
+    @JoinColumn(name = "transportMediumId")
+    private TransportMediumEntity groupEmissionTransportMedium;
+
     @ManyToOne
     @JoinColumn(name = "groupId")
     private GroupEntity group;
@@ -70,12 +77,12 @@ public class GroupEmissionEntity {
         this.groupEmissionCustomTransportMedium = groupEmissionCustomTransportMedium;
     }
 
-    public long getGroupEmissionTransportMediumId() {
-        return groupEmissionTransportMediumId;
+    public TransportMediumEntity getGroupEmissionTransportMedium() {
+        return groupEmissionTransportMedium;
     }
 
-    public void setGroupEmissionTransportMediumId(long groupEmissionTransportMediumId) {
-        this.groupEmissionTransportMediumId = groupEmissionTransportMediumId;
+    public void setGroupEmissionTransportMedium(TransportMediumEntity groupEmissionTransportMedium) {
+        this.groupEmissionTransportMedium = groupEmissionTransportMedium;
     }
 
     public GroupEntity getGroup() {

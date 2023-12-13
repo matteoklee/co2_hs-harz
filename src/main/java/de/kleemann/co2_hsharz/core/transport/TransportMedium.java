@@ -30,4 +30,8 @@ public interface TransportMedium {
 
     public void setTransportMediumConsumption(double transportMediumConsumption);
 
+    public double getTransportMediumVersion();
+
+    public void setTransportMediumVersion(double transportMediumVersion);
+
 }
