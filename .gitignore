@@ -9,6 +9,7 @@ target/
 # src/main/resources/application-secrets.properties
 application.properties
 src/main/resources/application.properties
+META-INF/
 
 ### STS ###
 .apt_generated
@@ -41,3 +42,4 @@ build/
 ### VS Code ###
 .vscode/
 >>>>>>> branch 'dev' of https://github.com/matteoklee/co2_hs-harz
+/.gitignore
