@@ -11,10 +11,21 @@ import jakarta.persistence.EntityExistsException;
  */
 public class CustomEntityExistsException extends EntityExistsException {
 
-    public CustomEntityExistsException(String message) {
+    /**
+	 * Serial Version
+	 */
+	private static final long serialVersionUID = -1797282454792413316L;
+
+	/**
+	 * Constructs an new {@link CustomEntityExistsException}
+	 * @param message - Message Payload of this Exception
+	 */
+	public CustomEntityExistsException(String message) {
         super(message);
     }
 
+	/** {@inheritDoc}
+	 */
     @Override
     public synchronized Throwable fillInStackTrace() {
         return this;

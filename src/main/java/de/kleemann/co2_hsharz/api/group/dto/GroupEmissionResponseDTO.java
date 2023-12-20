@@ -1,12 +1,13 @@
 package de.kleemann.co2_hsharz.api.group.dto;
 
+import de.kleemann.co2_hsharz.api.group.GroupEmissionController;
 import de.kleemann.co2_hsharz.core.group.emission.GroupEmissionImpl;
 import de.kleemann.co2_hsharz.persistence.group.GroupEntity;
 
 import java.util.Date;
 
 /**
- * Class "GroupEmissionResponseDTO" is used for ...
+ * This Class is a Data Transfer Object for the {@link GroupEmissionController} API Endpoint
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -27,6 +28,10 @@ public class GroupEmissionResponseDTO {
     private Date groupEmissionCreateDate;
 
 
+    /**
+     * Constructs new {@link GroupEmissionResponseDTO} from {@link GroupEmissionImpl}
+     * @param groupEmission - {@link GroupEmissionImpl} to convert
+     */
     public GroupEmissionResponseDTO(GroupEmissionImpl groupEmission) {
         this(groupEmission.getGroupEmissionId(), groupEmission.getGroupEmissionStartLocation(),
                 groupEmission.getGroupEmissionEndLocation(), groupEmission.isGroupEmissionCustomTransportMedium(),
@@ -35,6 +40,19 @@ public class GroupEmissionResponseDTO {
                 groupEmission.getGroupEmissionCreateDate());
     }
 
+    /**
+     * Required Args Constructor
+     * 
+     * @param groupEmissionId - {@code long} Id of this GroupEmission
+     * @param groupEmissionStartLocation - {@link String} Name of the starting location
+     * @param groupEmissionEndLocation - {@link String} Name of the ending location
+     * @param groupEmissionCustomTransportMedium - {@boolean long} Flag if TransportMedium contains custom consumption
+     * @param groupEmissionTransportMediumId - {@code long} Id of the transport medium
+     * @param groupId - {@code long} Id of the group
+     * @param groupEmission - {@code double} Amount of CO2 emitted
+     * @param groupEmissionScore - {@code double} Score gained from this journey
+     * @param groupEmissionCreateDate - {@link Date} Date of saving
+     */
     public GroupEmissionResponseDTO(long groupEmissionId, String groupEmissionStartLocation,
                                     String groupEmissionEndLocation, boolean groupEmissionCustomTransportMedium,
                                     long groupEmissionTransportMediumId, long groupId, double groupEmission,

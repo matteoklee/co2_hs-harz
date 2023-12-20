@@ -1,19 +1,22 @@
 package de.kleemann.co2_hsharz.core.distance;
 
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graphhopper.util.shapes.GHPoint;
+
+import lombok.NonNull;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 /**
- * Class "CoordinateService" is used for ...
+ * This Service provides core layer functionality to retrieve the coordinate of a city by using the graphhopper api
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -22,14 +25,27 @@ import java.io.IOException;
 @Service
 public class CoordinateService {
 
+	/**
+	 * API Key for the Graphhopper API <br>
+	 * Defined in the application.properties
+	 */
     @Value("${api.key}")
     private String API_KEY;
 
+    /**
+     * Default Constructor
+     */
     public CoordinateService() {
 
     }
 
-    public GHPoint getCoordinatesFromCity(String city) throws IOException {
+    /**
+     * Retrieves a GraphHopper Point containing the coordinates from a city
+     * @param city - {@link String} Name of the City
+     * @return {@link GHPoint} containing the coordinates
+     * @throws IOException if GraphHopper API is not available or Json Object Mapping failed
+     */
+    public GHPoint getCoordinatesFromCity(@NonNull String city) throws IOException {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()

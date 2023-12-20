@@ -1,19 +1,22 @@
 package de.kleemann.co2_hsharz.core.distance;
 
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graphhopper.util.shapes.GHPoint;
+
+import lombok.NonNull;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 /**
- * Class "DistanceCalculationService" is used for ...
+ * This Service provides core layer functionality to calculate the distance between two cities by using the graphhopper api
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -22,15 +25,34 @@ import java.io.IOException;
 @Service
 public class DistanceCalculationService {
 
+	/**
+	 * {@link CoordinateService}
+	 */
     private final CoordinateService coordinateService;
+    
+    /**
+	 * API Key for the Graphhopper API <br>
+	 * Defined in the application.properties
+	 */
     @Value("${api.key}")
     private String API_KEY;
 
+    /**
+     * Constructs a {@link DistanceCalculationService} using the {@link CoordinateService}
+     * @param coordinateService - {@link CoordinateService}
+     */
     public DistanceCalculationService(CoordinateService coordinateService) {
         this.coordinateService = coordinateService;
     }
 
-    public double calculateDistance(String startLocation, String endLocation) throws IOException {
+    /**
+     * Calculates the distance between two cities using the Graphhopper API
+     * @param startLocation - {@link String} Name of the starting city
+     * @param endLocation - {@link String} Name of the ending city
+     * @return {@code double} Distance between these two cities in meters
+     * @throws IOException
+     */
+    public double calculateDistance(@NonNull String startLocation, @NonNull String endLocation) throws IOException {
         GHPoint start = coordinateService.getCoordinatesFromCity(startLocation);
         GHPoint end = coordinateService.getCoordinatesFromCity(endLocation);
 

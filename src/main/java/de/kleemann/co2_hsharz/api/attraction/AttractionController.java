@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This API Controller offers the API Endpoint {@value AttractionController#ATTRACTION_URL} with basic CRUD functionality
+ * for Attractions. Attractions are Places worth visiting, which could be displayed on our co2 calculator map
+ * For now this class remains a test / dummy class and might be removed before release
+ * 
+ * <br> See the API Documentation at <a href=https://github.com/matteoklee/co2_hs-harz/wiki/Attraction-Endpoint> Github </a> for detailed information
+ */
 @RestController
 @RequestMapping("/api")
 class AttractionController {

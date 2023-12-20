@@ -11,10 +11,21 @@ import jakarta.persistence.EntityNotFoundException;
  */
 public class CustomEntityNotFoundException extends EntityNotFoundException {
 
-    public CustomEntityNotFoundException(String message) {
+    /**
+	 * Serial Version
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Constructs an new {@link CustomEntityNotFoundException}
+	 * @param message - Message Payload of this Exception
+	 */
+	public CustomEntityNotFoundException(String message) {
         super(message);
     }
 
+	/** {@inheritDoc}
+	 */
     @Override
     public synchronized Throwable fillInStackTrace() {
         return this;

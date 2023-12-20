@@ -1,13 +1,23 @@
 package de.kleemann.co2_hsharz.api.group;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionDTO;
 import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionRequestDTO;
 import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionResponseDTO;
 import de.kleemann.co2_hsharz.api.transport.dto.TransportMediumDTO;
-import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.group.GroupImpl;
 import de.kleemann.co2_hsharz.core.group.GroupService;
-import de.kleemann.co2_hsharz.core.group.emission.GroupEmission;
 import de.kleemann.co2_hsharz.core.group.emission.GroupEmissionImpl;
 import de.kleemann.co2_hsharz.core.group.emission.GroupEmissionService;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
@@ -15,17 +25,10 @@ import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * Class "GroupEmissionController" is used for ...
+ * This API Controller offers the API Endpoint {@code /groupEmission} which can be used to save and Co2 Emissions and get a list of those saved Emissions.
+ * <br> See the API Documentation at <a href=https://github.com/matteoklee/co2_hs-harz/wiki/Group-Emission-Endpoint> Github </a> for detailed information
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -40,6 +43,13 @@ public class GroupEmissionController {
     private final TransportMediumService transportMediumService;
     private final GroupService groupService;
 
+    /**
+     * Constructor with Auto-Wired required Services
+     * 
+	 * @param groupEmissionService - {@link GroupEmissionService}
+	 * @param transportMediumService - {@link TransportMediumService}
+	 * @param groupService - {@link GroupService}
+     */
     public GroupEmissionController(GroupEmissionService groupEmissionService, TransportMediumService transportMediumService,
                                    GroupService groupService){
         this.groupEmissionService = groupEmissionService;
@@ -50,7 +60,8 @@ public class GroupEmissionController {
     /**
      * Saves a GroupEmission to database
      *
-     * @param groupEmissionRequestDTO
+     * @param groupEmissionRequestDTO - {@link GroupEmissionRequestDTO} Data Transfer Object, containing the initial emissions calculations request, the calculated co2 emission as well as group credentials
+     * @return {@link ResponseEntity} containing the created GroupEmission Object as a {@link GroupEmissionResponseDTO}
      */
     @PostMapping("/groupEmission")
     public ResponseEntity<GroupEmissionResponseDTO> saveGroupEmission(@RequestBody GroupEmissionRequestDTO groupEmissionRequestDTO){
@@ -128,7 +139,7 @@ public class GroupEmissionController {
 
     /**
      * Returns a history of the groups emissions
-     * @return History of emissions
+     * @return {@link List} of {@link GroupEmissionResponseDTO} - The History of emissions
      */
     @GetMapping("/groupEmission")
     public List<GroupEmissionResponseDTO> getGroupEmissions() {

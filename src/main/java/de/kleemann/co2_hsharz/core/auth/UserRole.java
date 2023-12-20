@@ -1,7 +1,7 @@
 package de.kleemann.co2_hsharz.core.auth;
 
 /**
- * Class "UserRole" is used for ...
+ * This enum defines Roles a User can hold
  *
  * @author Matteo Kleemann
  * @version 1.0

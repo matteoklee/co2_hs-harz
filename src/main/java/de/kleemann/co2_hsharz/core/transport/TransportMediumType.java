@@ -3,6 +3,7 @@ package de.kleemann.co2_hsharz.core.transport;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated(forRemoval = true)
 public enum TransportMediumType {
 
     CAR_PETROL_SMALL("Pkw_Otto_klein"),
