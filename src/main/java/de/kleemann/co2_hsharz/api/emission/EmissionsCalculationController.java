@@ -53,7 +53,8 @@ public class EmissionsCalculationController {
 
         double distance = 0;
         try {
-            distance = distanceCalculationService.calculateDistance(emissionsCalculationRequestDTO.getStartLocation(), emissionsCalculationRequestDTO.getEndLocation());
+            distance = distanceCalculationService.calculateDistance(emissionsCalculationRequestDTO.getStartLocation(),
+                    emissionsCalculationRequestDTO.getEndLocation(), transportMediumDTO);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
