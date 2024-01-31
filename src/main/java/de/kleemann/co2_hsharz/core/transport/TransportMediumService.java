@@ -55,7 +55,7 @@ public class TransportMediumService {
     public TransportMediumImpl findTransportMediumByNameAndSizeAndFuel(TransportMediumName transportMediumName,
                                                                        TransportMediumSize transportMediumSize,
                                                                        TransportMediumFuel transportMediumFuel) {
-        System.err.println("DEBUG: " + transportMediumName + ", Size: " + transportMediumSize + ", Fuel: " + transportMediumFuel);
+        //System.err.println("DEBUG: " + transportMediumName + ", Size: " + transportMediumSize + ", Fuel: " + transportMediumFuel);
         try {
             return new TransportMediumImpl(transportMediumPersistenceService
                     .findTransportMediumByNameAndSizeAndFuel(transportMediumName, transportMediumSize, transportMediumFuel));

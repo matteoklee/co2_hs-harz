@@ -66,11 +66,13 @@ public class DistanceCalculationService {
 
     private double getDistanceFromMaps(Response response) throws IOException {
         if (!response.isSuccessful()) {
+            //TODO: throw error
             System.err.println("reponse was not successful. " + response.code());
             return 0;
         }
         ResponseBody responseBody = response.body();
         if (responseBody == null) {
+            //TODO: throw error
             System.err.println("response body is null.");
             return 0;
         }
@@ -82,11 +84,12 @@ public class DistanceCalculationService {
         JsonNode distanceNode = root.findValue("distance");
         if (distanceNode == null || !distanceNode.isObject()) {
            System.err.println("distanceNode cannot be read.");
+           //TODO: throw error
            return 0;
         }
         double distance = distanceNode.findValue("value").asDouble();
-        System.out.println("Distance: " + distance);
-        System.out.println("durationNode: " + root.findValue("duration"));
+        //System.out.println("Distance: " + distance);
+        //System.out.println("durationNode: " + root.findValue("duration"));
         return distance;
     }
 

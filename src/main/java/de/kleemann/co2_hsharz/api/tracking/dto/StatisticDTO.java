@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.api.tracking;
+package de.kleemann.co2_hsharz.api.tracking.dto;
 
 import lombok.Data;
 

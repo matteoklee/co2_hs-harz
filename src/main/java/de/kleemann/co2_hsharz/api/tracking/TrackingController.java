@@ -1,5 +1,7 @@
 package de.kleemann.co2_hsharz.api.tracking;
 
+import de.kleemann.co2_hsharz.api.tracking.dto.StatisticDTO;
+import de.kleemann.co2_hsharz.api.tracking.dto.VisitorStatsRequestDTO;
 import de.kleemann.co2_hsharz.persistence.tracking.VisitorStatsEntity;
 import de.kleemann.co2_hsharz.persistence.tracking.VisitorStatsPersistenceService;
 import de.kleemann.co2_hsharz.persistence.tracking.stats.*;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,12 +59,12 @@ public class TrackingController {
 
     @PostMapping("/statistics")
     public ResponseEntity<VisitorStatsEntity> saveStatistics(@RequestBody VisitorStatsRequestDTO visitorStatsRequestDTO) {
+        System.out.println("CALLING /statistics");
         VisitorStatsEntity visitorStatsEntity = visitorStatsPersistenceService.createVisitorStatsEntity();
 
         List<StatisticEntity> visitorStats = new ArrayList<>();
         for(StatisticDTO statisticDTO : visitorStatsRequestDTO.getVisitorStats()) {
             String type = statisticDTO.getStatisticEntityType();
-
             switch (type) {
                 case "subPageVisit":
                     SubPageVisitEntity subPageVisitEntity = (SubPageVisitEntity) statisticPersistenceService.createStatisticEntity(type);
@@ -70,11 +74,14 @@ public class TrackingController {
                     visitorStats.add(persistedSubPageVisitEntity);
                     break;
                 case "totalDuration":
+                    System.out.println("totalDuration");
                     TotalDurationEntity totalDurationEntity = (TotalDurationEntity) statisticPersistenceService.createStatisticEntity(type);
                     totalDurationEntity.setTotalDurationEntityName(statisticDTO.getTotalDurationEntityName());
                     totalDurationEntity.setTotalDurationEntityAmount(statisticDTO.getTotalDurationEntityAmount());
                     TotalDurationEntity persistedTotalDurationEntity = (TotalDurationEntity) statisticPersistenceService.persistStatistic(totalDurationEntity);
                     visitorStats.add(persistedTotalDurationEntity);
+
+                    System.out.println(persistedTotalDurationEntity.getTotalDurationEntityAmount()/1000 + " s , " + persistedTotalDurationEntity.getTotalDurationEntityAmount()/1000/60 + " min");
                     break;
                 case "buttonClick":
                     ButtonClickEntity buttonClickEntity = (ButtonClickEntity) statisticPersistenceService.createStatisticEntity(type);
