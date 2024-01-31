@@ -1,5 +1,6 @@
 package de.kleemann.co2_hsharz.persistence;
 
+import de.kleemann.co2_hsharz.api.security.APIIntercept;
 import de.kleemann.co2_hsharz.persistence.auth.UserPersistenceService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Class "SecurityConfiguration" is used for ...
@@ -26,7 +29,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  */
 //@EnableWebSecurity
 @Configuration
-public class SecurityConfiguration {
+public class SecurityConfiguration implements WebMvcConfigurer {
 
     AuthenticationManager authenticationManager;
     private final UserPersistenceService userPersistenceService;
@@ -45,6 +48,11 @@ public class SecurityConfiguration {
 
     public SecurityConfiguration(UserPersistenceService userPersistenceService) {
         this.userPersistenceService = userPersistenceService;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new APIIntercept());
     }
 
     @Bean

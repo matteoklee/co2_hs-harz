@@ -2,9 +2,7 @@ package de.kleemann.co2_hsharz.core.distance;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.graphhopper.util.shapes.GHPoint;
 import de.kleemann.co2_hsharz.api.transport.dto.TransportMediumDTO;
-import de.kleemann.co2_hsharz.core.transport.TransportMedium;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
