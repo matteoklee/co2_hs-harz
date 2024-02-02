@@ -64,6 +64,7 @@ public class GroupEmissionController {
 
         if(transportMediumDTO.getTransportMediumFuelConsumption() != null) {
             groupEmission.setGroupEmissionCustomTransportMedium(true);
+            //TODO: change to existing transportmedium or set to null
             TransportMediumImpl defaultTransportMedium = transportMediumService
                     .findTransportMediumByNameAndSizeAndFuel(TransportMediumName.CAR,
                             TransportMediumSize.MEDIUM,
@@ -122,6 +123,7 @@ public class GroupEmissionController {
 
 
         //set attributes
+        //TODO: Bug saving groupEmission when choosing foot
         final GroupEmissionImpl persistedGroupEmission = groupEmissionService.persistGroupEmission(groupEmission);
         return ResponseEntity.ok(new GroupEmissionResponseDTO(persistedGroupEmission));
     }
