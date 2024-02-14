@@ -1,6 +1,6 @@
 package de.kleemann.co2_hsharz.persistence;
 
-import de.kleemann.co2_hsharz.api.security.APIIntercept;
+import de.kleemann.co2_hsharz.api.security.APISecurity;
 import de.kleemann.co2_hsharz.persistence.auth.UserPersistenceService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -52,7 +52,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new APIIntercept());
+        registry.addInterceptor(new APISecurity());
     }
 
     @Bean

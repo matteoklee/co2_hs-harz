@@ -13,11 +13,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * @since 31.01.2024
  */
 @Slf4j
-public class APIIntercept implements HandlerInterceptor {
+public class APISecurity implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("Intercepting request from remote address {}", request.getRemoteAddr());
         log.info("Accepting request: " + request.getRemoteAddr().matches(request.getLocalAddr()));
-        return request.getRemoteAddr().matches(request.getLocalAddr()); //TODO Testen
+        return request.getRemoteAddr().matches(request.getLocalAddr());
     }
 }

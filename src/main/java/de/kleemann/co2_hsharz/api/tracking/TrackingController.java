@@ -2,18 +2,16 @@ package de.kleemann.co2_hsharz.api.tracking;
 
 import de.kleemann.co2_hsharz.api.tracking.dto.StatisticDTO;
 import de.kleemann.co2_hsharz.api.tracking.dto.VisitorStatsRequestDTO;
-import de.kleemann.co2_hsharz.persistence.tracking.VisitorStatsEntity;
-import de.kleemann.co2_hsharz.persistence.tracking.VisitorStatsPersistenceService;
-import de.kleemann.co2_hsharz.persistence.tracking.stats.*;
+import de.kleemann.co2_hsharz.core.tracking.VisitorStatsImpl;
+import de.kleemann.co2_hsharz.core.tracking.VisitorStatsService;
+import de.kleemann.co2_hsharz.core.tracking.stats.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,14 +25,14 @@ import java.util.List;
 @RequestMapping("/api")
 public class TrackingController {
 
-    private final VisitorStatsPersistenceService visitorStatsPersistenceService;
-    private final StatisticPersistenceService statisticPersistenceService;
+    private final VisitorStatsService visitorStatsService;
+    private final StatisticService statisticService;
 
-    public TrackingController(final VisitorStatsPersistenceService visitorStatsPersistenceService,
-                              final StatisticPersistenceService statisticPersistenceService) {
-        this.visitorStatsPersistenceService = visitorStatsPersistenceService;
-        this.statisticPersistenceService = statisticPersistenceService;
+    public TrackingController(VisitorStatsService visitorStatsService, StatisticService statisticService) {
+        this.visitorStatsService = visitorStatsService;
+        this.statisticService = statisticService;
     }
+
 
      /*
 
@@ -58,8 +56,52 @@ public class TrackingController {
      */
 
     @PostMapping("/statistics")
-    public ResponseEntity<VisitorStatsEntity> saveStatistics(@RequestBody VisitorStatsRequestDTO visitorStatsRequestDTO) {
+    public ResponseEntity<VisitorStatsImpl> saveStatistics(@RequestBody VisitorStatsRequestDTO visitorStatsRequestDTO) {
         System.out.println("CALLING /statistics");
+
+        VisitorStatsImpl visitorStatsImpl = visitorStatsService.createVisitorStatsEntity();
+
+        List<StatisticImpl> visitorStats = new ArrayList<>();
+        for(StatisticDTO statisticDTO : visitorStatsRequestDTO.getVisitorStats()) {
+            String type = statisticDTO.getStatisticEntityType();
+            //StatisticImpl statisticImpl = statisticService.createStatisticEntity(type);
+            switch (type) {
+                case "subPageVisit":
+                    SubPageVisit subPageVisit = (SubPageVisit) statisticService.createStatisticEntity(type);
+                    subPageVisit.setSubPageVisitName(statisticDTO.getSubPageVisitEntityName());
+                    subPageVisit.setSubPageVisitTotalVisits(statisticDTO.getSubPageVisitEntityTotalVisits());
+                    StatisticImpl persistedSubPageVisit = statisticService.persistStatistic(subPageVisit);
+
+                    visitorStats.add(persistedSubPageVisit);
+                    break;
+                case "totalDuration":
+                    System.out.println("totalDuration");
+                    TotalDuration totalDuration = (TotalDuration) statisticService.createStatisticEntity(type);
+                    totalDuration.setTotalDurationName(statisticDTO.getTotalDurationEntityName());
+                    totalDuration.setTotalDurationAmount(statisticDTO.getTotalDurationEntityAmount());
+                    StatisticImpl persistedTotalDuration = statisticService.persistStatistic(totalDuration);
+
+                    visitorStats.add(persistedTotalDuration);
+                    //System.out.println(persistedTotalDuration.getTotalDurationAmount()/1000 + " s , " + persistedTotalDuration.getTotalDurationAmount()/1000/60 + " min");
+                    break;
+                case "buttonClick":
+                    ButtonClick buttonClick = (ButtonClick) statisticService.createStatisticEntity(type);
+                    buttonClick.setButtonClickName(statisticDTO.getButtonClickEntityName());
+                    buttonClick.setButtonClickAmount(statisticDTO.getButtonClickEntityAmount());
+                    StatisticImpl persistedButtonClick = statisticService.persistStatistic(buttonClick);
+
+                    visitorStats.add(persistedButtonClick);
+                    break;
+                default:
+                    break;
+            }
+        }
+        visitorStatsImpl.setVisitorStats(visitorStats);
+
+        final VisitorStatsImpl persistedVisitorStatsImpl = visitorStatsService.persistVisitorStats(visitorStatsImpl);
+        return ResponseEntity.ok(persistedVisitorStatsImpl);
+
+        /*
         VisitorStatsEntity visitorStatsEntity = visitorStatsPersistenceService.createVisitorStatsEntity();
 
         List<StatisticEntity> visitorStats = new ArrayList<>();
@@ -97,7 +139,7 @@ public class TrackingController {
 
         final VisitorStatsEntity persistedVisitorStatsEntity = visitorStatsPersistenceService.persistVisitorStats(visitorStatsEntity);
         return ResponseEntity.ok(persistedVisitorStatsEntity);
+        */
     }
-
 
 }

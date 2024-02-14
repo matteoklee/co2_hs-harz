@@ -10,7 +10,7 @@ import de.kleemann.co2_hsharz.persistence.group.GroupEntity;
  * @version 1.0
  * @since 06.12.2023
  */
-public class GroupImpl implements Group{
+public class GroupImpl implements Group {
 
     private final GroupEntity groupEntity;
 
