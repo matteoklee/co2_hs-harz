@@ -1,9 +1,10 @@
 package de.kleemann.co2_hsharz.core.transport;
 
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 /**
  * Class "TransportMedium" is used for ...
@@ -18,7 +19,7 @@ public class TransportMediumImpl implements TransportMedium {
 
     public TransportMediumImpl(TransportMediumEntity transportMediumEntity) {
         if(transportMediumEntity == null) {
-            throw new IllegalArgumentException("transportMediumEntity must not be null.");
+            throw new CustomIllegalArgumentException("transportMediumEntity must not be null.");
         }
         this.transportMediumEntity = transportMediumEntity;
     }
@@ -82,6 +83,16 @@ public class TransportMediumImpl implements TransportMedium {
     @Override
     public void setTransportMediumConsumption(double transportMediumConsumption) {
         this.transportMediumEntity.setTransportMediumConsumption(transportMediumConsumption);
+    }
+
+    @Override
+    public double getTransportMediumVersion() {
+        return this.transportMediumEntity.getTransportMediumVersion();
+    }
+
+    @Override
+    public void setTransportMediumVersion(double transportMediumVersion) {
+        this.transportMediumEntity.setTransportMediumVersion(transportMediumVersion);
     }
 
 

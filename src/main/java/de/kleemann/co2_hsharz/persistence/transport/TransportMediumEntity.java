@@ -1,8 +1,9 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
+import jakarta.persistence.*;
 
 /**
  * Class "TransportMediumEntity" is used for ...
@@ -15,13 +16,14 @@ import jakarta.persistence.Id;
 public class TransportMediumEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transportMediumId;
     private String transportMediumFileName;
     private TransportMediumName transportMediumName;
     private TransportMediumSize transportMediumSize;
     private TransportMediumFuel transportMediumFuel;
     private double transportMediumConsumption;
+    private double transportMediumVersion;
 
     public TransportMediumEntity() {
 
@@ -79,6 +81,37 @@ public class TransportMediumEntity {
         this.transportMediumConsumption = transportMediumConsumption;
     }
 
+    public double getTransportMediumVersion() {
+        return transportMediumVersion;
+    }
+
+    public void setTransportMediumVersion(double transportMediumVersion) {
+        this.transportMediumVersion = transportMediumVersion;
+    }
+
+    @Override
+	public boolean equals(Object obj) {
+    	if(obj == null || !(obj instanceof TransportMediumEntity))
+    		return false;
+    	
+    	TransportMediumEntity entity = (TransportMediumEntity) obj;
+    	
+		return entity.getTransportMediumId() == this.getTransportMediumId()
+				&& entity.getTransportMediumConsumption() == this.getTransportMediumConsumption()
+				&& (entity.getTransportMediumFileName() == null ? 
+						this.getTransportMediumFileName() == null : 
+						entity.getTransportMediumFileName().equals(this.getTransportMediumFileName()))
+				&& (entity.getTransportMediumFuel() == null ? 
+						this.getTransportMediumFuel() == null :
+						entity.getTransportMediumFuel().equals(this.getTransportMediumFuel()))
+				&& (entity.getTransportMediumName() == null ? 
+						this.getTransportMediumName() == null : 
+						entity.getTransportMediumName().equals(this.getTransportMediumName()))
+				&& (entity.getTransportMediumSize() == null ? 
+						this.getTransportMediumSize() == null : 
+						entity.getTransportMediumSize().equals(this.getTransportMediumSize()));
+	}
+
     @Override
     public String toString() {
         return "TransportMediumEntity{" +
@@ -88,6 +121,7 @@ public class TransportMediumEntity {
                 ", transportMediumSize=" + transportMediumSize +
                 ", transportMediumFuel=" + transportMediumFuel +
                 ", transportMediumConsumption=" + transportMediumConsumption +
+                ", transportMediumVersion=" + transportMediumVersion +
                 '}';
     }
 }

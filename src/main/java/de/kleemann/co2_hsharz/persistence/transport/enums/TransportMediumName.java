@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.persistence.transport;
+package de.kleemann.co2_hsharz.persistence.transport.enums;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,15 +7,16 @@ import java.util.Optional;
 
 public enum TransportMediumName {
 
-    DEFAULT(0, "Default"),
-    CAR(1, "Pkw", "Car"),
-    BUS_PUBLIC(2, "Buslinie"),
-    BUS_TOUR(2, "Busreise"),
-    TRAIN(3, "Zug", "Train"),
-    BIKE(4, "Fahrrad", "Bike"),
-    FOOT(5, "Fuß", "Foot");
+    DEFAULT(0, "driving","Default"),
+    CAR(1, "driving", "Pkw", "Car"),
+    BUS_PUBLIC(2, "transit&transit_mode=bus", "Buslinie", "BUS_PUBLIC"),
+    BUS_TOUR(3, "driving", "Busreise", "BUS_TOUR"),
+    TRAIN(4, "transit&transit_mode=train", "Zug", "Train"),
+    BIKE(5, "bicycling", "Fahrrad", "Bike"),
+    FOOT(6, "walking", "Fussgaenger", "Fuß", "Foot");
 
     private int transportMediumName;
+    private String transportMediumMode;
     private String[] transportMediumNameStrings;
 
     private static final Map<String, TransportMediumName> NAME_MAP = new HashMap<>();
@@ -35,8 +36,9 @@ public enum TransportMediumName {
 
     }
 
-    TransportMediumName(int name, String ... nameStrings) {
+    TransportMediumName(int name, String mode, String ... nameStrings) {
         this.transportMediumName = name;
+        this.transportMediumMode = mode;
         this.transportMediumNameStrings = nameStrings;
     }
 
@@ -61,6 +63,10 @@ public enum TransportMediumName {
 
     public int getTransportMediumName() {
         return transportMediumName;
+    }
+
+    public String getTransportMediumMode() {
+        return transportMediumMode;
     }
 
     public String[] getTransprotMediumNameStrings() {

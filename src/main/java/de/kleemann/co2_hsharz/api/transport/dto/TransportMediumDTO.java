@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.api.emission.dto;
+package de.kleemann.co2_hsharz.api.transport.dto;
 
 /**
  * Class "TransportMediumDTO" is used for ...
@@ -12,7 +12,7 @@ public class TransportMediumDTO {
     private String transportMediumName;
     private String transportMediumSize;
     private String transportMediumFuel;
-    private double transportMediumCustomConsumption;
+    private Double transportMediumFuelConsumption;
 
 
     public TransportMediumDTO(String transportMediumName, String transportMediumSize, String transportMediumFuel) {
@@ -45,11 +45,11 @@ public class TransportMediumDTO {
         this.transportMediumFuel = transportMediumFuel;
     }
 
-    public double getTransportMediumCustomConsumption() {
-        return transportMediumCustomConsumption;
+    public Double getTransportMediumFuelConsumption() {
+        return transportMediumFuelConsumption;
     }
 
-    public void setTransportMediumCustomConsumption(double transportMediumCustomConsumption) {
-        this.transportMediumCustomConsumption = transportMediumCustomConsumption;
+    public void setTransportMediumFuelConsumption(double transportMediumFuelConsumption) {
+        this.transportMediumFuelConsumption = transportMediumFuelConsumption;
     }
 }

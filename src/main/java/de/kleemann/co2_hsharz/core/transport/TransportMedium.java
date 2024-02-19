@@ -1,8 +1,8 @@
 package de.kleemann.co2_hsharz.core.transport;
 
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 public interface TransportMedium {
 
@@ -29,5 +29,9 @@ public interface TransportMedium {
     public double getTransportMediumConsumption();
 
     public void setTransportMediumConsumption(double transportMediumConsumption);
+
+    public double getTransportMediumVersion();
+
+    public void setTransportMediumVersion(double transportMediumVersion);
 
 }

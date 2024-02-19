@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+/bin/
+=======
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -15,6 +18,9 @@ src/main/resources/application.properties
 .settings
 .springBeans
 .sts4-cache
+
+### Eclipse ###
+*.prefs
 
 ### IntelliJ IDEA ###
 .idea
@@ -34,3 +40,4 @@ build/
 
 ### VS Code ###
 .vscode/
+>>>>>>> branch 'dev' of https://github.com/matteoklee/co2_hs-harz

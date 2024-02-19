@@ -1,14 +1,17 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
-import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.core.transport.TransportMediumType;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
+
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 /**
  * Class "TransportMediumImportService" is used for ...
@@ -24,6 +27,9 @@ public class TransportMediumImportService {
     @Value("${data.import.location}")
     private String fileLocation;
 
+    @Value("${data.import.version}")
+    private double transportMediumVersion;
+
     public TransportMediumImportService(TransportMediumPersistenceService transportMediumPersistenceService)  {
         this.transportMediumPersistenceService = transportMediumPersistenceService;
     }
@@ -33,14 +39,18 @@ public class TransportMediumImportService {
         File[] directoryFiles = directory.listFiles();
 
         if(!directory.isDirectory()) {
-            throw new CustomIllegalArgumentException("directory for transportMediums does not exists yet.");
+            throw new CustomIllegalArgumentException("directory for transportMediums does not exists yet. Path: " + directory.getAbsolutePath());
         }
 
         for(File file : directoryFiles) {
             String fileName = file.getName();
 
             if(transportMediumPersistenceService.existsByTransportMediumFileName(fileName)) {
-                continue;
+                TransportMediumEntity existingTransportMedium = transportMediumPersistenceService.findTransportMediumByFileName(fileName);
+                double existingVersion = existingTransportMedium.getTransportMediumVersion();
+                if(existingVersion >= transportMediumVersion) {
+                    continue;
+                }
             }
             double emission = getCO2FromFile(file.getAbsolutePath());
             TransportMediumEntity newTransportMedium = getTransportMedium(fileName);
@@ -55,104 +65,34 @@ public class TransportMediumImportService {
     private TransportMediumEntity getTransportMedium(String filename) {
         TransportMediumEntity transportMediumEntity = transportMediumPersistenceService.createTransportMediumEntity();
         transportMediumEntity.setTransportMediumFileName(filename);
+        transportMediumEntity.setTransportMediumVersion(transportMediumVersion);
 
         String[] split = filename.split("_");
         String name = split[0];
 
-        transportMediumEntity.setTransportMediumName(TransportMediumName.fromName(name));
-        switch(name.toLowerCase()) {
-            case "pkw":
-                return handleCar(transportMediumEntity, split);
-            case "fahrrad":
+        if(name.toLowerCase().equals("bus")) {
+            name += split[1];
+        }
+        TransportMediumName transportMediumName = TransportMediumName.fromName(name);
+        if(transportMediumName == null) {
+        	throw new CustomIllegalArgumentException("failed to find transportMediumName from String " + name);
+        }
+        transportMediumEntity.setTransportMediumName(transportMediumName);
+
+        switch(transportMediumName) {
+            case DEFAULT, FOOT:
+            case BIKE:
                 return handleBike(transportMediumEntity, split);
-            case "zug":
-                return handleTrain(transportMediumEntity, split);
-            case "bus":
+            case BUS_PUBLIC, BUS_TOUR:
                 return handleBus(transportMediumEntity, split);
+            case CAR:
+                return handleCar(transportMediumEntity, split);
+            case TRAIN:
+                return handleTrain(transportMediumEntity, split);
             default:
                 throw new CustomIllegalArgumentException("transportMedium could not be created from file.");
         }
 
-        /*
-        if(name.equalsIgnoreCase("Bus")) {
-            name = name + split[1];
-
-            transportMediumEntity.setTransportMediumName(name);
-
-            if(split[1].equalsIgnoreCase("Linie")) {
-                String fuel = split[2];
-
-                transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
-                transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
-                return transportMediumEntity;
-            }
-
-            // Bus Reise
-            transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.DEFAULT);
-            transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
-            return transportMediumEntity;
-        }
-
-        transportMediumEntity.setTransportMediumName(name);
-
-        if(name.equalsIgnoreCase("Fahrrad")) {
-            transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.DEFAULT);
-            transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
-            return transportMediumEntity;
-        }
-
-        if(name.equalsIgnoreCase("Pkw")) {
-            String fuel = split[1];
-
-            if(fuel.equalsIgnoreCase("Otto")) {
-                if(split[2].equalsIgnoreCase("LPG")) {
-                    String size = split[3];
-
-                    transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
-                    transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.LPG);
-                    return transportMediumEntity;
-                }
-
-                String size = split[2];
-
-                transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
-                transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
-                return transportMediumEntity;
-            }
-
-            if(fuel.equalsIgnoreCase("PHEV")) {
-                fuel = fuel + "_" + split[2];
-                String size = split[3];
-
-                transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
-                transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
-                return transportMediumEntity;
-            }
-
-            if(fuel.equalsIgnoreCase("EM")) {
-                String size = split[2];
-
-                transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
-                transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.ELECTRIC);
-                return transportMediumEntity;
-            }
-
-            // Diesel
-            String size = split[2];
-
-            transportMediumEntity.setTransportMediumSize(TransportMediumSize.fromName(size));
-            transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
-            return transportMediumEntity;
-        }
-
-        if(name.equalsIgnoreCase("Zug")) {
-            String fuel = split[3];
-
-            transportMediumEntity.setTransportMediumFuel(TransportMediumFuel.fromName(fuel));
-            transportMediumEntity.setTransportMediumSize(TransportMediumSize.DEFAULT);
-            return transportMediumEntity;
-        }
-        */
     }
 
     private TransportMediumEntity handleCar(TransportMediumEntity transportMedium, String[] split) {
@@ -207,7 +147,6 @@ public class TransportMediumImportService {
     }
 
     private TransportMediumEntity handleBus(TransportMediumEntity transportMedium, String[] split) {
-        transportMedium.setTransportMediumName(TransportMediumName.fromName(split[0] + split[1]));
 
         if(split[1].equalsIgnoreCase("Linie")) {
             String fuel = split[2];
@@ -248,7 +187,7 @@ public class TransportMediumImportService {
             bufferedReader.close();
             fileReader.close();
             if(!direct_emission) {
-                return -1;
+                return 0;
             }
             return getCO2Value(string);
         } catch (Exception e) {
@@ -258,6 +197,9 @@ public class TransportMediumImportService {
     }
 
     private double getCO2Value(String string) {
+    	if(string == null || string.length() < 34)
+    		return -1;
+    	
         string = string.substring(18, 34);
         String[] split = string.split("<sup>");
 

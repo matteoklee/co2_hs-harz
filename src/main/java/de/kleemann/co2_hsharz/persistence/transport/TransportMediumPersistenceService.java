@@ -3,8 +3,9 @@ package de.kleemann.co2_hsharz.persistence.transport;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityExistsException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
-import de.kleemann.co2_hsharz.persistence.attraction.AttractionEntity;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
 
@@ -38,23 +39,29 @@ public class TransportMediumPersistenceService {
     }
 
     public TransportMediumEntity findTransportMediumByName(TransportMediumName transportMediumName) {
-        return transportMediumRepository.findFirstByTransportMediumName(transportMediumName);
+        return transportMediumRepository.getFirstByTransportMediumNameOrderByTransportMediumVersionDesc(transportMediumName);
     }
 
     public TransportMediumEntity findTransportMediumByNameAndFuel(TransportMediumName transportMediumName, TransportMediumFuel transportMediumFuel) {
-        return transportMediumRepository.findFirstByTransportMediumNameAndTransportMediumFuel(transportMediumName, transportMediumFuel);
+        return transportMediumRepository
+                .getFirstByTransportMediumNameAndTransportMediumFuelOrderByTransportMediumVersionDesc(transportMediumName, transportMediumFuel);
     }
 
     public TransportMediumEntity findTransportMediumByNameAndSizeAndFuel(TransportMediumName transportMediumName,
                                                                          TransportMediumSize transportMediumSize,
                                                                          TransportMediumFuel transportMediumFuel) {
         return transportMediumRepository
-                .findFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuel(transportMediumName,
-                        transportMediumSize, transportMediumFuel);
+                .getFirstByTransportMediumNameAndTransportMediumSizeAndTransportMediumFuelOrderByTransportMediumVersionDesc(
+                        transportMediumName, transportMediumSize, transportMediumFuel);
     }
 
     public boolean existsByTransportMediumFileName(String transportMediumFileName) {
-        return transportMediumRepository .existsByTransportMediumFileName(transportMediumFileName);
+        return transportMediumRepository.existsByTransportMediumFileName(transportMediumFileName);
+    }
+
+    public TransportMediumEntity findTransportMediumByFileName(String transportMediumFileName) {
+        return transportMediumRepository
+                .getFirstByTransportMediumFileNameOrderByTransportMediumVersionDesc(transportMediumFileName);
     }
 
 

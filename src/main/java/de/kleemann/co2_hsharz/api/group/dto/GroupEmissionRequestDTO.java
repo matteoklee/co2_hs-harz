@@ -1,26 +1,30 @@
-package de.kleemann.co2_hsharz.api.emission.dto;
+package de.kleemann.co2_hsharz.api.group.dto;
+
+import de.kleemann.co2_hsharz.api.transport.dto.TransportMediumDTO;
 
 /**
- * Class "EmissionsCalculationDTO" is used for ...
+ * Class "GroupEmissionDTO" is used for ...
  *
  * @author Matteo Kleemann
  * @version 1.0
- * @since 09.11.2023
+ * @since 06.12.2023
  */
-public class EmissionsCalculationDTO {
+public class GroupEmissionRequestDTO {
 
     private String startLocation;
     private String endLocation;
     private TransportMediumDTO transportMediumDTO;
+    private GroupEmissionDTO groupEmissionDTO;
 
-    public EmissionsCalculationDTO() {
+    public GroupEmissionRequestDTO() {
 
     }
 
-    public EmissionsCalculationDTO(String startLocation, String endLocation, TransportMediumDTO transportMediumDTO) {
+    public GroupEmissionRequestDTO(String startLocation, String endLocation, TransportMediumDTO transportMediumDTO, GroupEmissionDTO groupEmissionDTO) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.transportMediumDTO = transportMediumDTO;
+        this.groupEmissionDTO = groupEmissionDTO;
     }
 
     public String getStartLocation() {
@@ -45,5 +49,13 @@ public class EmissionsCalculationDTO {
 
     public void setTransportMediumDTO(TransportMediumDTO transportMediumDTO) {
         this.transportMediumDTO = transportMediumDTO;
+    }
+
+    public GroupEmissionDTO getGroupEmissionDTO() {
+        return groupEmissionDTO;
+    }
+
+    public void setGroupEmissionDTO(GroupEmissionDTO groupEmissionDTO) {
+        this.groupEmissionDTO = groupEmissionDTO;
     }
 }

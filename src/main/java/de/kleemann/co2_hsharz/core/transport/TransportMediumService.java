@@ -1,11 +1,13 @@
 package de.kleemann.co2_hsharz.core.transport;
 
+import de.kleemann.co2_hsharz.api.transport.dto.TransportMediumDTO;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumFuel;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumName;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumPersistenceService;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumSize;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
+import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,7 +55,7 @@ public class TransportMediumService {
     public TransportMediumImpl findTransportMediumByNameAndSizeAndFuel(TransportMediumName transportMediumName,
                                                                        TransportMediumSize transportMediumSize,
                                                                        TransportMediumFuel transportMediumFuel) {
-        System.err.println("DEBUG: " + transportMediumName + ", Size: " + transportMediumSize + ", Fuel: " + transportMediumFuel);
+        //System.err.println("DEBUG: " + transportMediumName + ", Size: " + transportMediumSize + ", Fuel: " + transportMediumFuel);
         try {
             return new TransportMediumImpl(transportMediumPersistenceService
                     .findTransportMediumByNameAndSizeAndFuel(transportMediumName, transportMediumSize, transportMediumFuel));
@@ -90,6 +92,75 @@ public class TransportMediumService {
             throw new CustomIllegalArgumentException("transportMedium must not be null.");
         }
         transportMediumPersistenceService.deleteTransportMedium(transportMedium.getTransportMediumEntity());
+    }
+
+
+    public TransportMediumImpl findTransportMediumByCustomInput(TransportMediumDTO transportMediumDTO) {
+        if(transportMediumDTO.getTransportMediumName() == null || transportMediumDTO.getTransportMediumName().isBlank()
+                || transportMediumDTO.getTransportMediumName().isEmpty()) {
+            throw new CustomIllegalArgumentException("transportMediumName must not be null.");
+        }
+        //String transportMediumName = transportMediumDTO.getTransportMediumName().toLowerCase();
+        TransportMediumName transportMediumName = TransportMediumName.fromName(transportMediumDTO.getTransportMediumName());
+        if(transportMediumName == null) {
+            throw new CustomIllegalArgumentException("transportMediumName could not be found.");
+        }
+        String transportMediumSize = "";
+        String transportMediumFuel = "";
+        switch (transportMediumName) {
+            case CAR:
+                if(transportMediumDTO.getTransportMediumSize() == null || transportMediumDTO.getTransportMediumSize().isEmpty()
+                        || transportMediumDTO.getTransportMediumSize().isBlank()) {
+                    throw new CustomIllegalArgumentException("transportMediumSize must not be null for case car.");
+                }
+                transportMediumSize = transportMediumDTO.getTransportMediumSize();
+                if(transportMediumDTO.getTransportMediumFuel() == null || transportMediumDTO.getTransportMediumFuel().isEmpty()
+                        || transportMediumDTO.getTransportMediumFuel().isBlank()) {
+                    throw new CustomIllegalArgumentException("transportMediumFuel must not be null for case car.");
+                }
+                transportMediumFuel = transportMediumDTO.getTransportMediumFuel();
+                if(TransportMediumSize.fromName(transportMediumSize) == null) {
+                    throw new CustomIllegalArgumentException("transportMediumSize does not exists.");
+                }
+                if(TransportMediumFuel.fromName(transportMediumFuel) == null) {
+                    throw new CustomIllegalArgumentException("transportMediumFuel does not exists.");
+                }
+                return findTransportMediumByNameAndSizeAndFuel(transportMediumName,
+                        TransportMediumSize.fromName(transportMediumSize),
+                        TransportMediumFuel.fromName(transportMediumFuel));
+
+            case TRAIN:
+                if(transportMediumDTO.getTransportMediumFuel() == null || transportMediumDTO.getTransportMediumFuel().isEmpty()
+                        || transportMediumDTO.getTransportMediumFuel().isBlank()) {
+                    throw new CustomIllegalArgumentException("transportMediumFuel must not be null for case train.");
+                }
+                transportMediumFuel = transportMediumDTO.getTransportMediumFuel();
+                if(TransportMediumFuel.fromName(transportMediumFuel) == null) {
+                    throw new CustomIllegalArgumentException("transportMediumFuel does not exists.");
+                }
+                return findTransportMediumByNameAndFuel(transportMediumName,
+                        TransportMediumFuel.fromName(transportMediumFuel));
+            case BUS_TOUR, BIKE:
+                return findTransportMediumByName(transportMediumName);
+            case BUS_PUBLIC:
+                if(transportMediumDTO.getTransportMediumFuel() == null || transportMediumDTO.getTransportMediumFuel().isEmpty()
+                        || transportMediumDTO.getTransportMediumFuel().isBlank()) {
+                    throw new CustomIllegalArgumentException("transportMediumFuel must not be null for case bus_public.");
+                }
+                transportMediumFuel = transportMediumDTO.getTransportMediumFuel();
+                if(TransportMediumFuel.fromName(transportMediumFuel) == null) {
+                    throw new CustomIllegalArgumentException("transportMediumFuel does not exists.");
+                }
+                return findTransportMediumByNameAndFuel(transportMediumName,
+                        TransportMediumFuel.fromName(transportMediumFuel));
+            case FOOT:
+                TransportMediumImpl transportMedium = createTransportMedium();
+                transportMedium.setTransportMediumName(TransportMediumName.FOOT);
+                transportMedium.setTransportMediumConsumption(0.0);
+                return transportMedium;
+            default:
+                throw new CustomIllegalArgumentException("findTransportMediumByCustomInput could not be found.");
+        }
     }
 
 
