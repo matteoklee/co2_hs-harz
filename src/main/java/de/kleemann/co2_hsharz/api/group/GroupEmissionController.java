@@ -4,10 +4,8 @@ import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionDTO;
 import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionRequestDTO;
 import de.kleemann.co2_hsharz.api.group.dto.GroupEmissionResponseDTO;
 import de.kleemann.co2_hsharz.api.transport.dto.TransportMediumDTO;
-import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.group.GroupImpl;
 import de.kleemann.co2_hsharz.core.group.GroupService;
-import de.kleemann.co2_hsharz.core.group.emission.GroupEmission;
 import de.kleemann.co2_hsharz.core.group.emission.GroupEmissionImpl;
 import de.kleemann.co2_hsharz.core.group.emission.GroupEmissionService;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
