@@ -11,7 +11,7 @@ import lombok.NonNull;
  * @version 1.0
  * @since 06.12.2023
  */
-public class GroupImpl implements Group{
+public class GroupImpl implements Group {
 
 	/**
 	 * {@link GroupEntity}, from which this {@link GroupImpl} was constructed

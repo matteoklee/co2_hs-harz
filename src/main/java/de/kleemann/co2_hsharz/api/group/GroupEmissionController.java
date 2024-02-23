@@ -25,6 +25,16 @@ import de.kleemann.co2_hsharz.core.transport.TransportMediumService;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
+<<<<<<< HEAD
+=======
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+>>>>>>> refs/heads/dev
 
 /**
  * This API Controller offers the API Endpoint {@code /groupEmission} which can be used to save and Co2 Emissions and get a list of those saved Emissions.
@@ -75,6 +85,7 @@ public class GroupEmissionController {
 
         if(transportMediumDTO.getTransportMediumFuelConsumption() != null) {
             groupEmission.setGroupEmissionCustomTransportMedium(true);
+            //TODO: change to existing transportmedium or set to null
             TransportMediumImpl defaultTransportMedium = transportMediumService
                     .findTransportMediumByNameAndSizeAndFuel(TransportMediumName.CAR,
                             TransportMediumSize.MEDIUM,
@@ -133,6 +144,7 @@ public class GroupEmissionController {
 
 
         //set attributes
+        //TODO: Bug saving groupEmission when choosing foot
         final GroupEmissionImpl persistedGroupEmission = groupEmissionService.persistGroupEmission(groupEmission);
         return ResponseEntity.ok(new GroupEmissionResponseDTO(persistedGroupEmission));
     }
