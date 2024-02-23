@@ -10,7 +10,7 @@ package de.kleemann.co2_hsharz.core.exceptions;
 public class CustomIllegalArgumentException extends IllegalArgumentException {
 
 	/**
-	 * Serial Version
+	 * Serial Version {@value CustomIllegalArgumentException#serialVersionUID}
 	 */
 	private static final long serialVersionUID = -5109682259096981172L;
 

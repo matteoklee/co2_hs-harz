@@ -3,17 +3,22 @@ package de.kleemann.co2_hsharz.persistence.group.emission;
 import de.kleemann.co2_hsharz.persistence.group.GroupEntity;
 import de.kleemann.co2_hsharz.persistence.transport.TransportMediumEntity;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 /**
- * Class "GroupEmissionEntity" is used for ...
+ * This Entity represents a single emission, emitted by a {@link GroupEntity}. <br>
+ * It has an ID, a location for the start and destination of the journey, a transport medium, the emission value and score and the date of its creation
  *
  * @author Matteo Kleemann
  * @version 1.0
  * @since 06.12.2023
  */
+@Data
 @Entity
+@NoArgsConstructor
 public class GroupEmissionEntity {
 
     @Id
@@ -36,84 +41,7 @@ public class GroupEmissionEntity {
     private double groupEmissionScore;
     private Date groupEmissionCreateDate;
 
-
-    public GroupEmissionEntity() {
-
-    }
-
     public GroupEmissionEntity(long id) {
         setGroupEmissionId(id);
-    }
-
-    public long getGroupEmissionId() {
-        return groupEmissionId;
-    }
-
-    public void setGroupEmissionId(long groupEmissionId) {
-        this.groupEmissionId = groupEmissionId;
-    }
-
-    public String getGroupEmissionStartLocation() {
-        return groupEmissionStartLocation;
-    }
-
-    public void setGroupEmissionStartLocation(String groupEmissionStartLocation) {
-        this.groupEmissionStartLocation = groupEmissionStartLocation;
-    }
-
-    public String getGroupEmissionEndLocation() {
-        return groupEmissionEndLocation;
-    }
-
-    public void setGroupEmissionEndLocation(String groupEmissionEndLocation) {
-        this.groupEmissionEndLocation = groupEmissionEndLocation;
-    }
-
-    public boolean isGroupEmissionCustomTransportMedium() {
-        return groupEmissionCustomTransportMedium;
-    }
-
-    public void setGroupEmissionCustomTransportMedium(boolean groupEmissionCustomTransportMedium) {
-        this.groupEmissionCustomTransportMedium = groupEmissionCustomTransportMedium;
-    }
-
-    public TransportMediumEntity getGroupEmissionTransportMedium() {
-        return groupEmissionTransportMedium;
-    }
-
-    public void setGroupEmissionTransportMedium(TransportMediumEntity groupEmissionTransportMedium) {
-        this.groupEmissionTransportMedium = groupEmissionTransportMedium;
-    }
-
-    public GroupEntity getGroup() {
-        return group;
-    }
-
-    public void setGroup(GroupEntity group) {
-        this.group = group;
-    }
-
-    public double getGroupEmission() {
-        return groupEmission;
-    }
-
-    public void setGroupEmission(double groupEmission) {
-        this.groupEmission = groupEmission;
-    }
-
-    public double getGroupEmissionScore() {
-        return groupEmissionScore;
-    }
-
-    public void setGroupEmissionScore(double groupEmissionScore) {
-        this.groupEmissionScore = groupEmissionScore;
-    }
-
-    public Date getGroupEmissionCreateDate() {
-        return groupEmissionCreateDate;
-    }
-
-    public void setGroupEmissionCreateDate(Date groupEmissionCreateDate) {
-        this.groupEmissionCreateDate = groupEmissionCreateDate;
     }
 }

@@ -16,9 +16,12 @@ import java.util.stream.Collectors;
  * For now this class remains a test / dummy class and might be removed before release
  * 
  * <br> See the API Documentation at <a href=https://github.com/matteoklee/co2_hs-harz/wiki/Attraction-Endpoint> Github </a> for detailed information
+ * 
+ * This Endpoint is Deprecated and pending removal
  */
 @RestController
 @RequestMapping("/api")
+@Deprecated
 class AttractionController {
 
     /**

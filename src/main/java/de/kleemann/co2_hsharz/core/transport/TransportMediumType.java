@@ -3,6 +3,9 @@ package de.kleemann.co2_hsharz.core.transport;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This Enum is deprecated and pending removal.
+ */
 @Deprecated(forRemoval = true)
 public enum TransportMediumType {
 

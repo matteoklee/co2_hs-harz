@@ -12,7 +12,7 @@ import jakarta.persistence.EntityExistsException;
 public class CustomEntityExistsException extends EntityExistsException {
 
     /**
-	 * Serial Version
+	 * Serial Version {@value CustomEntityExistsException#serialVersionUID}
 	 */
 	private static final long serialVersionUID = -1797282454792413316L;
 

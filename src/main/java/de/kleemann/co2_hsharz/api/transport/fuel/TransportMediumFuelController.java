@@ -27,7 +27,6 @@ import lombok.NonNull;
 @RequestMapping("/api/transport")
 public class TransportMediumFuelController {
 	 private final TransportMediumFuelService transportMediumFuelService;
-	 private final TransportMediumService transportMediumService;
 
 	 /**
 	  * Constructor with Auto-Wired required Services
@@ -35,9 +34,8 @@ public class TransportMediumFuelController {
 	  * @param transportMediumFuelService - {@link TransportMediumFuelService}
 	  * @param transportMediumService - {@link TransportMediumService}
 	  */
-	 public TransportMediumFuelController(final TransportMediumFuelService transportMediumFuelService, final TransportMediumService transportMediumService) {
+	 public TransportMediumFuelController(final TransportMediumFuelService transportMediumFuelService) {
 		 this.transportMediumFuelService = transportMediumFuelService;
-		 this.transportMediumService = transportMediumService;
 	 }
 	
 	 /**

@@ -2,6 +2,7 @@ package de.kleemann.co2_hsharz.api.tracking;
 
 import de.kleemann.co2_hsharz.api.tracking.dto.StatisticDTO;
 import de.kleemann.co2_hsharz.api.tracking.dto.VisitorStatsRequestDTO;
+import de.kleemann.co2_hsharz.core.tracking.VisitorStats;
 import de.kleemann.co2_hsharz.core.tracking.VisitorStatsImpl;
 import de.kleemann.co2_hsharz.core.tracking.VisitorStatsService;
 import de.kleemann.co2_hsharz.core.tracking.stats.*;
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class "TrackingController" is used for ...
+ * This API Controller offers the API Endpoint {@code /statistics} which can be used to save Frontend-Statistics, like visitor interactions or the duration of the visit. <br>
+ * See the API Documentation at <a href=https://github.com/matteoklee/co2_hs-harz/wiki/Statistics-Endpoint> Github </a> for detailed information
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -25,51 +27,64 @@ import java.util.List;
 @RequestMapping("/api")
 public class TrackingController {
 
+	/** {@link VisitorStatsService} - used to save visitor stats*/
     private final VisitorStatsService visitorStatsService;
+    /** {@link StatisticService} - used to create and save statistics*/
     private final StatisticService statisticService;
 
+    /**
+     * Constructs a new {@link TrackingController}
+     * @param visitorStatsService - {@link VisitorStatsService} used to save visitor stats
+     * @param statisticService - {@link StatisticService} used to create and save statistics
+     */
     public TrackingController(VisitorStatsService visitorStatsService, StatisticService statisticService) {
         this.visitorStatsService = visitorStatsService;
         this.statisticService = statisticService;
     }
 
-
-     /*
-
-        {
-            "visitorStatsId": "",
-            "visitorStats": [
-                {
-                    statisticEntityId: "",
-                    statisticEntityType: "",
-                    subPageVisitEntityName: "",
-                    subPageVisitEntityTotalVisits: "",
-                },
-                {
-                    statisticEntityId: "",
-                    statisticEntityType: "",
-                    subPageVisitEntityName: "",
-                    subPageVisitEntityTotalVisits: "",
-                },
-            ]
-        }
+    /**
+     * Stores Visitor Statistics in Database
+     * Expected JSON Object:
+     * <pre>
+     * {
+     *      "visitorStatsId": "",
+     *      "visitorStats": [
+     *          {
+     *              statisticEntityId: "",
+     *              statisticEntityType: "",
+     *              subPageVisitEntityName: "",
+     *              subPageVisitEntityTotalVisits: "",
+     *          },
+     *          {
+     *              statisticEntityId: "",
+     *              statisticEntityType: "",
+     *              subPageVisitEntityName: "",
+     *              subPageVisitEntityTotalVisits: "",
+     *          },
+     *      ]
+     *  }
+     *  </pre>
+     * 
+     * @param visitorStatsRequestDTO - {@link VisitorStatsRequestDTO} containing the statistic values to be saved
+     * @return {@link ResponseEntity} containing the saved {@link VisitorStatsImpl}
+     * 
+     * 
      */
-
     @PostMapping("/statistics")
-    public ResponseEntity<VisitorStatsImpl> saveStatistics(@RequestBody VisitorStatsRequestDTO visitorStatsRequestDTO) {
+    public ResponseEntity<VisitorStats> saveStatistics(@RequestBody VisitorStatsRequestDTO visitorStatsRequestDTO) {
         System.out.println("CALLING /statistics");
 
-        VisitorStatsImpl visitorStatsImpl = visitorStatsService.createVisitorStatsEntity();
+        VisitorStats visitorStatsImpl = visitorStatsService.createVisitorStatsEntity();
 
         List<StatisticImpl> visitorStats = new ArrayList<>();
         for(StatisticDTO statisticDTO : visitorStatsRequestDTO.getVisitorStats()) {
-            String type = statisticDTO.getStatisticEntityType();
+            String type = statisticDTO.getStatisticType();
             //StatisticImpl statisticImpl = statisticService.createStatisticEntity(type);
             switch (type) {
                 case "subPageVisit":
                     SubPageVisit subPageVisit = (SubPageVisit) statisticService.createStatisticEntity(type);
-                    subPageVisit.setSubPageVisitName(statisticDTO.getSubPageVisitEntityName());
-                    subPageVisit.setSubPageVisitTotalVisits(statisticDTO.getSubPageVisitEntityTotalVisits());
+                    subPageVisit.setSubPageVisitName(statisticDTO.getSubPageVisitName());
+                    subPageVisit.setSubPageVisitTotalVisits(statisticDTO.getSubPageVisitTotalVisits());
                     StatisticImpl persistedSubPageVisit = statisticService.persistStatistic(subPageVisit);
 
                     visitorStats.add(persistedSubPageVisit);
@@ -77,8 +92,8 @@ public class TrackingController {
                 case "totalDuration":
                     System.out.println("totalDuration");
                     TotalDuration totalDuration = (TotalDuration) statisticService.createStatisticEntity(type);
-                    totalDuration.setTotalDurationName(statisticDTO.getTotalDurationEntityName());
-                    totalDuration.setTotalDurationAmount(statisticDTO.getTotalDurationEntityAmount());
+                    totalDuration.setTotalDurationName(statisticDTO.getTotalDurationName());
+                    totalDuration.setTotalDurationAmount(statisticDTO.getTotalDurationAmount());
                     StatisticImpl persistedTotalDuration = statisticService.persistStatistic(totalDuration);
 
                     visitorStats.add(persistedTotalDuration);
@@ -86,8 +101,8 @@ public class TrackingController {
                     break;
                 case "buttonClick":
                     ButtonClick buttonClick = (ButtonClick) statisticService.createStatisticEntity(type);
-                    buttonClick.setButtonClickName(statisticDTO.getButtonClickEntityName());
-                    buttonClick.setButtonClickAmount(statisticDTO.getButtonClickEntityAmount());
+                    buttonClick.setButtonClickName(statisticDTO.getButtonClickName());
+                    buttonClick.setButtonClickAmount(statisticDTO.getButtonClickAmount());
                     StatisticImpl persistedButtonClick = statisticService.persistStatistic(buttonClick);
 
                     visitorStats.add(persistedButtonClick);
@@ -98,7 +113,7 @@ public class TrackingController {
         }
         visitorStatsImpl.setVisitorStats(visitorStats);
 
-        final VisitorStatsImpl persistedVisitorStatsImpl = visitorStatsService.persistVisitorStats(visitorStatsImpl);
+        final VisitorStats persistedVisitorStatsImpl = visitorStatsService.persistVisitorStats(visitorStatsImpl);
         return ResponseEntity.ok(persistedVisitorStatsImpl);
 
         /*

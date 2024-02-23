@@ -3,6 +3,7 @@ package de.kleemann.co2_hsharz.persistence.transport;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
@@ -10,11 +11,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.core.transport.TransportMedium;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 /**
- * Class "TransportMediumImportService" is used for ...
+ * This Service is used to import {@link TransportMedium}s from a set of files located in the data folder.
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -23,17 +25,28 @@ import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 @Service
 public class TransportMediumImportService {
 
+	/** {@link TransportMediumPersistenceService} used to save the {@link TransportMediumEntity}s */
     private final TransportMediumPersistenceService transportMediumPersistenceService;
+    
+    /** {@link String} path to data folder - Defined in Application Properties */
     @Value("${data.import.location}")
     private String fileLocation;
 
+    /** {@link Double} data version - Defined in Application Properties */
     @Value("${data.import.version}")
     private double transportMediumVersion;
 
+    /**
+     * Constructs a {@link TransportMediumImportService}
+     * @param transportMediumPersistenceService - {@link TransportMediumPersistenceService} used to save the {@link TransportMediumEntity}s
+     */
     public TransportMediumImportService(TransportMediumPersistenceService transportMediumPersistenceService)  {
         this.transportMediumPersistenceService = transportMediumPersistenceService;
     }
 
+    /**
+     * Imports all available {@link TransportMedium}s to database. <br>
+     */
     public void importTransportMediumData() {
         File directory = new File(fileLocation);
         File[] directoryFiles = directory.listFiles();
@@ -62,6 +75,13 @@ public class TransportMediumImportService {
         }
     }
 
+    /**
+     * Returns a {@link TransportMedium} constructed from a data file. <br>
+     * This Method will parse the filename and determines what {@link TransportMediumName} this {@link TransportMedium} uses. <br>
+     * It then switches method depending on the {@link TransportMediumName}
+     * @param filename {@link String} name of the file
+     * @return {@link TransportMediumEntity} of this file
+     */
     private TransportMediumEntity getTransportMedium(String filename) {
         TransportMediumEntity transportMediumEntity = transportMediumPersistenceService.createTransportMediumEntity();
         transportMediumEntity.setTransportMediumFileName(filename);
@@ -95,6 +115,12 @@ public class TransportMediumImportService {
 
     }
 
+    /**
+     * Handles Import for a car
+     * @param transportMedium {@link TransportMediumEntity}
+     * @param split {@link String} {@link Array} parsed filename
+     * @return {@link TransportMediumEntity} containing the specifications from filename
+     */
     private TransportMediumEntity handleCar(TransportMediumEntity transportMedium, String[] split) {
         String fuel = split[1];
         String size = "";
@@ -135,9 +161,14 @@ public class TransportMediumImportService {
             default:
                 throw new CustomIllegalArgumentException("car combination could not be found.");
         }
-
     }
 
+    /**
+     * Handles Import for a train
+     * @param transportMedium {@link TransportMediumEntity}
+     * @param split {@link String} {@link Array} parsed filename
+     * @return {@link TransportMediumEntity} containing the specifications from filename
+     */
     private TransportMediumEntity handleTrain(TransportMediumEntity transportMedium, String[] split) {
         String fuel = split[3];
 
@@ -146,6 +177,12 @@ public class TransportMediumImportService {
         return transportMedium;
     }
 
+    /**
+     * Handles Import for a bus
+     * @param transportMedium {@link TransportMediumEntity}
+     * @param split {@link String} {@link Array} parsed filename
+     * @return {@link TransportMediumEntity} containing the specifications from filename
+     */
     private TransportMediumEntity handleBus(TransportMediumEntity transportMedium, String[] split) {
 
         if(split[1].equalsIgnoreCase("Linie")) {
@@ -160,12 +197,23 @@ public class TransportMediumImportService {
         return transportMedium;
     }
 
+    /**
+     * Handles Import for a bike
+     * @param transportMedium {@link TransportMediumEntity}
+     * @param split {@link String} {@link Array} parsed filename
+     * @return {@link TransportMediumEntity} containing the specifications from filename
+     */
     private TransportMediumEntity handleBike(TransportMediumEntity transportMedium, String[] split) {
         transportMedium.setTransportMediumFuel(TransportMediumFuel.DEFAULT);
         transportMedium.setTransportMediumSize(TransportMediumSize.DEFAULT);
         return transportMedium;
     }
 
+    /**
+     * Reads the CO2 Emission per km from the file
+     * @param path {@link String} path to file
+     * @return {@link Double} CO2 Emission per km
+     */
     private double getCO2FromFile(String path) {
         try {
             File file = new File(path);
@@ -196,6 +244,11 @@ public class TransportMediumImportService {
         return -1;
     }
 
+    /**
+     * Parses a string to co2 emission value
+     * @param string {@link String} from file
+     * @return {@link Double} co2 emission per km
+     */
     private double getCO2Value(String string) {
     	if(string == null || string.length() < 34)
     		return -1;

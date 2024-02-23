@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Class "StatisticService" is used for ...
+ * This Service provides CRUD-Functionality for {@link Statistic}-Objects
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -18,12 +18,21 @@ import java.util.stream.Collectors;
 @Service
 public class StatisticService {
 
+	/** {@link StatisticPersistenceService} used for {@link StatisticEntity} crud functionality */
     private final StatisticPersistenceService statisticPersistenceService;
-
+    
+    /**
+     * Constructs a new {@link StatisticService}
+     * @param statisticPersistenceService {@link StatisticPersistenceService} used for {@link StatisticEntity} crud functionality
+     */
     public StatisticService(StatisticPersistenceService statisticPersistenceService) {
         this.statisticPersistenceService = statisticPersistenceService;
     }
 
+    /**
+     * Retrieves a {@link List} of all {@link StatisticEntity}s mapped as {@link StatisticImpl}
+     * @return {@link List} of {@link StatisticImpl} 
+     */
     public List<StatisticImpl> findAllStatistics() {
         return statisticPersistenceService.findAllStatistics()
             .stream()
@@ -31,6 +40,11 @@ public class StatisticService {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a {@link Statistic} by its ID
+     * @param id - {@link Long} id
+     * @return {@link StatisticImpl} with this id
+     */
     public StatisticImpl findStatisticById(long id) {
         try {
             return new StatisticImpl(statisticPersistenceService.findStatisticById(id));
@@ -39,6 +53,11 @@ public class StatisticService {
         }
     }
 
+    /**
+     * Persists a {@link StatisticImpl}
+     * @param statistic {@link StatisticImpl} to persist
+     * @return {@link StatisticImpl} persisted object
+     */
     public StatisticImpl persistStatistic(final StatisticImpl statistic) {
         if(statistic == null) {
             throw new CustomIllegalArgumentException("statistic must not be null.");
@@ -53,6 +72,10 @@ public class StatisticService {
         return new StatisticImpl(persistedStatisticEntity);
     }
 
+    /**
+     * Deletes a {@link StatisticImpl}
+     * @param statistic {@link StatisticImpl} to delete
+     */
     public void deleteStatistic(final StatisticImpl statistic) {
         if(statistic == null) {
             throw new CustomIllegalArgumentException("statistic must not be null.");
@@ -60,6 +83,11 @@ public class StatisticService {
         statisticPersistenceService.deleteStatistic(statistic.getStaticEntity());
     }
 
+    /**
+     * Creates a {@link StatisticImpl} for a specific type
+     * @param type {@link String} statistic entity type
+     * @return new {@link StatisticImpl} of this type
+     */
     public StatisticImpl createStatisticEntity(String type) {
         if(type == null || type.isBlank()) {
             throw new CustomIllegalArgumentException("statisticType must not be null or empty.");
@@ -76,6 +104,12 @@ public class StatisticService {
         }
     }
 
+    /**
+     * Creates a {@link StatisticImpl} for a specific type with a specific id
+     * @param type {@link String} statistic entity type
+     * @param id {@link Long} id of this entity
+     * @return new {@link StatisticImpl} of this type
+     */
     public StatisticImpl createStatisticEntity(String type, long id) {
         if(type == null || type.isBlank()) {
             throw new CustomIllegalArgumentException("statisticType must not be null or empty.");

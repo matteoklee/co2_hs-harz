@@ -1,12 +1,16 @@
 package de.kleemann.co2_hsharz.api.transport.dto;
 
+import de.kleemann.co2_hsharz.core.transport.TransportMedium;
+import lombok.Data;
+
 /**
- * Class "TransportMediumDTO" is used for ...
+ * This Class is a Data Transfer Object (DTO) for the {@link TransportMedium}
  *
  * @author Matteo Kleemann
  * @version 1.0
  * @since 22.11.2023
  */
+@Data
 public class TransportMediumDTO {
 
     private String transportMediumName;
@@ -19,37 +23,5 @@ public class TransportMediumDTO {
         this.transportMediumName = transportMediumName;
         this.transportMediumSize = transportMediumSize;
         this.transportMediumFuel = transportMediumFuel;
-    }
-
-    public String getTransportMediumName() {
-        return transportMediumName;
-    }
-
-    public void setTransportMediumName(String transportMediumName) {
-        this.transportMediumName = transportMediumName;
-    }
-
-    public String getTransportMediumSize() {
-        return transportMediumSize;
-    }
-
-    public void setTransportMediumSize(String transportMediumSize) {
-        this.transportMediumSize = transportMediumSize;
-    }
-
-    public String getTransportMediumFuel() {
-        return transportMediumFuel;
-    }
-
-    public void setTransportMediumFuel(String transportMediumFuel) {
-        this.transportMediumFuel = transportMediumFuel;
-    }
-
-    public Double getTransportMediumFuelConsumption() {
-        return transportMediumFuelConsumption;
-    }
-
-    public void setTransportMediumFuelConsumption(double transportMediumFuelConsumption) {
-        this.transportMediumFuelConsumption = transportMediumFuelConsumption;
     }
 }

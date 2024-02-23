@@ -9,7 +9,9 @@ import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
 
 /**
- * Class "TransportMediumRepository" is used for ...
+ * This Interface is a {@link JpaRepository} for the {@link TransportMediumEntity} <br>
+ * It defines Query Methods to find {@link TransportMediumEntity}s by several different attributes, 
+ * as well as a method that checks the existence of a {@link TransportMediumEntity} by its file name
  *
  * @author Matteo Kleemann
  * @version 1.0

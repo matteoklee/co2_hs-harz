@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 16.10.2023
  */
+@Deprecated
 @RestController()
 @RequestMapping("/auth")
 public class UserController {
@@ -30,7 +31,7 @@ public class UserController {
 
     /**
      * Constructor with auto-injection of a {@link UserService}-Bean
-     * @param userService - {@link UserService}-Bean
+     * @param userService {@link UserService}-Bean
      */
     public UserController(UserService userService) {
         this.userService = userService;
@@ -52,7 +53,7 @@ public class UserController {
 
     /**
      * Registeres a new user
-     * @param userDTO - Non Null {@link UserDTO} containing user credentials
+     * @param userDTO Non Null {@link UserDTO} containing user credentials
      * @return {@link ResponseEntity} containing the created {@link UserDTO}
      */
     @PreAuthorize("hasRole('ADMIN')")
@@ -70,7 +71,7 @@ public class UserController {
 
     /**
      * Converts a {@link User} to a {@link UserDTO}
-     * @param user - Non Null {@link User}-Object to convert
+     * @param user Non Null {@link User}-Object to convert
      * @return {@link UserDTO}-Object converted from {@code user}
      */
     private UserDTO convertToUserDTO(@NonNull User user) {
@@ -84,7 +85,7 @@ public class UserController {
 
     /**
      * Converts a {@link UserDTO} to a {@link User}
-     * @param userDTO - Non Null {@link UserDTO}-Object to convert
+     * @param userDTO Non Null {@link UserDTO}-Object to convert
      * @return {@link User}-Object converted from {@code userDTO}
      */
     private User convertToUser(@NonNull UserDTO userDTO) {

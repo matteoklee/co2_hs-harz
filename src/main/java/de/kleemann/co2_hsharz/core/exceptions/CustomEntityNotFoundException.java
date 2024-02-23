@@ -12,7 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 public class CustomEntityNotFoundException extends EntityNotFoundException {
 
     /**
-	 * Serial Version
+	 * Serial Version {@value CustomEntityNotFoundException#serialVersionUID}
 	 */
 	private static final long serialVersionUID = 1L;
 

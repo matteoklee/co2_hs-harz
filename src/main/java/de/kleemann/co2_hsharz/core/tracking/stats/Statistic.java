@@ -1,7 +1,13 @@
 package de.kleemann.co2_hsharz.core.tracking.stats;
 
 /**
- * Class "Statistik" is used for ...
+ * This Interface represents a statistic, that is tracked by the frontend 
+ *
+ * @see StatisticImpl
+ * @see ButtonClick
+ * @see SubPageVisit
+ * @see TotalDuration
+ * @see StatisticService
  *
  * @author Matteo Kleemann
  * @version 1.0

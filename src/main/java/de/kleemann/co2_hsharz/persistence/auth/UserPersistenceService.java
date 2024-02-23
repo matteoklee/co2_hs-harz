@@ -23,6 +23,7 @@ import java.util.List;
  * @since 16.10.2023
  */
 @Service
+@Deprecated
 public class UserPersistenceService implements UserDetailsService {
 
     private final UserRepository userRepository;

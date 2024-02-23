@@ -19,13 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmissionsCalculationService {
 
-	/**
-	 * Default Constructor
-	 */
-    public EmissionsCalculationService() {
-
-    }
-
     /**
      * CO2 Emission per Liter
      *

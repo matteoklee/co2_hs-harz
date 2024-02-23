@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Class "StatisticRepository" is used for ...
+ * This Interface is a {@link JpaRepository} for the {@link StatisticEntity}
  *
  * @author Matteo Kleemann
  * @version 1.0

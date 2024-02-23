@@ -1,9 +1,11 @@
 package de.kleemann.co2_hsharz.api.tracking.dto;
 
+import de.kleemann.co2_hsharz.core.tracking.stats.Statistic;
 import lombok.Data;
 
 /**
- * Class "StatisticDTO" is used for ...
+ * This Class is a Data Transfer Object (DTO) for the {@link Statistic}. <br>
+ * It contains fields for all possible subclasses of {@link Statistic}
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -12,16 +14,16 @@ import lombok.Data;
 @Data
 public class StatisticDTO {
 
-    private String statisticEntityId;
-    private String statisticEntityType;
+    private String statisticId;
+    private String statisticType;
 
-    private String buttonClickEntityName;
-    private int buttonClickEntityAmount;
+    private String buttonClickName;
+    private int buttonClickAmount;
 
-    private String subPageVisitEntityName;
-    private int subPageVisitEntityTotalVisits;
+    private String subPageVisitName;
+    private int subPageVisitTotalVisits;
 
-    private String totalDurationEntityName;
-    private long totalDurationEntityAmount;
+    private String totalDurationName;
+    private long totalDurationAmount;
 
 }

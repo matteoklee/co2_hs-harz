@@ -4,7 +4,7 @@ import de.kleemann.co2_hsharz.persistence.tracking.stats.StatisticEntity;
 import lombok.NonNull;
 
 /**
- * Class "StatisticImpl" is used for ...
+ * This is the implementation class of {@link Statistic}
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -12,8 +12,13 @@ import lombok.NonNull;
  */
 public class StatisticImpl implements Statistic {
 
+	/** {@link StatisticEntity} used to construct this Object */
     private StatisticEntity staticEntity;
 
+    /**
+     * Constructs a new {@link StatisticImpl}
+     * @param statisticEntity {@link StatisticEntity} used to construct this object
+     */
     public StatisticImpl(@NonNull StatisticEntity statisticEntity){
         this.staticEntity = statisticEntity;
     }
@@ -42,6 +47,10 @@ public class StatisticImpl implements Statistic {
         this.staticEntity.setStatisticEntityId(id);
     }
 
+    /**
+     * Returns the {@link StatisticEntity} used to construct this object
+     * @return {@link StatisticEntity} used to construct this object
+     */
     public StatisticEntity getStaticEntity() {
         return staticEntity;
     }

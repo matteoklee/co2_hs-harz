@@ -1,39 +1,30 @@
 package de.kleemann.co2_hsharz.persistence.tracking.stats;
 
+import de.kleemann.co2_hsharz.core.tracking.stats.TotalDuration;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
- * Class "TotalDurationEntity" is used for ...
+ * This Entity represents a {@link TotalDuration}-Statistic.
+ * 
+ * @see StatisticEntity
  *
  * @author Matteo Kleemann
  * @version 1.0
  * @since 31.01.2024
  */
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class TotalDurationEntity extends StatisticEntity {
 
     private String totalDurationEntityName;
     private long totalDurationEntityAmount;
 
-    public TotalDurationEntity() {}
-
     public TotalDurationEntity(long id) {
         setStatisticEntityId(id);
-    }
-
-    public String getTotalDurationEntityName() {
-        return totalDurationEntityName;
-    }
-
-    public void setTotalDurationEntityName(String totalDurationEntityName) {
-        this.totalDurationEntityName = totalDurationEntityName;
-    }
-
-    public long getTotalDurationEntityAmount() {
-        return totalDurationEntityAmount;
-    }
-
-    public void setTotalDurationEntityAmount(long totalDurationEntityAmount) {
-        this.totalDurationEntityAmount = totalDurationEntityAmount;
     }
 }

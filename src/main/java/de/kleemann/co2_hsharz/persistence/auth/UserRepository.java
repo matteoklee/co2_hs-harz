@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
  * @since 16.10.2023
  */
 @Repository
+@Deprecated
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity findByUserName(String userName);

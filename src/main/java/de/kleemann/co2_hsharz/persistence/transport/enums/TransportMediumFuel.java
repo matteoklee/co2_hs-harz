@@ -1,12 +1,15 @@
 package de.kleemann.co2_hsharz.persistence.transport.enums;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import de.kleemann.co2_hsharz.core.transport.TransportMedium;
+
 /**
- * Class "TransportMediumFuel" is used for ...
+ * This enum represents all fuel types, that can be used in a {@link TransportMedium}
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -28,6 +31,9 @@ public enum TransportMediumFuel {
 
     private static final Map<String, TransportMediumFuel> FUELNAME_MAP = new HashMap<>();
 
+    /**
+     * Collects the enum values in a {@link Map}
+     */
     static {
         for(TransportMediumFuel transportMediumFuel : values()) {
             String[] fuelNames = transportMediumFuel.getTransportMediumFuelStrings();
@@ -39,19 +45,29 @@ public enum TransportMediumFuel {
         }
     }
 
-    TransportMediumFuel() {
-
-    }
-
+    /**
+     * Constructs a {@link TransportMediumFuel}
+     * @param fuel {@link Integer} id
+     * @param fuelString {@link String} {@link Array} aliases
+     */
     TransportMediumFuel(int fuel, String ... fuelString) {
         this.transportMediumFuel = fuel;
         this.transportMediumFuelStrings = fuelString;
     }
 
+    /**
+     * Returns a {@link Array} all valid names
+     * @return {@link Array} of all aliases
+     */
     public String[] getTransportMediumFuelStrings() {
         return transportMediumFuelStrings;
     }
 
+    /**
+     * Returns a {@link TransportMediumFuel} with this name
+     * @param fuelName {@link String} name
+     * @return {@link TransportMedium} with this name
+     */
     public static TransportMediumFuel fromName(String fuelName) {
         int fuel;
         try {
@@ -62,6 +78,11 @@ public enum TransportMediumFuel {
         }
     }
 
+    /**
+     * Returns a possibly empty {@link Optional} of {@link TransportMediumFuel}s from a integer
+     * @param fuel {@link Integer} id (ordinal)
+     * @return {@link Optional} of {@link TransportMediumFuel}
+     */
     public static Optional<TransportMediumFuel> valueOf(int fuel) {
         return Arrays.stream(values())
                 .filter(element -> element.transportMediumFuel == fuel)

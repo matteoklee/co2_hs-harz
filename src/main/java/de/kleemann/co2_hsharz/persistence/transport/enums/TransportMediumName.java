@@ -1,10 +1,20 @@
 package de.kleemann.co2_hsharz.persistence.transport.enums;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import de.kleemann.co2_hsharz.core.transport.TransportMedium;
+
+/**
+ * This enum represents all names, that can be used in a {@link TransportMedium}
+ *
+ * @author Matteo Kleemann
+ * @version 1.0
+ * @since 22.11.2023
+ */
 public enum TransportMediumName {
 
     DEFAULT(0, "driving","Default"),
@@ -21,6 +31,9 @@ public enum TransportMediumName {
 
     private static final Map<String, TransportMediumName> NAME_MAP = new HashMap<>();
 
+    /**
+     * Collects the enum values in a {@link Map}
+     */
     static {
         for(TransportMediumName transportMediumName : values()) {
             String[] names = transportMediumName.getTransprotMediumNameStrings();
@@ -32,16 +45,22 @@ public enum TransportMediumName {
         }
     }
 
-    TransportMediumName() {
-
-    }
-
+    /**
+     * Constructs a {@link TransportMediumName}
+     * @param size {@link Integer} id
+     * @param sizeString {@link String} {@link Array} aliases
+     */
     TransportMediumName(int name, String mode, String ... nameStrings) {
         this.transportMediumName = name;
         this.transportMediumMode = mode;
         this.transportMediumNameStrings = nameStrings;
     }
 
+    /**
+     * Returns a {@link TransportMediumName} with this name
+     * @param sizeString {@link String} id / name
+     * @return {@link TransportMediumName}
+     */
     public static TransportMediumName fromName(String nameString) {
         int name;
         try {
@@ -55,20 +74,37 @@ public enum TransportMediumName {
         }
     }
 
+    /**
+     * Returns a possibly empty {@link Optional} of {@link TransportMediumName}s from an integer
+     * @param fuel {@link Integer} id (ordinal)
+     * @return {@link Optional} of {@link TransportMediumName}
+     */
     public static Optional<TransportMediumName> valueOf(int name) {
         return Arrays.stream(values())
                 .filter(element -> element.getTransportMediumName() == name)
                 .findFirst();
     }
 
+    /**
+     * Returns the id of this {@link TransportMediumName}
+     * @return id
+     */
     public int getTransportMediumName() {
         return transportMediumName;
     }
 
+    /**
+     * Returns the Mode of this {@link TransportMediumName}
+     * @return {@link String} mode
+     */
     public String getTransportMediumMode() {
         return transportMediumMode;
     }
 
+    /**
+     * Returns a {@link Array} of aliases
+     * @return {@link String} {@link Array} of aliases
+     */
     public String[] getTransprotMediumNameStrings() {
         return transportMediumNameStrings;
     }

@@ -1,94 +1,54 @@
 package de.kleemann.co2_hsharz.persistence.transport;
 
+import de.kleemann.co2_hsharz.core.transport.TransportMedium;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 /**
- * Class "TransportMediumEntity" is used for ...
+ * This Entity represents a {@link TransportMedium}
  *
  * @author Matteo Kleemann
  * @version 1.0
  * @since 09.11.2023
  */
 @Entity
+@Setter
+@Getter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class TransportMediumEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transportMediumId;
+    @NonNull
     private String transportMediumFileName;
+    @NonNull
     private TransportMediumName transportMediumName;
     private TransportMediumSize transportMediumSize;
     private TransportMediumFuel transportMediumFuel;
     private double transportMediumConsumption;
     private double transportMediumVersion;
 
-    public TransportMediumEntity() {
-
-    }
-
     public TransportMediumEntity(long transportMediumId) {
         setTransportMediumId(transportMediumId);
     }
 
-    public long getTransportMediumId() {
-        return transportMediumId;
-    }
-
-    public void setTransportMediumId(long transportMediumId) {
-        this.transportMediumId = transportMediumId;
-    }
-
-    public String getTransportMediumFileName() {
-        return transportMediumFileName;
-    }
-
-    public void setTransportMediumFileName(String transportMediumFileName) {
-        this.transportMediumFileName = transportMediumFileName;
-    }
-
-    public TransportMediumName getTransportMediumName() {
-        return transportMediumName;
-    }
-
-    public void setTransportMediumName(TransportMediumName transportMediumName) {
-        this.transportMediumName = transportMediumName;
-    }
-
-    public TransportMediumSize getTransportMediumSize() {
-        return transportMediumSize;
-    }
-
-    public void setTransportMediumSize(TransportMediumSize transportMediumSize) {
-        this.transportMediumSize = transportMediumSize;
-    }
-
-    public TransportMediumFuel getTransportMediumFuel() {
-        return transportMediumFuel;
-    }
-
-    public void setTransportMediumFuel(TransportMediumFuel transportMediumFuel) {
-        this.transportMediumFuel = transportMediumFuel;
-    }
-
-    public double getTransportMediumConsumption() {
-        return transportMediumConsumption;
-    }
-
-    public void setTransportMediumConsumption(double transportMediumConsumption) {
-        this.transportMediumConsumption = transportMediumConsumption;
-    }
-
-    public double getTransportMediumVersion() {
-        return transportMediumVersion;
-    }
-
-    public void setTransportMediumVersion(double transportMediumVersion) {
-        this.transportMediumVersion = transportMediumVersion;
-    }
-
+    /**
+     * Compares this Object to another object
+     * <hr>
+     * {@inheritDoc}
+     */
     @Override
 	public boolean equals(Object obj) {
     	if(obj == null || !(obj instanceof TransportMediumEntity))
@@ -112,6 +72,11 @@ public class TransportMediumEntity {
 						entity.getTransportMediumSize().equals(this.getTransportMediumSize()));
 	}
 
+    /**
+     * Returns a JSON-String of this Entity
+     * <hr>
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TransportMediumEntity{" +

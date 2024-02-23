@@ -1,18 +1,24 @@
 package de.kleemann.co2_hsharz.persistence.group;
 
-import de.kleemann.co2_hsharz.persistence.group.emission.GroupEmissionEntity;
-import jakarta.persistence.*;
-
-import java.util.Set;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Class "GroupEntity" is used for ...
+ * This Entity represents a travel group, which emits co2 on its journey. <br>
+ * A group has an id, a nickname, a passphrase and a count of members (size)
  *
  * @author Matteo Kleemann
  * @version 1.0
  * @since 06.12.2023
  */
 @Entity
+@Data
+@NoArgsConstructor
 public class GroupEntity {
 
     @Id
@@ -24,44 +30,7 @@ public class GroupEntity {
     private String groupPassPhrase;
     private int groupSize;
 
-    public GroupEntity() {
-        
-    }
-
     public GroupEntity(long id) {
         setGroupId(id);
     }
-
-    public long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(long groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getGroupNickName() {
-        return groupNickName;
-    }
-
-    public void setGroupNickName(String groupNickName) {
-        this.groupNickName = groupNickName;
-    }
-
-    public String getGroupPassPhrase() {
-        return groupPassPhrase;
-    }
-
-    public void setGroupPassPhrase(String groupPassPhrase) {
-        this.groupPassPhrase = groupPassPhrase;
-    }
-
-    public int getGroupSize() {
-        return groupSize;
-    }
-
-    public void setGroupSize(int groupSize) {
-        this.groupSize = groupSize;
-    }
-
 }

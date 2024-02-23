@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Class "VisitorStatsService" is used for ...
+ * This Service provides CRUD Functionality for {@link VisitorStatsImpl}
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -19,20 +19,34 @@ import java.util.stream.Collectors;
 @Service
 public class VisitorStatsService {
 
+	/** {@link VisitorStatsPersistenceService} - used for {@link VisitorStatsEntity}-CRUD*/
     private final VisitorStatsPersistenceService visitorStatsPersistenceService;
 
+    /**
+     * Constructs a new {@link VisitorStatsService}
+     * @param visitorStatsPersistenceService {@link VisitorStatsPersistenceService} used to CRUD {@link VisitorStatsEntity}s
+     */
     public VisitorStatsService(VisitorStatsPersistenceService visitorStatsPersistenceService) {
         this.visitorStatsPersistenceService = visitorStatsPersistenceService;
     }
 
-    public List<VisitorStatsImpl> findAllVisitorStats() {
+    /**
+     * Retrieves a {@link List} of all {@link VisitorStatsEntity}s from Database and maps them to {@link VisitorStatsImpl}
+     * @return {@link List} of {@link VisitorStatsImpl}
+     */
+    public List<VisitorStats> findAllVisitorStats() {
         return visitorStatsPersistenceService.findAllVisitorStats()
             .stream()
             .map(VisitorStatsImpl::new)
             .collect(Collectors.toList());
     }
 
-    public VisitorStatsImpl findVisitorStatsById(long id) {
+    /**
+     * Retrieves a {@link VisitorStatsEntity} by its id
+     * @param id {@link Long} id
+     * @return {@link VisitorStatsImpl} with this id
+     */
+    public VisitorStats findVisitorStatsById(long id) {
         try {
             return new VisitorStatsImpl(visitorStatsPersistenceService.findVisitorStatsById(id));
         } catch (Exception exception) {
@@ -40,44 +54,68 @@ public class VisitorStatsService {
         }
     }
 
-    public VisitorStatsImpl updateVisitorStats(long id, VisitorStatsImpl visitorStats) {
+    /**
+     * Updates {@link VisitorStats}
+     * @param id {@link Long} id of the {@link VisitorStatsEntity} to change
+     * @param visitorStats Updates {@link VisitorStats}
+     * @return Updated {@link VisitorStats}
+     */
+    public VisitorStats updateVisitorStats(long id, VisitorStats visitorStats) {
         if(visitorStats == null) {
             throw new CustomIllegalArgumentException("visitorStats must not be null.");
         }
         final VisitorStatsEntity visitorStatsEntity;
         try {
-            visitorStatsEntity = visitorStatsPersistenceService.updateVisitorStats(id, visitorStats.getVisitorStatsEntity());
+            visitorStatsEntity = visitorStatsPersistenceService.updateVisitorStats(id, ((VisitorStatsImpl) visitorStats).getVisitorStatsEntity());
         } catch (Exception exception) {
             throw new CustomRuntimeException("error in updateVisitorStats()");
         }
         return new VisitorStatsImpl(visitorStatsEntity);
     }
 
-    public VisitorStatsImpl persistVisitorStats(VisitorStatsImpl visitorStats) {
+    /**
+     * Persists {@link VisitorStats}
+     * @param visitorStats {@link VisitorStats} to persist
+     * @return Persisted {@link VisitorStats}
+     */
+    public VisitorStats persistVisitorStats(VisitorStats visitorStats) {
         if(visitorStats == null) {
             throw new CustomIllegalArgumentException("visitorStats must not be null.");
         }
         final VisitorStatsEntity visitorStatsEntity;
         try {
-            visitorStatsEntity = visitorStatsPersistenceService.persistVisitorStats(visitorStats.getVisitorStatsEntity());
+            visitorStatsEntity = visitorStatsPersistenceService.persistVisitorStats(((VisitorStatsImpl)visitorStats).getVisitorStatsEntity());
         } catch (Exception exception) {
             throw new CustomRuntimeException("error in persistVisitorStats()");
         }
         return new VisitorStatsImpl(visitorStatsEntity);
     }
 
-    public void deleteVisitorStats(VisitorStatsImpl visitorStats) {
+    /**
+     * Deletes {@link VisitorStats}
+     * @param visitorStats {@link VisitorStats} to delete
+     */
+    public void deleteVisitorStats(VisitorStats visitorStats) {
         if(visitorStats == null) {
             throw new CustomIllegalArgumentException("visitorStats must not be null.");
         }
-        visitorStatsPersistenceService.deleteVisitorStats(visitorStats.getVisitorStatsEntity());
+        visitorStatsPersistenceService.deleteVisitorStats(((VisitorStatsImpl)visitorStats).getVisitorStatsEntity());
     }
 
-    public VisitorStatsImpl createVisitorStatsEntity() {
+    /**
+     * Creates a new {@link VisitorStats}-Object
+     * @return new {@link VisitorStatsImpl}
+     */
+    public VisitorStats createVisitorStatsEntity() {
         return new VisitorStatsImpl(visitorStatsPersistenceService.createVisitorStatsEntity());
     }
 
-    public VisitorStatsImpl createVisitorStatsEntity(long id) {
+    /**
+     * Creates a new {@link VisitorStats}-Object with a specific id
+     * @param id {@link Long} id of the object
+     * @return new {@link VisitorStatsImpl}
+     */
+    public VisitorStats createVisitorStatsEntity(long id) {
         return new VisitorStatsImpl(visitorStatsPersistenceService.createVisitorStatsEntity(id));
     }
 

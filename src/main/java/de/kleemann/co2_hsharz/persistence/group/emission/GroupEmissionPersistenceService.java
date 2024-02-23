@@ -3,6 +3,7 @@ package de.kleemann.co2_hsharz.persistence.group.emission;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityExistsException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomEntityNotFoundException;
 import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.core.group.emission.GroupEmission;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class "GroupEmissionPersistenceService" is used for ...
+ * This Service provides CRUD-Functionality for {@link GroupEmission}
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -19,21 +20,41 @@ import java.util.List;
 @Service
 public class GroupEmissionPersistenceService {
 
+	/** {@link GroupEmissionRepository} */
     private final GroupEmissionRepository groupEmissionRepository;
 
+    /**
+     * Constructs a new {@link GroupEmissionPersistenceService}
+     * @param groupEmissionRepository {@link GroupEmissionRepository} used for database queries
+     */
     public GroupEmissionPersistenceService(final GroupEmissionRepository groupEmissionRepository) {
         this.groupEmissionRepository = groupEmissionRepository;
     }
 
+    /**
+     * Retrieves a {@link List} of all {@link GroupEmissionEntity}s
+     * @return {@link List} of {@link GroupEmissionEntity}s
+     */
     public List<GroupEmissionEntity> findAllGroupEmissions() {
         return new ArrayList<>(groupEmissionRepository.findAll());
     }
 
+    /**
+     * Retrieves a {@link GroupEmissionEntity} by its ID
+     * @param groupEmissionId {@link Long} id
+     * @return possibly <code>null</code> {@link GroupEmissionEntity} with this id
+     */
     public GroupEmissionEntity findGroupEmissionById(long groupEmissionId) {
         return groupEmissionRepository.findById(groupEmissionId)
                 .orElseThrow(() -> new CustomEntityNotFoundException("unknown group emission entity with id: " + groupEmissionId));
     }
 
+    /**
+     * Updates a {@link GroupEmissionEntity}
+     * @param groupEmissionId {@link Long} Id of the {@link GroupEmissionEntity} that should be updated
+     * @param groupEmissionEntity Updated {@link GroupEmissionEntity}
+     * @return Updated {@link GroupEmissionEntity}
+     */
     public GroupEmissionEntity updateGroupEmission(long groupEmissionId, GroupEmissionEntity groupEmissionEntity) {
         if (groupEmissionEntity == null) {
             throw new CustomIllegalArgumentException("groupEmissionEntity must not be null.");
@@ -53,6 +74,11 @@ public class GroupEmissionPersistenceService {
         return saveGroupEmission(updateGroupEmissionEntity);
     }
 
+    /**
+     * Saves a {@link GroupEmissionEntity}
+     * @param groupEmissionEntity
+     * @return
+     */
     private GroupEmissionEntity saveGroupEmission(final GroupEmissionEntity groupEmissionEntity) {
         try {
             return groupEmissionRepository.save(groupEmissionEntity);
@@ -62,6 +88,11 @@ public class GroupEmissionPersistenceService {
         }
     }
 
+    /**
+     * Persists a {@link GroupEmissionEntity}
+     * @param groupEmissionEntity {@link GroupEmissionEntity} to persist
+     * @return Persisted {@link GroupEmissionEntity}
+     */
     public GroupEmissionEntity persistGroupEmission(final GroupEmissionEntity groupEmissionEntity) {
         if (groupEmissionEntity == null) {
             throw new CustomIllegalArgumentException("groupEmissionEntity must not be null.");
@@ -74,6 +105,10 @@ public class GroupEmissionPersistenceService {
         return saveGroupEmission(groupEmissionEntity);
     }
 
+    /**
+     * Deletes a {@link GroupEmissionEntity}
+     * @param groupEmissionEntity {@link GroupEmissionEntity} to delete
+     */
     public void deleteGroupEmission(final GroupEmissionEntity groupEmissionEntity) {
         if (groupEmissionEntity == null) {
             throw new CustomIllegalArgumentException("groupEmissionEntity must not be null!");
@@ -81,10 +116,19 @@ public class GroupEmissionPersistenceService {
         groupEmissionRepository.deleteById(groupEmissionEntity.getGroupEmissionId());
     }
 
+    /**
+     * Creates a new {@link GroupEmissionEntity}
+     * @return new {@link GroupEmissionEntity}
+     */
     public GroupEmissionEntity createGroupEmissionEntity() {
         return new GroupEmissionEntity();
     }
 
+    /**
+     * Creates a new {@link GroupEmissionEntity} with a specific id
+     * @param id {@link Long} id
+     * @return new {@link GroupEmissionEntity}
+     */
     public GroupEmissionEntity createGroupEmissionEntity(long id) {
         return new GroupEmissionEntity(id);
     }

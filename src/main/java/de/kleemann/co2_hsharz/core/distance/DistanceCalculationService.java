@@ -7,21 +7,16 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-<<<<<<< HEAD
-import com.graphhopper.util.shapes.GHPoint;
 
-import lombok.NonNull;
-=======
 import de.kleemann.co2_hsharz.api.transport.dto.TransportMediumDTO;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
->>>>>>> refs/heads/dev
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
- * This Service provides core layer functionality to calculate the distance between two cities by using the graphhopper api
+ * This Service provides core layer functionality to calculate the distance between two cities by using the <s>graphhopper</s> google maps api
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -29,39 +24,21 @@ import okhttp3.ResponseBody;
  */
 @Service
 public class DistanceCalculationService {
-
-<<<<<<< HEAD
-	/**
-	 * {@link CoordinateService}
-	 */
-    private final CoordinateService coordinateService;
     
     /**
 	 * API Key for the Graphhopper API <br>
 	 * Defined in the application.properties
 	 */
-=======
->>>>>>> refs/heads/dev
     @Value("${api.key}")
     private String API_KEY;
-
-<<<<<<< HEAD
+    
     /**
-     * Constructs a {@link DistanceCalculationService} using the {@link CoordinateService}
-     * @param coordinateService - {@link CoordinateService}
-     */
-    public DistanceCalculationService(CoordinateService coordinateService) {
-        this.coordinateService = coordinateService;
-=======
+	 * API Key for the Google Maps - Routes API <br>
+	 * Defined in the application.properties
+	 */
     @Value("${api.key.google}")
     private String API_KEY_GOOGLE;
 
-    public DistanceCalculationService() {
-
->>>>>>> refs/heads/dev
-    }
-
-<<<<<<< HEAD
     /**
      * Calculates the distance between two cities using the Graphhopper API
      * @param startLocation - {@link String} Name of the starting city
@@ -69,12 +46,6 @@ public class DistanceCalculationService {
      * @return {@code double} Distance between these two cities in meters
      * @throws IOException
      */
-    public double calculateDistance(@NonNull String startLocation, @NonNull String endLocation) throws IOException {
-        GHPoint start = coordinateService.getCoordinatesFromCity(startLocation);
-        GHPoint end = coordinateService.getCoordinatesFromCity(endLocation);
-
-        //Eingabe auf country == Deutschland testen
-=======
     public double calculateDistance(String startLocation, String endLocation, TransportMediumDTO transportMediumDTO) throws IOException {
         /*
         https://developers.google.com/maps/documentation/distance-matrix/distance-matrix?hl=de#mode
@@ -92,7 +63,6 @@ public class DistanceCalculationService {
          */
         String transportMediumNameString = transportMediumDTO.getTransportMediumName();
         TransportMediumName transportMediumName = TransportMediumName.fromName(transportMediumNameString);
->>>>>>> refs/heads/dev
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -106,7 +76,12 @@ public class DistanceCalculationService {
         return getDistanceFromMaps(response);
     }
 
-
+    /**
+     * Returns the Length of the calculated Route
+     * @param response {@link Response} Google Maps API Response containing the Route Length
+     * @return {@link Double} - Distance between the two cities / the length of the route
+     * @throws IOException If there was an issue converting the response json to an object
+     */
     private double getDistanceFromMaps(Response response) throws IOException {
         if (!response.isSuccessful()) {
             //TODO: throw error

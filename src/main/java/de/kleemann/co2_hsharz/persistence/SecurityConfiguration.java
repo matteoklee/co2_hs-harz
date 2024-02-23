@@ -1,7 +1,5 @@
 package de.kleemann.co2_hsharz.persistence;
 
-import de.kleemann.co2_hsharz.api.security.APISecurity;
-import de.kleemann.co2_hsharz.persistence.auth.UserPersistenceService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +18,13 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import de.kleemann.co2_hsharz.api.security.APISecurity;
+import de.kleemann.co2_hsharz.persistence.auth.UserPersistenceService;
+
 /**
- * Class "SecurityConfiguration" is used for ...
+ * This is a Spring Configuration Class for API Security. <br>
+ * It implements {@link WebMvcConfigurer} and registers the {@link APISecurity}-Interceptor. <br>
+ * It was also used to enable user authentication, which is deprecated
  *
  * @author Matteo Kleemann
  * @version 1.0
@@ -56,11 +59,11 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService());
         authenticationManager = authenticationManagerBuilder.build();
@@ -78,9 +81,8 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         return http.build();
     }
 
-
     @Bean
-    public UserDetailsService userDetailsService() {
+    UserDetailsService userDetailsService() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserDetails user = User.withUsername(userUsername)
                 .password(passwordEncoder.encode(userPassword))
@@ -94,5 +96,4 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .build();
         return new InMemoryUserDetailsManager(user, admin);
     }
-
 }

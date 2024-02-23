@@ -124,10 +124,19 @@ public class GroupService {
         groupPersistenceService.deleteGroup(group.getGroupEntity());
     }
 
+    /**
+     * Creates a new {@link GroupEntity} and maps it to a {@link GroupImpl}
+     * @return {@link GroupImpl} of the created {@link GroupEntity}
+     */
     public GroupImpl createGroupEntity() {
         return new GroupImpl(groupPersistenceService.createGroupEntity());
     }
 
+    /**
+     * Creates a new {@link GroupEntity} with the given id and maps it to a {@link GroupImpl}
+     * @param id {@link Long} Id for the {@link GroupEntity} 
+     * @return {@link GroupImpl} of the created {@link GroupEntity}
+     */
     public GroupImpl createGroupEntity(long id) {
         return new GroupImpl(groupPersistenceService.createGroupEntity(id));
     }

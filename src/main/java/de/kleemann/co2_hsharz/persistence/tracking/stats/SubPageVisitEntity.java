@@ -1,15 +1,24 @@
 package de.kleemann.co2_hsharz.persistence.tracking.stats;
 
+import de.kleemann.co2_hsharz.core.tracking.stats.SubPageVisit;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
- * Class "SubPageVisitEntity" is used for ...
+ *  This Entity represents a {@link SubPageVisit}-Statistic.
+ * 
+ * @see StatisticEntity
  *
  * @author Matteo Kleemann
  * @version 1.0
  * @since 31.01.2024
  */
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
 public class SubPageVisitEntity extends StatisticEntity {
 
     private String subPageVisitEntityName;
@@ -17,23 +26,5 @@ public class SubPageVisitEntity extends StatisticEntity {
 
     public SubPageVisitEntity(long id) {
         setStatisticEntityId(id);
-    }
-
-    public SubPageVisitEntity() {}
-
-    public String getSubPageVisitEntityName() {
-        return subPageVisitEntityName;
-    }
-
-    public void setSubPageVisitEntityName(String subPageVisitEntityName) {
-        this.subPageVisitEntityName = subPageVisitEntityName;
-    }
-
-    public int getSubPageVisitEntityTotalVisits() {
-        return subPageVisitEntityTotalVisits;
-    }
-
-    public void setSubPageVisitEntityTotalVisits(int subPageVisitEntityTotalVisits) {
-        this.subPageVisitEntityTotalVisits = subPageVisitEntityTotalVisits;
     }
 }

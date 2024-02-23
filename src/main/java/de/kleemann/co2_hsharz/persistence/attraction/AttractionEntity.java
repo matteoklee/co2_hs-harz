@@ -2,6 +2,12 @@ package de.kleemann.co2_hsharz.persistence.attraction;
 
 import jakarta.persistence.*;
 
+/**
+ * This Entity reflects a tourist attraction
+ * 
+ * This class is deprecated and pending removal
+ */
+@Deprecated
 @Entity
 public class AttractionEntity {
 

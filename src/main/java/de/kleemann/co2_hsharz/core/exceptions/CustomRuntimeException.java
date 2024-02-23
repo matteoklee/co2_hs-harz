@@ -10,7 +10,7 @@ package de.kleemann.co2_hsharz.core.exceptions;
 public class CustomRuntimeException extends RuntimeException {
 
     /**
-	 * Serial Version
+	 * Serial Version {@value CustomRuntimeException#serialVersionUID}
 	 */
 	private static final long serialVersionUID = -559487244332834082L;
 

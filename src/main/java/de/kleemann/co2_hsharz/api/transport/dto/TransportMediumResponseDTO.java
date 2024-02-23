@@ -1,17 +1,26 @@
 package de.kleemann.co2_hsharz.api.transport.dto;
 
+import de.kleemann.co2_hsharz.api.transport.TransportMediumController;
+import de.kleemann.co2_hsharz.core.transport.TransportMedium;
 import de.kleemann.co2_hsharz.core.transport.TransportMediumImpl;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumName;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumFuel;
 import de.kleemann.co2_hsharz.persistence.transport.enums.TransportMediumSize;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Class "TransportMediumResponseDTO" is used for ...
+ * This Class is a Data Transfer Object (DTO) for the {@link TransportMediumController#findAllTransportMediums()} Response
+ * and represents a {@link TransportMedium}
  *
  * @author Matteo Kleemann
  * @version 1.0
  * @since 29.11.2023
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TransportMediumResponseDTO {
 
     private long transportMediumId;
@@ -21,83 +30,14 @@ public class TransportMediumResponseDTO {
     private TransportMediumFuel transportMediumFuel;
     private double transportMediumConsumption;
     private double transportMediumVersion;
-
-
-    public TransportMediumResponseDTO() {
-
-    }
     
+    /**
+     * Constructs this DTO from a {@link TransportMediumImpl}
+     * @param transportMedium {@link TransportMediumImpl} to create this object from 
+     */
     public TransportMediumResponseDTO(TransportMediumImpl transportMedium) {
     	this(transportMedium.getTransportMediumId(), transportMedium.getTransportMediumFileName(),
                 transportMedium.getTransportMediumName(), transportMedium.getTransportMediumSize(),
                 transportMedium.getTransportMediumFuel(), transportMedium.getTransportMediumConsumption(), transportMedium.getTransportMediumVersion());
-    }
-
-    public TransportMediumResponseDTO(long transportMediumId, String transportMediumFileName,
-                                      TransportMediumName transportMediumName, TransportMediumSize transportMediumSize,
-                                      TransportMediumFuel transportMediumFuel, double transportMediumConsumption, double transportMediumVersion) {
-        this.transportMediumId = transportMediumId;
-        this.transportMediumFileName = transportMediumFileName;
-        this.transportMediumName = transportMediumName;
-        this.transportMediumSize = transportMediumSize;
-        this.transportMediumFuel = transportMediumFuel;
-        this.transportMediumConsumption = transportMediumConsumption;
-        this.transportMediumVersion = transportMediumVersion;
-    }
-
-    public long getTransportMediumId() {
-        return transportMediumId;
-    }
-
-    public void setTransportMediumId(long transportMediumId) {
-        this.transportMediumId = transportMediumId;
-    }
-
-    public String getTransportMediumFileName() {
-        return transportMediumFileName;
-    }
-
-    public void setTransportMediumFileName(String transportMediumFileName) {
-        this.transportMediumFileName = transportMediumFileName;
-    }
-
-    public TransportMediumName getTransportMediumName() {
-        return transportMediumName;
-    }
-
-    public void setTransportMediumName(TransportMediumName transportMediumName) {
-        this.transportMediumName = transportMediumName;
-    }
-
-    public TransportMediumSize getTransportMediumSize() {
-        return transportMediumSize;
-    }
-
-    public void setTransportMediumSize(TransportMediumSize transportMediumSize) {
-        this.transportMediumSize = transportMediumSize;
-    }
-
-    public TransportMediumFuel getTransportMediumFuel() {
-        return transportMediumFuel;
-    }
-
-    public void setTransportMediumFuel(TransportMediumFuel transportMediumFuel) {
-        this.transportMediumFuel = transportMediumFuel;
-    }
-
-    public double getTransportMediumConsumption() {
-        return transportMediumConsumption;
-    }
-
-    public void setTransportMediumConsumption(double transportMediumConsumption) {
-        this.transportMediumConsumption = transportMediumConsumption;
-    }
-
-    public double getTransportMediumVersion() {
-        return transportMediumVersion;
-    }
-
-    public void setTransportMediumVersion(double transportMediumVersion) {
-        this.transportMediumVersion = transportMediumVersion;
     }
 }
