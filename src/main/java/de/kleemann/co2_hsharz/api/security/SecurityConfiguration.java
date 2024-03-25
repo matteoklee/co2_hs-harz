@@ -1,7 +1,5 @@
 package de.kleemann.co2_hsharz.api.security;
 
-import de.kleemann.co2_hsharz.persistence.CustomRequestFilter;
-import de.kleemann.co2_hsharz.persistence.auth.UserPersistenceService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +12,17 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import de.kleemann.co2_hsharz.persistence.CustomRequestFilter;
 
 /**
  * Class "SecurityConfiguration" is used for ...
@@ -32,7 +36,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfiguration implements WebMvcConfigurer {
 
     AuthenticationManager authenticationManager;
-    private final UserPersistenceService userPersistenceService;
+    private final HandlerInterceptor apiRequestInterceptor;
 
     @Value("${custom.user.username}")
     private String userUsername;
@@ -46,21 +50,31 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     @Value("${custom.admin.password}")
     private String adminPassword;
 
-    public SecurityConfiguration(UserPersistenceService userPersistenceService) {
-        this.userPersistenceService = userPersistenceService;
+    public SecurityConfiguration(HandlerInterceptor apiRequestInterceptor) {
+        this.apiRequestInterceptor = apiRequestInterceptor;
     }
 
+    /**
+     * Adds the {@link ApiRequestInterceptor} as a {@link HandlerInterceptor} to the {@link InterceptorRegistry}
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new ApiRequestInterceptor());
+        registry.addInterceptor(apiRequestInterceptor);
     }
 
+    /**
+     * Defines a PasswordEncoder Bean. <br>
+     * Uses the {@link DelegatingPasswordEncoder}
+     * @return {@link PasswordEncoder}
+     */
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+    
+    
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService());
         authenticationManager = authenticationManagerBuilder.build();
@@ -80,7 +94,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
 
     @Bean
-    public UserDetailsService userDetailsService() {
+    UserDetailsService userDetailsService() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserDetails user = User.withUsername(userUsername)
                 .password(passwordEncoder.encode(userPassword))
