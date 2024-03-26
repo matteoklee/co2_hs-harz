@@ -1,9 +1,13 @@
 package de.kleemann.co2_hsharz.persistence;
 
-import de.kleemann.co2_hsharz.Application;
-import jakarta.servlet.*;
-
 import java.io.IOException;
+
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
 /**
  * Class "CustomRequestFilter" is used for ...
@@ -12,6 +16,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 17.10.2023
  */
+@Deprecated
 public class CustomRequestFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
