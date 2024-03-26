@@ -1,5 +1,10 @@
 package de.kleemann.co2_hsharz.api.auth;
 
+import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
+import de.kleemann.co2_hsharz.persistence.auth.UserRole;
+import lombok.Data;
+import lombok.NonNull;
+
 /**
  * Class "UserDTO" is used for ...
  *
@@ -8,6 +13,7 @@ package de.kleemann.co2_hsharz.api.auth;
  * @since 16.10.2023
  */
 
+@Data
 public class UserDTO {
 
     private long userId;
@@ -15,39 +21,18 @@ public class UserDTO {
     private String userPassword;
     private String userRole;
 
-    public UserDTO() {
-
+    //TODO unsauber
+    public UserRole getUserRole() {
+    	try {
+    		UserRole role = UserRole.valueOf(this.userRole);
+    		return role;
+    	}
+    	catch(Exception e) {
+    		throw new CustomIllegalArgumentException("User Role not found");
+    	}
     }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
+    
+    public void setUserRole(@NonNull UserRole userRole) {
+        this.userRole = userRole.toString();
     }
 }
