@@ -1,9 +1,13 @@
 package de.kleemann.co2_hsharz;
 
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumImportService;
-import de.kleemann.co2_hsharz.persistence.transport.TransportMediumPersistenceService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import de.kleemann.co2_hsharz.core.auth.User;
+import de.kleemann.co2_hsharz.core.auth.UserService;
+import de.kleemann.co2_hsharz.persistence.auth.UserRole;
+import de.kleemann.co2_hsharz.persistence.transport.TransportMediumImportService;
 
 @SpringBootApplication(scanBasePackages = "de.kleemann.co2_hsharz.*")
 public class Application {
@@ -18,7 +22,7 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
         System.out.println("   ____ ___ ____       ____           _                     \n" +
                 "  / ___/ _ \\___ \\     |  _ \\ ___  ___| |__  _ __   ___ _ __ \n" +
                 " | |  | | | |__) |____| |_) / _ \\/ __| '_ \\| '_ \\ / _ \\ '__|\n" +
@@ -26,6 +30,14 @@ public class Application {
                 "  \\____\\___/_____|    |_| \\_\\___|\\___|_| |_|_| |_|\\___|_|   \n" +
                 "                                                            \n" +
                 "API successfully started.");
+        
+        //TODO Remove before release
+        UserService userService = context.getBean(UserService.class);
+        User testUser = userService.createUser();
+        testUser.setUserName("admin");
+        testUser.setUserPassword("admin");
+        testUser.setUserRole(UserRole.ADMIN);
+        testUser = userService.persistUser(testUser);
     }
 
     public static String getPREFIX() {
