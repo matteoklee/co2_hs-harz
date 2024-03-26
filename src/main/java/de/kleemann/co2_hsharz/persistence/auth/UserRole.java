@@ -1,4 +1,4 @@
-package de.kleemann.co2_hsharz.core.auth;
+package de.kleemann.co2_hsharz.persistence.auth;
 
 /**
  * Class "UserRole" is used for ...
