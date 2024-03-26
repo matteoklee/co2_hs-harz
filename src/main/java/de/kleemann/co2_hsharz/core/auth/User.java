@@ -1,6 +1,8 @@
 package de.kleemann.co2_hsharz.core.auth;
 
 import de.kleemann.co2_hsharz.persistence.auth.UserEntity;
+import de.kleemann.co2_hsharz.persistence.auth.UserRole;
+import lombok.NonNull;
 
 /**
  * Class "User" is used for ...
@@ -14,10 +16,7 @@ public class User {
 
     private final UserEntity userEntity;
 
-    public User(final UserEntity userEntity) {
-        if(userEntity == null) {
-            throw new IllegalArgumentException("userEntity may not be null.");
-        }
+    public User(@NonNull final UserEntity userEntity) {
         this.userEntity = userEntity;
     }
 
@@ -37,7 +36,7 @@ public class User {
         return this.userEntity.getUserName();
     }
 
-    public void setUserName(String userName) {
+    public void setUserName(@NonNull String userName) {
         this.userEntity.setUserName(userName);
     }
 
@@ -45,15 +44,15 @@ public class User {
         return this.userEntity.getUserPassword();
     }
 
-    public void setUserPassword(String userPassword) {
+    public void setUserPassword(@NonNull String userPassword) {
         this.userEntity.setUserPassword(userPassword);
     }
 
-    public String getUserRole() {
+    public UserRole getUserRole() {
         return this.userEntity.getUserRole();
     }
 
-    public void setUserRole(String userRole) {
+    public void setUserRole(@NonNull UserRole userRole) {
         this.userEntity.setUserRole(userRole);
     }
 
