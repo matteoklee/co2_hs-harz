@@ -1,19 +1,13 @@
 package de.kleemann.co2_hsharz.persistence.auth;
 
-import de.kleemann.co2_hsharz.core.exceptions.CustomEntityExistsException;
-import de.kleemann.co2_hsharz.core.exceptions.CustomIllegalArgumentException;
-import jakarta.persistence.EntityExistsException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import de.kleemann.co2_hsharz.core.exceptions.CustomEntityExistsException;
+import jakarta.persistence.EntityExistsException;
+import lombok.NonNull;
 
 /**
  * Class "UserPersistenceService" is used for ...
@@ -23,7 +17,7 @@ import java.util.List;
  * @since 16.10.2023
  */
 @Service
-public class UserPersistenceService implements UserDetailsService {
+public class UserPersistenceService {
 
     private final UserRepository userRepository;
 
@@ -31,22 +25,9 @@ public class UserPersistenceService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByUserName(username);
-        if(userEntity == null) {
-            throw new UsernameNotFoundException("username does not exists yet.");
-        }
-        return new User(userEntity.getUserName(), userEntity.getUserPassword(), getAuthorities(userEntity));
-    }
-
-    private Collection<? extends GrantedAuthority> getAuthorities(UserEntity userEntity) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + userEntity.getUserRole()));
-        return authorities;
-    }
-
+	public UserEntity findUserByUsername(@NonNull String username) {
+		return userRepository.findByUserName(username);
+	}
 
     public List<UserEntity> findAllUsers() {
         return new ArrayList<>(userRepository.findAll());
@@ -60,7 +41,7 @@ public class UserPersistenceService implements UserDetailsService {
         return new UserEntity(id);
     }
 
-    private UserEntity saveUser(final UserEntity userEntity) {
+    private UserEntity saveUser(@NonNull final UserEntity userEntity) {
         try {
             return userRepository.save(userEntity);
         }
@@ -69,12 +50,7 @@ public class UserPersistenceService implements UserDetailsService {
         }
     }
 
-    public UserEntity persistUser(final UserEntity userEntity) {
-        if (userEntity == null) {
-            throw new CustomIllegalArgumentException("user must not be null.");
-        }
+    public UserEntity persistUser(@NonNull final UserEntity userEntity) {
         return saveUser(userEntity);
     }
-
-
 }
